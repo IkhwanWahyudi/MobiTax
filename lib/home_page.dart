@@ -22,7 +22,7 @@ class MyHomePage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.only(top:16, bottom: 16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [

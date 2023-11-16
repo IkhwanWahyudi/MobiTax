@@ -103,26 +103,26 @@ class _SignInState extends State<SignIn> {
               ),
               child: const Text('Masuk'),
             ),
-            Slider(
-              value: 0, // Nilai slider
-              onChanged: null, // Mengatur onChanged ke null
-            ),
-            Slider(
-              value: 1 / 4, // Nilai slider
-              onChanged: null, // Mengatur onChanged ke null
-            ),
-            Slider(
-              value: 2 / 4, // Nilai slider
-              onChanged: null, // Mengatur onChanged ke null
-            ),
-            Slider(
-              value: 3 / 4, // Nilai slider
-              onChanged: null, // Mengatur onChanged ke null
-            ),
-            Slider(
-              value: 4 / 4, // Nilai slider
-              onChanged: null, // Mengatur onChanged ke null
-            ),
+            // Slider(
+            //   value: 0, // Nilai slider
+            //   onChanged: null, // Mengatur onChanged ke null
+            // ),
+            // Slider(
+            //   value: 1 / 4, // Nilai slider
+            //   onChanged: null, // Mengatur onChanged ke null
+            // ),
+            // Slider(
+            //   value: 2 / 4, // Nilai slider
+            //   onChanged: null, // Mengatur onChanged ke null
+            // ),
+            // Slider(
+            //   value: 3 / 4, // Nilai slider
+            //   onChanged: null, // Mengatur onChanged ke null
+            // ),
+            // Slider(
+            //   value: 4 / 4, // Nilai slider
+            //   onChanged: null, // Mengatur onChanged ke null
+            // ),
           ],
         ),
       ),
