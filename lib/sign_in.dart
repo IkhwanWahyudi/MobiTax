@@ -1,5 +1,10 @@
+// ignore_for_file: prefer_const_constructors, unused_import
+
 import 'package:flutter/material.dart';
+import 'package:mobi_tax/detail.dart';
 import 'package:mobi_tax/home_page.dart';
+
+import 'main.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -16,6 +21,7 @@ class _SignInState extends State<SignIn> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Masuk"),
+        backgroundColor: Color.fromRGBO(70, 152, 138, 1),
       ),
       body: Center(
         child: Column(
@@ -62,32 +68,59 @@ class _SignInState extends State<SignIn> {
                 obscureText: true,
               ),
             ),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     Navigator.of(context).pushReplacement(
+            //       MaterialPageRoute(
+            //         builder: (context) => const BottomNavigation(),
+            //       ),
+            //     );
+            //   },
+            //   child: const Text("Masuk"),
+            // ),
+            SizedBox(
+              height: 20,
+            ),
             ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) =>
-                        const MyHomePage(), // menggunakan AboutPage dari about_page.dart
-                  ));
-                },
-                child: const Text("Masuk")),
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => const BottomNavigation(),
+                  ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
+                minimumSize:
+                    const Size(150, 50), // Atur lebar dan tinggi button
+                padding: const EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 16), // Padding di sekitar icon dan teks
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                      30.0), // Mengatur radius untuk membuat button rounded
+                ),
+              ),
+              child: const Text('Masuk'),
+            ),
             Slider(
               value: 0, // Nilai slider
               onChanged: null, // Mengatur onChanged ke null
             ),
             Slider(
-              value: 1/4, // Nilai slider
+              value: 1 / 4, // Nilai slider
               onChanged: null, // Mengatur onChanged ke null
             ),
             Slider(
-              value: 2/4, // Nilai slider
+              value: 2 / 4, // Nilai slider
               onChanged: null, // Mengatur onChanged ke null
             ),
             Slider(
-              value: 3/4, // Nilai slider
+              value: 3 / 4, // Nilai slider
               onChanged: null, // Mengatur onChanged ke null
             ),
             Slider(
-              value: 4/4, // Nilai slider
+              value: 4 / 4, // Nilai slider
               onChanged: null, // Mengatur onChanged ke null
             ),
           ],
