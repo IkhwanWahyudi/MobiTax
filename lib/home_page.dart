@@ -3,6 +3,21 @@
 import 'package:flutter/material.dart';
 import 'detail.dart';
 
+class Kendaraan {
+// class Kendaraan
+  String kendaraan, plat, masa_berlaku;
+
+  Kendaraan(this.kendaraan, this.plat, this.masa_berlaku);
+}
+
+List<Kendaraan> kendaraans = [
+// list untuk menampung semua inputan/produk
+  Kendaraan("1", "1", "1"),
+  Kendaraan("2", "2", "2"),
+  Kendaraan("3", "3", "3"),
+  Kendaraan("4", "4", "4"),
+];
+
 class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
@@ -12,7 +27,7 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 240, 237, 237),
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(70,152,138, 1),
+        backgroundColor: Color.fromRGBO(70, 152, 138, 1),
         title: const Text(
           "MOBITAX",
           style: TextStyle(
@@ -48,12 +63,12 @@ class MyHomePage extends StatelessWidget {
               width: double.infinity,
               decoration: BoxDecoration(
                 //color: Color.fromRGBO(255,192,27, 1),
-                color: Color.fromRGBO(70,152,138, 1),
+                color: Color.fromRGBO(70, 152, 138, 1),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(15),
                   bottomRight: Radius.circular(15),
                 ),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Colors.grey, // warna bayangan
                     blurRadius: 5, // radius blur bayangan
@@ -128,90 +143,104 @@ class MyHomePage extends StatelessWidget {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
-
             Expanded(
-                child : ListView.builder(
-                  shrinkWrap: true,
-                  //physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    // Menambahkan fungsi GestureDetector untuk navigasi
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                DetailPage(), // Navigasi ke DetailPage
-                          ),
-                        );
-                      },
-                      child: Column(
-                        children: [
-                          Container(
-                            width: lebar,
-                            height: 90,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            // padding: EdgeInsets.symmetric(vertical: 15.0),
-                            padding: EdgeInsets.all(10),
-                            margin: EdgeInsets.only(left: 10,right: 10),
-                            // child: Column(
-                            //   children: [
-                            //     Text("Plat Nomor ${index + 1}"),
-                            //     Text("Kendaraan ${index + 1}"),
-                            //     Text("Masa Berlaku ${index + 1}")
-                            //   ],
-                            // ),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 50,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color.fromRGBO(70,152,138, 1),
-                                  ),
-                                  child: Icon(
-                                    Icons.directions_bike,
-                                    color: Colors.white,
-                                    size: 30,
-                                  ),
-                                ),
-                                Container(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text("Plat Nomor ${index + 1}"),
-                                      Text("Kendaraan ${index + 1}"),
-                                      Text("Masa Berlaku ${index + 1}")
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      ),
-                    );
+                child: ListView.builder(
+              shrinkWrap: true,
+              //physics: const NeverScrollableScrollPhysics(),
+              itemCount: kendaraans.length,
+              itemBuilder: (context, index) {
+                // Menambahkan fungsi GestureDetector untuk navigasi
+                return Dismissible(
+                  key: UniqueKey(),
+                  direction: DismissDirection.endToStart,
+                  background: Container(
+                    color: Colors.red,
+                    child: Icon(Icons.delete, color: Colors.white),
+                    alignment: Alignment.centerRight,
+                    padding: EdgeInsets.only(right: 20),
+                  ),
+                  onDismissed: (direction) {
+                    // Menghapus item dari daftar ketika di-swipe
+                    kendaraans.removeAt(index);
+                    // Menampilkan snackbar untuk memberi tahu pengguna bahwa item telah dihapus
+                    // Scaffold.of(context).showSnackBar(
+                    //   SnackBar(content: Text("Item deleted")),
+                    // );
                   },
-                )
-            ),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              DetailPage(), // Navigasi ke DetailPage
+                        ),
+                      );
+                    },
+                    child: Column(
+                      children: [
+                        Container(
+                          width: lebar,
+                          height: 90,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.only(left: 10, right: 10),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Color.fromRGBO(70, 152, 138, 1),
+                                ),
+                                child: Icon(
+                                  Icons.directions_bike,
+                                  color: Colors.white,
+                                  size: 30,
+                                ),
+                              ),
+                              const SizedBox(width: 15),
+                              Container(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                        "Plat Nomor ${kendaraans[index].plat}"),
+                                    Text(
+                                        "Kendaraan ${kendaraans[index].kendaraan}"),
+                                    Text(
+                                        "Masa Berlaku ${kendaraans[index].masa_berlaku}")
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            )),
             Container(
-              margin: EdgeInsets.all(10), // Tambahkan margin pada Container jika diinginkan
+              margin: EdgeInsets.all(
+                  10), // Tambahkan margin pada Container jika diinginkan
               child: ElevatedButton.icon(
                 onPressed: () {
                   // Logika ketika tombol ditekan
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
-                  minimumSize: const Size(150, 50), // Atur lebar dan tinggi button
+                  minimumSize:
+                      const Size(150, 50), // Atur lebar dan tinggi button
                   padding: const EdgeInsets.symmetric(
                     vertical: 10,
                     horizontal: 16,
