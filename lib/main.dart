@@ -24,7 +24,8 @@ class MyApp extends StatelessWidget {
       //   useMaterial3: true,
       // ),
       debugShowCheckedModeBanner: false,
-      home: SignIn(),
+       home: SignIn(),
+      //home: MyHomePage(),
     );
   }
 }
@@ -62,7 +63,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.home),
-            label: 'Halaman Utama',
+            label: 'Beranda',
           ),
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.creditcard),
