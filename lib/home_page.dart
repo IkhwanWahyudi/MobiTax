@@ -181,7 +181,6 @@ class MyHomePage extends StatelessWidget {
                                   ),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.only(left: 10),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
