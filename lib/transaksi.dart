@@ -26,16 +26,16 @@ class _transaksiState extends State<transaksi> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 40),
+              Container(
+                margin: EdgeInsets.only(left: 10),
                 child: Text(
                   'Detail',
                   style: TextStyle(fontSize: 10, color: Colors.white),
                   textAlign: TextAlign.left,
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.only(left: 40),
+              Container(
+                margin: EdgeInsets.only(left: 10),
                 child: Text(
                   'Transaksi',
                   style: TextStyle(
@@ -45,6 +45,25 @@ class _transaksiState extends State<transaksi> {
                   textAlign: TextAlign.left,
                 ),
               ),
+              // const Padding(
+              //   padding: EdgeInsets.only(left: 40),
+              //   child: Text(
+              //     'Detail',
+              //     style: TextStyle(fontSize: 10, color: Colors.white),
+              //     textAlign: TextAlign.left,
+              //   ),
+              // ),
+              // const Padding(
+              //   padding: EdgeInsets.only(left: 40),
+              //   child: Text(
+              //     'Transaksi',
+              //     style: TextStyle(
+              //         fontSize: 18,
+              //         fontWeight: FontWeight.bold,
+              //         color: Colors.white),
+              //     textAlign: TextAlign.left,
+              //   ),
+              // ),
               const SizedBox(height: 30),
               Container(
                 width: lebar,
@@ -56,27 +75,39 @@ class _transaksiState extends State<transaksi> {
                     topRight: Radius.circular(10),
                   ),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 20, left: 40),
+                child: Center(
+                  //padding: const EdgeInsets.only(top: 20, left: 40),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      const Text(
-                        'Transaksi',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
+                      Container(
+                        margin: EdgeInsets.only(left: 10, top: 20, bottom: 20),
+                        //padding: const EdgeInsets.all(20),
+                        child: Text(
+                          'Transaksi',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      // const SizedBox(
+                      //   height: 30,
+                      // ),
+                      // const Text(
+                      //   'Transaksi',
+                      //   style: TextStyle(
+                      //     fontSize: 15,
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
+                      // const SizedBox(
+                      //   height: 20,
+                      // ),
                       Container(
                         padding: const EdgeInsets.all(20),
-                        margin: const EdgeInsets.only(right: 40),
+                        //margin: const EdgeInsets.only(right: 40),
+                        margin: EdgeInsets.only(right: 10, left: 10),
                         decoration: const BoxDecoration(
                             color: Colors.white,
                             borderRadius:

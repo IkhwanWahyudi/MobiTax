@@ -52,8 +52,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
     return Scaffold(
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        unselectedItemColor: const Color.fromARGB(255, 161, 161, 159),
         selectedItemColor: const Color.fromRGBO(70, 152, 138, 1),
+        unselectedItemColor: const Color.fromARGB(255, 161, 161, 159).withOpacity(0.5),
+        //unselectedItemColor: Colors.black,
         currentIndex: _selectedIndex,
         onTap: (index) {
           setState(() {
@@ -74,7 +75,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
             label: 'Profil',
           ),
         ],
-        unselectedIconTheme: Theme.of(context).iconTheme,
+        //unselectedIconTheme: Theme.of(context).iconTheme,
         type: BottomNavigationBarType.fixed,
       ),
     );
