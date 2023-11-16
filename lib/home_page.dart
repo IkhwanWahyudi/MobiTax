@@ -8,6 +8,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromRGBO(70,152,138, 1),
         title: const Text("MobiTax"),
         automaticallyImplyLeading: false,
       ),
