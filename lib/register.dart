@@ -1,20 +1,16 @@
-// ignore_for_file: prefer_const_constructors, unused_import
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobi_tax/detail.dart';
-import 'package:mobi_tax/home_page.dart';
-import 'package:mobi_tax/register.dart';
+import 'package:mobi_tax/main.dart';
+import 'package:mobi_tax/sign_in.dart';
 
-import 'main.dart';
-
-class SignIn extends StatefulWidget {
-  const SignIn({super.key});
+class regis extends StatefulWidget {
+  const regis({super.key});
 
   @override
-  State<SignIn> createState() => _SignInState();
+  State<regis> createState() => _regisState();
 }
 
-class _SignInState extends State<SignIn> {
+class _regisState extends State<regis> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -22,8 +18,8 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Masuk"),
-        backgroundColor: Color.fromRGBO(70, 152, 138, 1),
+        title: const Text("Daftar"),
+        backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
       ),
       body: Center(
         child: Column(
@@ -70,34 +66,37 @@ class _SignInState extends State<SignIn> {
                 obscureText: true,
               ),
             ),
-            // ElevatedButton(
-            //   onPressed: () {
-            //     Navigator.of(context).pushReplacement(
-            //       MaterialPageRoute(
-            //         builder: (context) => const BottomNavigation(),
-            //       ),
-            //     );
-            //   },
-            //   child: const Text("Masuk"),
-            // ),
-            SizedBox(
+            Container(
+              margin: const EdgeInsets.all(5),
+              child: TextField(
+                autocorrect: true,
+                controller: passwordController,
+                decoration: const InputDecoration(
+                    labelText: 'Confirm Password',
+                    labelStyle: TextStyle(
+                      color: Color(0xFF183D3D), // warna label teks
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color(
+                            0xFF183D3D), // Warna outline saat dalam keadaan fokus
+                        width: 2.0, // Lebar garis
+                      ),
+                    ),
+                    suffixIcon: Icon(Icons.visibility_off)),
+                obscureText: true,
+              ),
+            ),
+            const SizedBox(
               height: 60,
             ),
             ElevatedButton(
               onPressed: () {
-                const mySnackBar = SnackBar(
-                  content: Text("Berhasil Login"),
-                  duration: Duration(seconds: 3),
-                  padding: EdgeInsets.all(10),
-                  backgroundColor: Colors.green,
-                  behavior: SnackBarBehavior
-                      .floating, // Mengatur SnackBar untuk muncul di atas
-                );
-                ScaffoldMessenger.of(context).showSnackBar(mySnackBar);
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (context) => const BottomNavigation(),
                   ),
+                  
                 );
               },
               style: ElevatedButton.styleFrom(
@@ -112,51 +111,32 @@ class _SignInState extends State<SignIn> {
                       30.0), // Mengatur radius untuk membuat button rounded
                 ),
               ),
-              child: const Text('Masuk'),
+              child: const Text('Daftar'),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Belum punya akun?'),
+                const Text('Sudah punya akun?'),
                 TextButton(
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => regis()),
+                      MaterialPageRoute(builder: (context) => const SignIn()),
                     );
                   },
-                  child: Text(
-                    'Daftar',
+                  child: const Text(
+                    'Masuk',
                     style: TextStyle(
-                        color: const Color.fromARGB(255, 233, 22, 7),
-                        fontWeight: FontWeight.bold),
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold
+                    ),
                   ),
                 )
               ],
             )
-            // Slider(
-            //   value: 0, // Nilai slider
-            //   onChanged: null, // Mengatur onChanged ke null
-            // ),
-            // Slider(
-            //   value: 1 / 4, // Nilai slider
-            //   onChanged: null, // Mengatur onChanged ke null
-            // ),
-            // Slider(
-            //   value: 2 / 4, // Nilai slider
-            //   onChanged: null, // Mengatur onChanged ke null
-            // ),
-            // Slider(
-            //   value: 3 / 4, // Nilai slider
-            //   onChanged: null, // Mengatur onChanged ke null
-            // ),
-            // Slider(
-            //   value: 4 / 4, // Nilai slider
-            //   onChanged: null, // Mengatur onChanged ke null
-            // ),
           ],
         ),
       ),
