@@ -160,9 +160,9 @@ class MyHomePage extends StatelessWidget {
                   direction: DismissDirection.endToStart,
                   background: Container(
                     color: Colors.red,
+                    child: Icon(Icons.delete, color: Colors.white),
                     alignment: Alignment.centerRight,
                     padding: EdgeInsets.only(right: 20),
-                    child: Icon(Icons.delete, color: Colors.white),
                   ),
                   onDismissed: (direction) {
                     // Menghapus item dari daftar ketika di-swipe
@@ -209,15 +209,19 @@ class MyHomePage extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(width: 15),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(kendaraans[index].plat),
-                                  Text(kendaraans[index].kendaraan),
-                                  Text(
-                                      "Masa Berlaku, ${kendaraans[index].masaBerlaku}")
-                                ],
+                              Container(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                        "Plat Nomor ${kendaraans[index].plat}"),
+                                    Text(
+                                        "Kendaraan ${kendaraans[index].kendaraan}"),
+                                    Text(
+                                        "Masa Berlaku ${kendaraans[index].masaBerlaku}")
+                                  ],
+                                ),
                               )
                             ],
                           ),
@@ -241,7 +245,7 @@ class MyHomePage extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
                   minimumSize:
-                      const Size(150, 50), // Atur lebar dan tinggi button
+                  const Size(150, 50), // Atur lebar dan tinggi button
                   padding: const EdgeInsets.symmetric(
                     vertical: 10,
                     horizontal: 16,

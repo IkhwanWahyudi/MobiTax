@@ -25,6 +25,7 @@ class _DetailPageState extends State<DetailPage> {
       backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
+        elevation: 0,
       ),
       body: Column(
         children: <Widget>[
