@@ -5,17 +5,21 @@ import 'detail.dart';
 
 class Kendaraan {
 // class Kendaraan
-  String kendaraan, plat, masa_berlaku;
+  String kendaraan, plat, masaBerlaku, brand, paint, type, bbm;
+  int cc, year;
 
-  Kendaraan(this.kendaraan, this.plat, this.masa_berlaku);
+  Kendaraan(this.kendaraan, this.plat, this.masaBerlaku, this.brand, this.paint,
+      this.year, this.type, this.bbm, this.cc);
 }
 
 List<Kendaraan> kendaraans = [
 // list untuk menampung semua inputan/produk
-  Kendaraan("1", "1", "1"),
-  Kendaraan("2", "2", "2"),
-  Kendaraan("3", "3", "3"),
-  Kendaraan("4", "4", "4"),
+  Kendaraan("Motor", "KT 1234 WW", "2 Juli 2025", "Honda PCX", "Hitam", 2018,
+      "Matic", "Bensin", 150),
+  Kendaraan("Mobil", "KT 3412 OP", "5 Mei 2025", "Honda CR-V", "Putih", 2020,
+      "Matic", "Bensin", 1498),
+  Kendaraan("Motor", "KT 9547 BA", "23 Oktober 2025", "MX King", "Biru", 2020,
+      "Manual", "Bensin", 150),
 ];
 
 class MyHomePage extends StatelessWidget {
@@ -72,7 +76,8 @@ class MyHomePage extends StatelessWidget {
                   BoxShadow(
                     color: Colors.grey, // warna bayangan
                     blurRadius: 5, // radius blur bayangan
-                    offset: Offset(0, 0), // pergeseran bayangan (horizontal, vertical)
+                    offset: Offset(
+                        0, 0), // pergeseran bayangan (horizontal, vertical)
                   ),
                 ],
               ),
@@ -88,30 +93,24 @@ class MyHomePage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            child: Text(
-                              "Dhimas Eko Wiyono",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          "Dhimas Eko Wiyono",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                           ),
-                          Container(
-                            child: Text(
-                              "Kota Samarinda",
-                              style: TextStyle(
-                                fontSize: 12,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+                        ),
+                        Text(
+                          "Kota Samarinda",
+                          style: TextStyle(
+                            fontSize: 12,
+                          ),
+                        )
+                      ],
                     ),
                     IconButton(
                       //padding: EdgeInsets.all(10),
@@ -149,15 +148,21 @@ class MyHomePage extends StatelessWidget {
               //physics: const NeverScrollableScrollPhysics(),
               itemCount: kendaraans.length,
               itemBuilder: (context, index) {
-                // Menambahkan fungsi GestureDetector untuk navigasi
+                IconData kendaraan;
+                if (kendaraans[index].kendaraan == "Motor") {
+                  kendaraan = Icons.directions_bike;
+                } else {
+                  kendaraan = Icons.directions_car;
+                }
+
                 return Dismissible(
                   key: UniqueKey(),
                   direction: DismissDirection.endToStart,
                   background: Container(
                     color: Colors.red,
-                    child: Icon(Icons.delete, color: Colors.white),
                     alignment: Alignment.centerRight,
                     padding: EdgeInsets.only(right: 20),
+                    child: Icon(Icons.delete, color: Colors.white),
                   ),
                   onDismissed: (direction) {
                     // Menghapus item dari daftar ketika di-swipe
@@ -173,7 +178,7 @@ class MyHomePage extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              DetailPage(), // Navigasi ke DetailPage
+                              DetailPage(selectedKendaraan: kendaraans[index]), // Navigasi ke DetailPage
                         ),
                       );
                     },
@@ -198,25 +203,21 @@ class MyHomePage extends StatelessWidget {
                                   color: Color.fromRGBO(70, 152, 138, 1),
                                 ),
                                 child: Icon(
-                                  Icons.directions_bike,
+                                  kendaraan,
                                   color: Colors.white,
                                   size: 30,
                                 ),
                               ),
                               const SizedBox(width: 15),
-                              Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                        "Plat Nomor ${kendaraans[index].plat}"),
-                                    Text(
-                                        "Kendaraan ${kendaraans[index].kendaraan}"),
-                                    Text(
-                                        "Masa Berlaku ${kendaraans[index].masa_berlaku}")
-                                  ],
-                                ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(kendaraans[index].plat),
+                                  Text(kendaraans[index].kendaraan),
+                                  Text(
+                                      "Masa Berlaku, ${kendaraans[index].masaBerlaku}")
+                                ],
                               )
                             ],
                           ),

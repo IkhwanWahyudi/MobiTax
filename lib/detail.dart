@@ -2,20 +2,17 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mobi_tax/home_page.dart';
 
 class DetailPage extends StatefulWidget {
+  final Kendaraan selectedKendaraan;
+  const DetailPage({Key? key, required this.selectedKendaraan}) : super(key: key);
+
   @override
   _DetailPageState createState() => _DetailPageState();
 }
 
 class _DetailPageState extends State<DetailPage> {
-  final String brand = "Honda PCX";
-  final String paint = "Hitam";
-  final String year = "2018";
-  final String type = "matic";
-  final String cc = "150 CC";
-  final String bbm = "Bensin";
-
   bool isNantiSajaSelected = false;
   bool isBayarSekarangSelected = false;
 
@@ -73,7 +70,7 @@ class _DetailPageState extends State<DetailPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        brand,
+                        widget.selectedKendaraan.brand,
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -102,7 +99,7 @@ class _DetailPageState extends State<DetailPage> {
                               const SizedBox(
                                   height: 5), // Jarak antara ikon dan teks
                               Text(
-                                year,
+                                widget.selectedKendaraan.year.toString(),
                                 style: const TextStyle(
                                   fontSize: 10,
                                 ),
@@ -127,7 +124,7 @@ class _DetailPageState extends State<DetailPage> {
                               const SizedBox(
                                   height: 5), // Jarak antara ikon dan teks
                               Text(
-                                paint,
+                                widget.selectedKendaraan.paint,
                                 style: const TextStyle(
                                   fontSize: 10,
                                 ),
@@ -152,7 +149,7 @@ class _DetailPageState extends State<DetailPage> {
                               const SizedBox(
                                   height: 5), // Jarak antara ikon dan teks
                               Text(
-                                type,
+                                widget.selectedKendaraan.type,
                                 style: const TextStyle(
                                   fontSize: 10,
                                 ),
@@ -177,7 +174,7 @@ class _DetailPageState extends State<DetailPage> {
                               const SizedBox(
                                   height: 5), // Jarak antara ikon dan teks
                               Text(
-                                cc,
+                                '${widget.selectedKendaraan.cc.toString()} CC',
                                 style: const TextStyle(
                                   fontSize: 10,
                                 ),
@@ -202,7 +199,7 @@ class _DetailPageState extends State<DetailPage> {
                               const SizedBox(
                                   height: 5), // Jarak antara ikon dan teks
                               Text(
-                                bbm,
+                                widget.selectedKendaraan.bbm,
                                 style: const TextStyle(
                                   fontSize: 10,
                                 ),
