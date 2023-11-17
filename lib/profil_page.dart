@@ -19,28 +19,36 @@ class Profile extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                margin: EdgeInsets.only(left: 10, bottom: 10),
-                child: CircleAvatar(backgroundColor: Colors.white, radius: 30,),
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 10),
-                child: Text(
-                  'Id Pengguna',
-                  style: TextStyle(fontSize: 10, color: Colors.white),
-                  textAlign: TextAlign.left,
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 10),
-                child: Text(
-                  'Nama Pengguna',
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                  textAlign: TextAlign.left,
-                ),
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(left: 30, bottom: 10),
+                    child: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 30,
+                    ),
+                  ),
+                  SizedBox(width: 30), // Jarak antara foto profil dan teks
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Id Pengguna',
+                        style: TextStyle(fontSize: 10, color: Colors.white),
+                        textAlign: TextAlign.left,
+                      ),
+                      Text(
+                        'Nama Pengguna',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                    ],
+                  ),
+                ],
               ),
               const SizedBox(height: 30),
               Container(
@@ -54,13 +62,11 @@ class Profile extends StatelessWidget {
                   ),
                 ),
                 child: Center(
-                  //padding: const EdgeInsets.only(top: 20, left: 40),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
                         margin: EdgeInsets.only(left: 10, top: 20, bottom: 20),
-                        //padding: const EdgeInsets.all(20),
                         child: Text(
                           'Data Diri',
                           style: TextStyle(
@@ -71,7 +77,6 @@ class Profile extends StatelessWidget {
                       ),
                       Container(
                         padding: const EdgeInsets.all(20),
-                        //margin: const EdgeInsets.only(right: 40),
                         margin: EdgeInsets.only(right: 10, left: 10),
                         decoration: const BoxDecoration(
                             color: Colors.white,
@@ -82,7 +87,8 @@ class Profile extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                Icon(Icons.list_alt_sharp, color: Color.fromRGBO(70, 152, 138, 1)),
+                                Icon(Icons.list_alt_sharp,
+                                    color: Color.fromRGBO(70, 152, 138, 1)),
                                 Text(
                                   'Ubah Data Diri',
                                   style: TextStyle(fontSize: 15),
@@ -92,7 +98,6 @@ class Profile extends StatelessWidget {
                             SizedBox(
                               height: 8,
                             ),
-                            
                           ],
                         ),
                       ),
