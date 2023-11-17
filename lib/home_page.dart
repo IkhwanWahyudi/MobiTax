@@ -160,9 +160,9 @@ class MyHomePage extends StatelessWidget {
                   direction: DismissDirection.endToStart,
                   background: Container(
                     color: Colors.red,
-                    child: Icon(Icons.delete, color: Colors.white),
                     alignment: Alignment.centerRight,
                     padding: EdgeInsets.only(right: 20),
+                    child: Icon(Icons.delete, color: Colors.white),
                   ),
                   onDismissed: (direction) {
                     // Menghapus item dari daftar ketika di-swipe
@@ -209,19 +209,17 @@ class MyHomePage extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(width: 15),
-                              Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                        "Plat Nomor ${kendaraans[index].plat}"),
-                                    Text(
-                                        "Kendaraan ${kendaraans[index].kendaraan}"),
-                                    Text(
-                                        "Masa Berlaku ${kendaraans[index].masaBerlaku}")
-                                  ],
-                                ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                      "Plat Nomor ${kendaraans[index].plat}"),
+                                  Text(
+                                      "Kendaraan ${kendaraans[index].kendaraan}"),
+                                  Text(
+                                      "Masa Berlaku ${kendaraans[index].masaBerlaku}")
+                                ],
                               )
                             ],
                           ),

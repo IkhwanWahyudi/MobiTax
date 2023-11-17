@@ -27,16 +27,16 @@ class _transaksiState extends State<transaksi> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                margin: EdgeInsets.only(left: 10),
-                child: Text(
+                margin: const EdgeInsets.only(left: 10),
+                child: const Text(
                   'Detail',
                   style: TextStyle(fontSize: 10, color: Colors.white),
                   textAlign: TextAlign.left,
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(left: 10),
-                child: Text(
+                margin: const EdgeInsets.only(left: 10),
+                child: const Text(
                   'Transaksi',
                   style: TextStyle(
                       fontSize: 18,
@@ -81,9 +81,9 @@ class _transaksiState extends State<transaksi> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        margin: EdgeInsets.only(left: 10, top: 20, bottom: 20),
+                        margin: const EdgeInsets.only(left: 10, top: 20, bottom: 20),
                         //padding: const EdgeInsets.all(20),
-                        child: Text(
+                        child: const Text(
                           'Transaksi',
                           style: TextStyle(
                             fontSize: 15,
@@ -107,7 +107,7 @@ class _transaksiState extends State<transaksi> {
                       Container(
                         padding: const EdgeInsets.all(20),
                         //margin: const EdgeInsets.only(right: 40),
-                        margin: EdgeInsets.only(right: 10, left: 10),
+                        margin: const EdgeInsets.only(right: 10, left: 10),
                         decoration: const BoxDecoration(
                             color: Colors.white,
                             borderRadius:
