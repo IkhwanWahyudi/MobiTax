@@ -7,74 +7,100 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var lebar = MediaQuery.of(context).size.width;
+    var tinggi = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: ListView(
-        children: [
-          const SizedBox(
-            height: 20,
+      backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
+      body: Column(
+        children: <Widget>[
+          const Expanded(
+            child: SingleChildScrollView(),
           ),
-          Container(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 40,
-                      backgroundImage: AssetImage(''),
-                    ),
-                    SizedBox(width: 20),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "ID Pengguna",
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        Text(
-                          "Nama Pengguna",
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ],
-                    ),
-                  ],
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: EdgeInsets.only(left: 10, bottom: 10),
+                child: CircleAvatar(backgroundColor: Colors.white, radius: 30,),
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 10),
+                child: Text(
+                  'Id Pengguna',
+                  style: TextStyle(fontSize: 10, color: Colors.white),
+                  textAlign: TextAlign.left,
                 ),
-                SizedBox(height: 20),
-                Container(
-                  color: const Color.fromRGBO(70, 152, 138, 1),
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 10),
+                child: Text(
+                  'Nama Pengguna',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                  textAlign: TextAlign.left,
+                ),
+              ),
+              const SizedBox(height: 30),
+              Container(
+                width: lebar,
+                height: tinggi * 0.69,
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 240, 237, 237),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                  ),
+                ),
+                child: Center(
+                  //padding: const EdgeInsets.only(top: 20, left: 40),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(child: const Text("Data Diri")),
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: Container(
-                          child: const Row(
-                            children: [
-                              Icon(Icons.list_alt_sharp),
-                              Text("Ubah Data Diri")
-                            ],
+                      Container(
+                        margin: EdgeInsets.only(left: 10, top: 20, bottom: 20),
+                        //padding: const EdgeInsets.all(20),
+                        child: Text(
+                          'Data Diri',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                       Container(
-                        child: const Text("Bantuan"),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: Container(
-                          child: const Row(
-                            children: [
-                              Icon(Icons.info_outline),
-                              Text("Panduan")
-                            ],
-                          ),
+                        padding: const EdgeInsets.all(20),
+                        //margin: const EdgeInsets.only(right: 40),
+                        margin: EdgeInsets.only(right: 10, left: 10),
+                        decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: const Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Icon(Icons.list_alt_sharp, color: Color.fromRGBO(70, 152, 138, 1)),
+                                Text(
+                                  'Ubah Data Diri',
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),

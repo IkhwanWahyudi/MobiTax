@@ -149,6 +149,25 @@ class _transaksiState extends State<transaksi> {
                                 ),
                               ],
                             ),
+                            SizedBox(
+                              height: 30
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Total',
+                                  style: TextStyle(fontSize: 18,fontWeight: FontWeight.w800),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(right: 20),
+                                  child: Text(
+                                    'Rp 00',
+                                    style: TextStyle(fontSize: 18,fontWeight: FontWeight.w800),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ),
