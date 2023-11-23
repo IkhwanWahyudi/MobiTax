@@ -1,15 +1,16 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_const
 
 import 'package:flutter/material.dart';
+import 'package:mobi_tax/kendaraan.dart';
 import 'detail.dart';
 
 class Kendaraan {
 // class Kendaraan
   String kendaraan, plat, masaBerlaku, brand, paint, type, bbm;
-  int cc, year;
+  int transmisi, year;
 
   Kendaraan(this.kendaraan, this.plat, this.masaBerlaku, this.brand, this.paint,
-      this.year, this.type, this.bbm, this.cc);
+      this.year, this.type, this.bbm, this.transmisi);
 }
 
 List<Kendaraan> kendaraans = [
@@ -177,8 +178,9 @@ class MyHomePage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              DetailPage(selectedKendaraan: kendaraans[index]), // Navigasi ke DetailPage
+                          builder: (context) => DetailPage(
+                              selectedKendaraan:
+                                  kendaraans[index]), // Navigasi ke DetailPage
                         ),
                       );
                     },
@@ -213,8 +215,7 @@ class MyHomePage extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(
-                                      "Plat Nomor ${kendaraans[index].plat}"),
+                                  Text("Plat Nomor ${kendaraans[index].plat}"),
                                   Text(
                                       "Kendaraan ${kendaraans[index].kendaraan}"),
                                   Text(
@@ -234,16 +235,21 @@ class MyHomePage extends StatelessWidget {
               },
             )),
             Container(
-              margin: EdgeInsets.all(
-                  10), // Tambahkan margin pada Container jika diinginkan
+              margin: EdgeInsets.all(10),
               child: ElevatedButton.icon(
                 onPressed: () {
-                  // Logika ketika tombol ditekan
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          kendaraan(), // Navigasi ke kendaraan
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
                   minimumSize:
-                  const Size(150, 50), // Atur lebar dan tinggi button
+                      const Size(150, 50), // Atur lebar dan tinggi button
                   padding: const EdgeInsets.symmetric(
                     vertical: 10,
                     horizontal: 16,

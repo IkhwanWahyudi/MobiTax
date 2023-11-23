@@ -175,7 +175,7 @@ class _DetailPageState extends State<DetailPage> {
                               const SizedBox(
                                   height: 5), // Jarak antara ikon dan teks
                               Text(
-                                '${widget.selectedKendaraan.cc.toString()} CC',
+                                '${widget.selectedKendaraan.transmisi.toString()} CC',
                                 style: const TextStyle(
                                   fontSize: 10,
                                 ),

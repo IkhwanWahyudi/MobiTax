@@ -74,19 +74,6 @@ class _transaksiState extends State<transaksi> {
                           ),
                         ),
                       ),
-                      // const SizedBox(
-                      //   height: 30,
-                      // ),
-                      // const Text(
-                      //   'Transaksi',
-                      //   style: TextStyle(
-                      //     fontSize: 15,
-                      //     fontWeight: FontWeight.bold,
-                      //   ),
-                      // ),
-                      // const SizedBox(
-                      //   height: 20,
-                      // ),
                       Container(
                         padding: const EdgeInsets.all(20),
                         //margin: const EdgeInsets.only(right: 40),
