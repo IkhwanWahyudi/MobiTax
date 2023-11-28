@@ -61,7 +61,7 @@ class Profile extends StatelessWidget {
                     topRight: Radius.circular(10),
                   ),
                 ),
-                child: Center(
+                child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -85,12 +85,118 @@ class Profile extends StatelessWidget {
                         child: const Column(
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Icon(Icons.list_alt_sharp,
                                     color: Color.fromRGBO(70, 152, 138, 1)),
+                                SizedBox(
+                                  width: 20,
+                                ),
                                 Text(
                                   'Ubah Data Diri',
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(20),
+                        margin: EdgeInsets.only(right: 10, left: 10),
+                        decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: const Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Icon(Icons.key,
+                                    color: Color.fromRGBO(70, 152, 138, 1)),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Text(
+                                  'Ubah Password',
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 10, top: 20, bottom: 20),
+                        child: Text(
+                          'Bantuan',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(20),
+                        margin: EdgeInsets.only(right: 10, left: 10),
+                        decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: const Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Icon(Icons.question_answer,
+                                    color: Color.fromRGBO(70, 152, 138, 1)),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Text(
+                                  'FAQ',
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(20),
+                        margin: EdgeInsets.only(right: 10, left: 10),
+                        decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: const Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Icon(Icons.help,
+                                    color: Color.fromRGBO(70, 152, 138, 1)),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Text(
+                                  'Panduan',
                                   style: TextStyle(fontSize: 15),
                                 ),
                               ],

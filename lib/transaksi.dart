@@ -1,5 +1,7 @@
 // ignore_for_file: camel_case_types, library_private_types_in_public_api, use_key_in_widget_constructors
 
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -195,33 +197,66 @@ class _transaksiState extends State<transaksi> {
                           ],
                         ),
                       ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              // Logika ketika tombol ditekan
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  const Color.fromRGBO(70, 152, 138, 1),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 30.0, vertical: 20),
+                            ),
+                            child: const Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.download),
+                                SizedBox(
+                                    width: 8), // Jarak antara ikon dan teks
+                                Text('E-TBPKB'),
+                              ],
+                            ),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              // Logika ketika tombol ditekan
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  const Color.fromRGBO(70, 152, 138, 1),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 30.0, vertical: 20),
+                            ),
+                            child: const Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.download),
+                                SizedBox(
+                                    width: 8), // Jarak antara ikon dan teks
+                                Text('E-STNK'),
+                              ],
+                            ),
+                          )
+                        ],
+                      )
                     ],
                   ),
                 ),
               ),
-              // Row(
-              //   children: [
-              //     FloatingActionButton.extended(
-              //       onPressed: () {
-              //         // Logika ketika tombol ditekan
-              //       },
-              //       backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
-              //       label: const Text('E_TBPKB'),
-              //       icon: const Icon(Icons.download),
-              //     ),
-              //     FloatingActionButton.extended(
-              //       onPressed: () {
-              //         // Logika ketika tombol ditekan
-              //       },
-              //       backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
-              //       label: const Text('E_TBPKB'),
-              //       icon: const Icon(Icons.download),
-              //     ),
-              //   ],
-              // )
             ],
           ),
-          //
         ],
       ),
     );
