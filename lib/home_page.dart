@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_const
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobi_tax/kendaraan.dart';
 import 'detail.dart';
@@ -29,6 +31,8 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var lebar = MediaQuery.of(context).size.width;
+    User? user = FirebaseAuth.instance.currentUser;
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 240, 237, 237),
       appBar: AppBar(
@@ -67,7 +71,6 @@ class MyHomePage extends StatelessWidget {
               height: 110,
               width: double.infinity,
               decoration: BoxDecoration(
-                //color: Color.fromRGBO(255,192,27, 1),
                 color: Color.fromRGBO(70, 152, 138, 1),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(15),
@@ -94,24 +97,40 @@ class MyHomePage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text(
-                          "Pengguna",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          "Kota Samarinda",
-                          style: TextStyle(
-                            fontSize: 12,
-                          ),
-                        )
-                      ],
+                    FutureBuilder<QuerySnapshot>(
+                      // Mendapatkan koleksi data_diri dari dokumen pengguna dengan UID saat ini
+                      future: FirebaseFirestore.instance
+                          .collection('pengguna')
+                          .doc(user?.uid)
+                          .collection('data_diri')
+                          .get(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        }
+
+                        var nama = snapshot.data!.docs[0]['nama'];
+                        var kota = snapshot.data!.docs[0]['kota'];
+
+                        return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                nama,
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "Kota $kota",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ]);
+                      },
                     ),
                     IconButton(
                       //padding: EdgeInsets.all(10),
@@ -130,12 +149,7 @@ class MyHomePage extends StatelessWidget {
             ),
             Container(
               height: 20,
-              // width: double.infinity,
               width: lebar,
-              // color: Colors.green,
-              // padding: const EdgeInsets.only(
-              //   left: 6,
-              // ),
               margin: EdgeInsets.all(10),
               alignment: Alignment.centerLeft,
               child: const Text(
@@ -144,93 +158,117 @@ class MyHomePage extends StatelessWidget {
               ),
             ),
             Expanded(
-                child: ListView.builder(
-              shrinkWrap: true,
-              //physics: const NeverScrollableScrollPhysics(),
-              itemCount: kendaraans.length,
-              itemBuilder: (context, index) {
-                IconData kendaraan;
-                if (kendaraans[index].kendaraan == "Motor") {
-                  kendaraan = Icons.directions_bike;
-                } else {
-                  kendaraan = Icons.directions_car;
+                child: FutureBuilder<QuerySnapshot>(
+              future: FirebaseFirestore.instance
+                  .collection('pengguna')
+                  .doc(user?.uid)
+                  .collection('kendaraan')
+                  .get(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  // return CircularProgressIndicator();
                 }
 
-                return Dismissible(
-                  key: UniqueKey(),
-                  direction: DismissDirection.endToStart,
-                  background: Container(
-                    color: Colors.red,
-                    alignment: Alignment.centerRight,
-                    padding: EdgeInsets.only(right: 20),
-                    child: Icon(Icons.delete, color: Colors.white),
-                  ),
-                  onDismissed: (direction) {
-                    // Menghapus item dari daftar ketika di-swipe
-                    kendaraans.removeAt(index);
-                    // Menampilkan snackbar untuk memberi tahu pengguna bahwa item telah dihapus
-                    // Scaffold.of(context).showSnackBar(
-                    //   SnackBar(content: Text("Item deleted")),
-                    // );
-                  },
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DetailPage(
-                              selectedKendaraan:
-                                  kendaraans[index]), // Navigasi ke DetailPage
-                        ),
-                      );
-                    },
-                    child: Column(
-                      children: [
-                        Container(
-                          width: lebar,
-                          height: 90,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          padding: EdgeInsets.all(10),
-                          margin: EdgeInsets.only(left: 10, right: 10),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 50,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color.fromRGBO(70, 152, 138, 1),
-                                ),
-                                child: Icon(
-                                  kendaraan,
-                                  color: Colors.white,
-                                  size: 30,
-                                ),
+                if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                  return Text('Tidak ada Kendaraan');
+                }
+
+                return ListView.builder(
+                  shrinkWrap: true,
+                  //physics: const NeverScrollableScrollPhysics(),
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    var dataKendaraan = snapshot.data!.docs[index].data()
+                        as Map<String, dynamic>;
+                    var jenisKendaraan = dataKendaraan['jenis'];
+                    var plat = dataKendaraan['plat'];
+                    var merk = dataKendaraan['merk'];
+                    // var transmisi = dataKendaraan['transmisi'];
+                    // var bbm = dataKendaraan['bbm'];
+                    // var rangka = dataKendaraan['rangka'];
+                    // var mesin = dataKendaraan['mesin'];
+                    // var bpkb = dataKendaraan['bpkb'];
+
+                    IconData kendaraan;
+                    if (jenisKendaraan[index] == "Motor") {
+                      kendaraan = Icons.directions_bike;
+                    } else {
+                      kendaraan = Icons.directions_car;
+                    }
+
+                    return Dismissible(
+                      key: UniqueKey(),
+                      direction: DismissDirection.endToStart,
+                      background: Container(
+                        color: Colors.red,
+                        alignment: Alignment.centerRight,
+                        padding: EdgeInsets.only(right: 20),
+                        child: Icon(Icons.delete, color: Colors.white),
+                      ),
+                      onDismissed: (direction) {
+                        kendaraans.removeAt(index);
+                      },
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailPage(
+                                  selectedKendaraan: kendaraans[
+                                      index]), // Navigasi ke DetailPage
+                            ),
+                          );
+                        },
+                        child: Column(
+                          children: [
+                            Container(
+                              width: lebar,
+                              height: 90,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
                               ),
-                              const SizedBox(width: 15),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
+                              padding: EdgeInsets.all(10),
+                              margin: EdgeInsets.only(left: 10, right: 10),
+                              child: Row(
                                 children: [
-                                  Text("Plat Nomor ${kendaraans[index].plat}"),
-                                  Text(
-                                      "Kendaraan ${kendaraans[index].kendaraan}"),
-                                  Text(
-                                      "Masa Berlaku ${kendaraans[index].masaBerlaku}")
+                                  Container(
+                                    width: 50,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color.fromRGBO(70, 152, 138, 1),
+                                    ),
+                                    child: Icon(
+                                      kendaraan,
+                                      color: Colors.white,
+                                      size: 30,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 15),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("Plat Nomor $plat"),
+                                      Text("Kendaraan $merk"),
+                                      Text(
+                                          "Masa Berlaku ${kendaraans[index].masaBerlaku}")
+                                    ],
+                                  )
                                 ],
-                              )
-                            ],
-                          ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                          ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                      ],
-                    ),
-                  ),
+                      ),
+                    );
+                  },
                 );
               },
             )),
@@ -275,36 +313,6 @@ class MyHomePage extends StatelessWidget {
           ],
         ),
       ),
-      // bottomNavigationBar: SizedBox(
-      //   height: kBottomNavigationBarHeight + 10.0,
-      //   child: BottomNavigationBar(
-      //     items: const [
-      //       BottomNavigationBarItem(
-      //         icon: Icon(Icons.home),
-      //         label: "Halaman Utama",
-      //       ),
-      //       BottomNavigationBarItem(
-      //         icon: Icon(Icons.credit_card),
-      //         label: "Transaksi",
-      //       ),
-      //       BottomNavigationBarItem(
-      //         icon: Icon(Icons.person),
-      //         label: "Profil",
-      //       ),
-      //     ],
-      //     currentIndex: 0,
-      //     onTap: (int index) async {
-      //       if (index == 2) {
-      //         Navigator.of(context).push(MaterialPageRoute(
-      //           builder: (context) => const Profile(),
-      //         ));
-      //       }
-      //     },
-      // unselectedItemColor: const Color.fromARGB(255, 161, 161, 159),
-      // selectedItemColor: const Color.fromRGBO(70, 152, 138, 1),
-      //     backgroundColor: Colors.white,
-      //   ),
-      // ),
     );
   }
 }

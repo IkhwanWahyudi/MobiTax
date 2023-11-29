@@ -24,7 +24,19 @@ class _SignInState extends State<SignIn> {
     if (!_formKey.currentState!.validate()) return;
     final email = _emailController.value.text;
     final password = _passwordController.value.text;
-    await Auth().login(email, password);
+    try {
+      // Mencoba untuk login
+      await Auth().login(email, password);
+
+      // Jika login berhasil, navigasikan ke halaman BottomNavigation
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const BottomNavigation(),
+        ),
+      );
+    } catch (e) {
+      print('Error saat sigin: $e');
+    }
   }
 
   bool isPasswordVisible = false;
@@ -103,36 +115,10 @@ class _SignInState extends State<SignIn> {
                   ),
                 ),
               ),
-              // ElevatedButton(
-              //   onPressed: () {
-              // Navigator.of(context).pushReplacement(
-              //   MaterialPageRoute(
-              //     builder: (context) => const BottomNavigation(),
-              //   ),
-              // );
-              //   },
-              //   child: const Text("Masuk"),
-              // ),
               SizedBox(
                 height: 60,
               ),
               ElevatedButton(
-                // onPressed: () {
-                // const mySnackBar = SnackBar(
-                //   content: Text("Berhasil Login"),
-                //   duration: Duration(seconds: 3),
-                //   padding: EdgeInsets.all(10),
-                //   backgroundColor: Colors.green,
-                //   behavior: SnackBarBehavior
-                //       .floating, // Mengatur SnackBar untuk muncul di atas
-                // );
-                // ScaffoldMessenger.of(context).showSnackBar(mySnackBar);
-                // Navigator.of(context).pushReplacement(
-                //   MaterialPageRoute(
-                //     builder: (context) => const BottomNavigation(),
-                //   ),
-                // );
-                // },
                 onPressed: () => handleSubmit(),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromRGBO(70, 152, 138, 1),

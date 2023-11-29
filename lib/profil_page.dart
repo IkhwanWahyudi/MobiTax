@@ -73,26 +73,6 @@ class Profile extends StatelessWidget {
                       ),
                     ],
                   ),
-                  // Column(
-                  //   crossAxisAlignment: CrossAxisAlignment.start,
-                  //   children: [
-                  //     Text(
-                  //       'Id Pengguna',
-                  //       style: TextStyle(fontSize: 10, color: Colors.white),
-                  //       textAlign: TextAlign.left,
-                  //     ),
-                  //     Text(
-                  //       'Nama Pengguna',
-                  //       style: TextStyle(
-                  //         fontSize: 18,
-                  //         fontWeight: FontWeight.bold,
-                  //         color: Colors.white,
-                  //       ),
-                  //       textAlign: TextAlign.left,
-                  //     ),
-
-                  //   ],
-                  // ),
                 ],
               ),
               const SizedBox(height: 30),

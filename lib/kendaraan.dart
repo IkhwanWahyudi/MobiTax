@@ -46,7 +46,6 @@ class _kendaraanState extends State<kendaraan> {
       // Anda juga bisa pindah ke halaman lain setelah berhasil menambahkan kendaraan
       // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HalamanBerikutnya()));
     } catch (e) {
-      print("Error menambahkan kendaraan: $e");
       // Tangani kesalahan saat menambahkan kendaraan
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Terjadi kesalahan. Silakan coba lagi.")),
@@ -199,12 +198,12 @@ class _kendaraanState extends State<kendaraan> {
         value: controller.text.isEmpty ? null : controller.text,
         items: const [
           DropdownMenuItem<String>(
-            value: 'Kendaraan Motor',
-            child: Text('Kendaraan Motor'),
+            value: 'Motor',
+            child: Text('Motor'),
           ),
           DropdownMenuItem<String>(
-            value: 'Kendaraan Mobil',
-            child: Text('Kendaraan Mobil'),
+            value: 'Mobil',
+            child: Text('Mobil'),
           ),
         ],
         onChanged: (String? value) {

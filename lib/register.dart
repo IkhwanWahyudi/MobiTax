@@ -12,6 +12,10 @@ class Regis extends StatefulWidget {
 
 class _regisState extends State<Regis> {
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _namaController = TextEditingController();
+  final TextEditingController _alamatController = TextEditingController();
+  final TextEditingController _kecamatanController = TextEditingController();
+  final TextEditingController _kotaController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
@@ -19,7 +23,11 @@ class _regisState extends State<Regis> {
     if (!_formKey.currentState!.validate()) return;
     final email = _emailController.value.text;
     final password = _passwordController.value.text;
-    await Auth().regis(email, password);
+    final nama = _namaController.value.text;
+    final alamat = _alamatController.value.text;
+    final kecamatan = _kecamatanController.value.text;
+    final kota = _kotaController.value.text;
+    await Auth().regis(email, password, nama, alamat, kecamatan, kota);
   }
 
   bool isPasswordVisible = false;
@@ -48,12 +56,13 @@ class _regisState extends State<Regis> {
             children: [
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
-                child: const TextField(
-                  style: TextStyle(
+                child: TextField(
+                  controller: _namaController,
+                  style: const TextStyle(
                     fontSize: 14,
                   ),
-                  decoration: InputDecoration(
-                    labelText: 'Nama Pengguna',
+                  decoration: const InputDecoration(
+                    labelText: 'Nama Lengkap',
                     labelStyle: TextStyle(
                       color: Color(0xFF183D3D), // warna label teks
                     ),
@@ -119,11 +128,12 @@ class _regisState extends State<Regis> {
               ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
-                child: const TextField(
-                  style: TextStyle(
+                child: TextField(
+                  controller: _alamatController,
+                  style: const TextStyle(
                     fontSize: 14,
                   ),
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Alamat',
                     labelStyle: TextStyle(
                       color: Color(0xFF183D3D), // warna label teks
@@ -140,11 +150,12 @@ class _regisState extends State<Regis> {
               ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
-                child: const TextField(
-                  style: TextStyle(
+                child: TextField(
+                  controller: _kecamatanController,
+                  style: const TextStyle(
                     fontSize: 14,
                   ),
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Kecamatan',
                     labelStyle: TextStyle(
                       color: Color(0xFF183D3D), // warna label teks
@@ -161,11 +172,12 @@ class _regisState extends State<Regis> {
               ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
-                child: const TextField(
-                  style: TextStyle(
+                child: TextField(
+                  controller: _kotaController,
+                  style: const TextStyle(
                     fontSize: 14,
                   ),
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Kota',
                     labelStyle: TextStyle(
                       color: Color(0xFF183D3D), // warna label teks
@@ -180,27 +192,6 @@ class _regisState extends State<Regis> {
                   ),
                 ),
               ),
-              // Container(
-              //   margin: const EdgeInsets.all(5),
-              //   child: TextField(
-              //     autocorrect: true,
-              //     controller: _passwordController,
-              //     decoration: const InputDecoration(
-              //         labelText: 'Confirm Password',
-              //         labelStyle: TextStyle(
-              //           color: Color(0xFF183D3D), // warna label teks
-              //         ),
-              //         focusedBorder: OutlineInputBorder(
-              //           borderSide: BorderSide(
-              //             color: Color(
-              //                 0xFF183D3D), // Warna outline saat dalam keadaan fokus
-              //             width: 2.0, // Lebar garis
-              //           ),
-              //         ),
-              //         suffixIcon: Icon(Icons.visibility_off)),
-              //     obscureText: true,
-              //   ),
-              // ),
               const SizedBox(
                 height: 60,
               ),
