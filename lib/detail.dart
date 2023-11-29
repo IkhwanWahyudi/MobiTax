@@ -1,12 +1,12 @@
 // ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobi_tax/home_page.dart';
 
 class DetailPage extends StatefulWidget {
-  final Kendaraan selectedKendaraan;
-  const DetailPage({Key? key, required this.selectedKendaraan})
+  const DetailPage({Key? key})
       : super(key: key);
 
   @override
@@ -16,6 +16,7 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   bool isNantiSajaSelected = false;
   bool isBayarSekarangSelected = false;
+  User? user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -68,300 +69,328 @@ class _DetailPageState extends State<DetailPage> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(top: 20, left: 40),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.selectedKendaraan.brand,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.left,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Row(
+                  child: FutureBuilder<QuerySnapshot>(
+                    future: FirebaseFirestore.instance
+                        .collection('pengguna')
+                        .doc(user?.uid)
+                        .collection('kendaraan')
+                        .get(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return CircularProgressIndicator();
+                      }
+
+                      var dataKendaraan = snapshot.data!.docs[1]
+                          .data() as Map<String, dynamic>;
+                      var brand = dataKendaraan['brand'];
+                      var tahun = dataKendaraan['tahun'];
+                      var warna = dataKendaraan['warna'];
+                      var type = dataKendaraan['type'];
+                      // var transmisi= dataKendaraan['transmisi'];
+                      var bbm = dataKendaraan['bbm'];
+                      var jenis = dataKendaraan['jenis'];
+                      var merk = dataKendaraan['merk'];
+                      var rangka = dataKendaraan['rangka'];
+                      var bpkb = dataKendaraan['bpkb'];
+                      var mesin = dataKendaraan['mesin'];
+
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Column(
+                          Text(
+                            brand,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Row(
                             children: [
-                              Container(
-                                width: 30, // Atur ukuran ikon
-                                height: 30,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color.fromRGBO(70, 152, 138, 1),
-                                ),
-                                child: const Icon(
-                                  CupertinoIcons.timer,
-                                  color: Colors.white,
-                                ),
+                              Column(
+                                children: [
+                                  Container(
+                                    width: 30, // Atur ukuran ikon
+                                    height: 30,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color.fromRGBO(70, 152, 138, 1),
+                                    ),
+                                    child: const Icon(
+                                      CupertinoIcons.timer,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                      height: 5), // Jarak antara ikon dan teks
+                                  Text(
+                                    tahun,
+                                    style: const TextStyle(
+                                      fontSize: 10,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              const SizedBox(
-                                  height: 5), // Jarak antara ikon dan teks
+                              const Spacer(),
+                              Column(
+                                children: [
+                                  Container(
+                                    width: 30, // Atur ukuran ikon
+                                    height: 30,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color.fromRGBO(70, 152, 138, 1),
+                                    ),
+                                    child: const Icon(
+                                      CupertinoIcons.paintbrush,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                      height: 5), // Jarak antara ikon dan teks
+                                  Text(
+                                    warna,
+                                    style: const TextStyle(
+                                      fontSize: 10,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const Spacer(),
+                              Column(
+                                children: [
+                                  Container(
+                                    width: 30, // Atur ukuran ikon
+                                    height: 30,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color.fromRGBO(70, 152, 138, 1),
+                                    ),
+                                    child: const Icon(
+                                      CupertinoIcons.barcode,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                      height: 5), // Jarak antara ikon dan teks
+                                  Text(
+                                    type,
+                                    style: const TextStyle(
+                                      fontSize: 10,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const Spacer(),
+                              Column(
+                                children: [
+                                  Container(
+                                    width: 30, // Atur ukuran ikon
+                                    height: 30,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color.fromRGBO(70, 152, 138, 1),
+                                    ),
+                                    child: const Icon(
+                                      CupertinoIcons.speedometer,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                      height: 5), // Jarak antara ikon dan teks
+                                  Text(
+                                    'CC',
+                                    style: const TextStyle(
+                                      fontSize: 10,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const Spacer(),
+                              Column(
+                                children: [
+                                  Container(
+                                    width: 30, // Atur ukuran ikon
+                                    height: 30,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color.fromRGBO(70, 152, 138, 1),
+                                    ),
+                                    child: const Icon(
+                                      CupertinoIcons.flame,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                      height: 5), // Jarak antara ikon dan teks
+                                  Text(
+                                    bbm,
+                                    style: const TextStyle(
+                                      fontSize: 10,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Spacer(),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          const Text(
+                            'Detail Informasi',
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 117, 117, 117)),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
                               Text(
-                                widget.selectedKendaraan.year.toString(),
-                                style: const TextStyle(
-                                  fontSize: 10,
+                                'Nama Pemilik',
+                                style: TextStyle(fontSize: 15),
+                              ),
+                              Spacer(),
+                              Padding(
+                                padding: EdgeInsets.only(right: 20),
+                                child: Text(
+                                  'Nana',
+                                  style: TextStyle(fontSize: 15),
                                 ),
                               ),
                             ],
                           ),
-                          const Spacer(),
-                          Column(
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                width: 30, // Atur ukuran ikon
-                                height: 30,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color.fromRGBO(70, 152, 138, 1),
-                                ),
-                                child: const Icon(
-                                  CupertinoIcons.paintbrush,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              const SizedBox(
-                                  height: 5), // Jarak antara ikon dan teks
                               Text(
-                                widget.selectedKendaraan.paint,
-                                style: const TextStyle(
-                                  fontSize: 10,
+                                'Jenis',
+                                style: TextStyle(fontSize: 15),
+                              ),
+                              Spacer(),
+                              Padding(
+                                padding: EdgeInsets.only(right: 20),
+                                child: Text(
+                                  jenis,
+                                  style: TextStyle(fontSize: 15),
                                 ),
                               ),
                             ],
                           ),
-                          const Spacer(),
-                          Column(
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                width: 30, // Atur ukuran ikon
-                                height: 30,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color.fromRGBO(70, 152, 138, 1),
-                                ),
-                                child: const Icon(
-                                  CupertinoIcons.barcode,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              const SizedBox(
-                                  height: 5), // Jarak antara ikon dan teks
                               Text(
-                                widget.selectedKendaraan.type,
-                                style: const TextStyle(
-                                  fontSize: 10,
+                                'Merk',
+                                style: TextStyle(fontSize: 15),
+                              ),
+                              Spacer(),
+                              Padding(
+                                padding: EdgeInsets.only(right: 20),
+                                child: Text(
+                                  merk,
+                                  style: TextStyle(fontSize: 15),
                                 ),
                               ),
                             ],
                           ),
-                          const Spacer(),
-                          Column(
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                width: 30, // Atur ukuran ikon
-                                height: 30,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color.fromRGBO(70, 152, 138, 1),
-                                ),
-                                child: const Icon(
-                                  CupertinoIcons.speedometer,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              const SizedBox(
-                                  height: 5), // Jarak antara ikon dan teks
                               Text(
-                                '${widget.selectedKendaraan.transmisi.toString()} CC',
-                                style: const TextStyle(
-                                  fontSize: 10,
+                                'Tipe',
+                                style: TextStyle(fontSize: 15),
+                              ),
+                              Spacer(),
+                              Padding(
+                                padding: EdgeInsets.only(right: 20),
+                                child: Text(
+                                  type,
+                                  style: TextStyle(fontSize: 15),
                                 ),
                               ),
                             ],
                           ),
-                          const Spacer(),
-                          Column(
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                width: 30, // Atur ukuran ikon
-                                height: 30,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color.fromRGBO(70, 152, 138, 1),
-                                ),
-                                child: const Icon(
-                                  CupertinoIcons.flame,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              const SizedBox(
-                                  height: 5), // Jarak antara ikon dan teks
                               Text(
-                                widget.selectedKendaraan.bbm,
-                                style: const TextStyle(
-                                  fontSize: 10,
+                                'No. Rangka',
+                                style: TextStyle(fontSize: 15),
+                              ),
+                              Spacer(),
+                              Padding(
+                                padding: EdgeInsets.only(right: 20),
+                                child: Text(
+                                  rangka,
+                                  style: TextStyle(fontSize: 15),
                                 ),
                               ),
                             ],
                           ),
-                          Spacer(),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'No. Mesin',
+                                style: TextStyle(fontSize: 15),
+                              ),
+                              Spacer(),
+                              Padding(
+                                padding: EdgeInsets.only(right: 20),
+                                child: Text(
+                                  mesin,
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'No. BPKB',
+                                style: TextStyle(fontSize: 15),
+                              ),
+                              Spacer(),
+                              Padding(
+                                padding: EdgeInsets.only(right: 20),
+                                child: Text(
+                                  bpkb,
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              ),
+                            ],
+                          )
                         ],
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      const Text(
-                        'Detail Informasi',
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 117, 117, 117)),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Nama Pemilik',
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          Spacer(),
-                          Padding(
-                            padding: EdgeInsets.only(right: 20),
-                            child: Text(
-                              'Nana',
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Jenis',
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          Spacer(),
-                          Padding(
-                            padding: EdgeInsets.only(right: 20),
-                            child: Text(
-                              'Sepeda Motor',
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Merk',
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          Spacer(),
-                          Padding(
-                            padding: EdgeInsets.only(right: 20),
-                            child: Text(
-                              'Honda',
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Tipe',
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          Spacer(),
-                          Padding(
-                            padding: EdgeInsets.only(right: 20),
-                            child: Text(
-                              'XXXXXXXXXXXXXXXXX',
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'No. Rangka',
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          Spacer(),
-                          Padding(
-                            padding: EdgeInsets.only(right: 20),
-                            child: Text(
-                              '00000000000000',
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'No. Mesin',
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          Spacer(),
-                          Padding(
-                            padding: EdgeInsets.only(right: 20),
-                            child: Text(
-                              '000000000000000',
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'No. BPKB',
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          Spacer(),
-                          Padding(
-                            padding: EdgeInsets.only(right: 20),
-                            child: Text(
-                              '0000000000000000',
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
+                      );
+                    },
                   ),
                 ),
               ),

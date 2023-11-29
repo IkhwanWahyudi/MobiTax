@@ -184,14 +184,9 @@ class MyHomePage extends StatelessWidget {
                     var jenisKendaraan = dataKendaraan['jenis'];
                     var plat = dataKendaraan['plat'];
                     var merk = dataKendaraan['merk'];
-                    // var transmisi = dataKendaraan['transmisi'];
-                    // var bbm = dataKendaraan['bbm'];
-                    // var rangka = dataKendaraan['rangka'];
-                    // var mesin = dataKendaraan['mesin'];
-                    // var bpkb = dataKendaraan['bpkb'];
 
                     IconData kendaraan;
-                    if (jenisKendaraan[index] == "Motor") {
+                    if (jenisKendaraan == "Motor") {
                       kendaraan = Icons.directions_bike;
                     } else {
                       kendaraan = Icons.directions_car;
@@ -214,9 +209,7 @@ class MyHomePage extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => DetailPage(
-                                  selectedKendaraan: kendaraans[
-                                      index]), // Navigasi ke DetailPage
+                              builder: (context) => DetailPage(), // Navigasi ke DetailPage
                             ),
                           );
                         },

@@ -34,19 +34,20 @@ class _kendaraanState extends State<kendaraan> {
         'plat': plat.text,
         'jenis': jenis.text,
         'merk': merk.text,
+        'type': type.text,
+        'tahun': tahun.text,
+        'warna': warna.text,
+        'rangka': noRangka.text,
+        'mesin': noMesin.text,
+        'bpkb': noBPKB.text,
       });
 
-      // Data kendaraan sekarang disimpan dalam dokumen Firestore pengguna
-
-      // Tampilkan pesan sukses atau pindah ke halaman lain jika diperlukan
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Kendaraan berhasil ditambahkan")),
       );
 
-      // Anda juga bisa pindah ke halaman lain setelah berhasil menambahkan kendaraan
       // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HalamanBerikutnya()));
     } catch (e) {
-      // Tangani kesalahan saat menambahkan kendaraan
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Terjadi kesalahan. Silakan coba lagi.")),
       );

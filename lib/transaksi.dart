@@ -1,7 +1,9 @@
 // ignore_for_file: camel_case_types, library_private_types_in_public_api, use_key_in_widget_constructors
 
-import 'dart:math';
+// import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -15,12 +17,10 @@ class _transaksiState extends State<transaksi> {
   Widget build(BuildContext context) {
     var lebar = MediaQuery.of(context).size.width;
     var tinggi = MediaQuery.of(context).size.height;
+    User? user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
       backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
-      // appBar: AppBar(
-      //   backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
-      // ),
       body: Column(
         children: <Widget>[
           const Expanded(
@@ -60,7 +60,6 @@ class _transaksiState extends State<transaksi> {
                   ),
                 ),
                 child: Center(
-                  //padding: const EdgeInsets.only(top: 20, left: 40),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -165,10 +164,10 @@ class _transaksiState extends State<transaksi> {
                           color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
-                        child: const Column(
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
+                            const Row(
                               children: [
                                 Icon(CupertinoIcons.location),
                                 Padding(
@@ -180,19 +179,45 @@ class _transaksiState extends State<transaksi> {
                                 ),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 8,
                             ),
-                            Text(
-                              'Jalan apa coba, No. 12',
-                              style: TextStyle(fontSize: 15),
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text(
-                              'Kecamatan mana, Kota Samarinda',
-                              style: TextStyle(fontSize: 15),
+                            FutureBuilder<QuerySnapshot>(
+                              // Mendapatkan koleksi data_diri dari dokumen pengguna dengan UID saat ini
+                              future: FirebaseFirestore.instance
+                                  .collection('pengguna')
+                                  .doc(user?.uid)
+                                  .collection('data_diri')
+                                  .get(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const CircularProgressIndicator();
+                                }
+
+                                var jalan = snapshot.data!.docs[0]['alamat'];
+                                var kecamatan =
+                                    snapshot.data!.docs[0]['kecamatan'];
+                                var kota = snapshot.data!.docs[0]['kota'];
+
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      jalan,
+                                      style: const TextStyle(fontSize: 15),
+                                    ),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text(
+                                      '$kecamatan, Kota $kota',
+                                      style: const TextStyle(fontSize: 15),
+                                    ),
+                                  ],
+                                );
+                              },
                             ),
                           ],
                         ),
