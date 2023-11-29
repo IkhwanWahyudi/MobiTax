@@ -249,7 +249,7 @@ class MyHomePage extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
                   minimumSize:
-                      const Size(150, 50), // Atur lebar dan tinggi button
+                      const Size(250, 50), // Atur lebar dan tinggi button
                   padding: const EdgeInsets.symmetric(
                     vertical: 10,
                     horizontal: 16,
@@ -260,8 +260,16 @@ class MyHomePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                icon: const Icon(Icons.add),
-                label: const Text('Tambah Kendaraan'),
+                icon: const Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+                label: const Text(
+                  'Tambah Kendaraan',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ),
           ],

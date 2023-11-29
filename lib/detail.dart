@@ -6,7 +6,8 @@ import 'package:mobi_tax/home_page.dart';
 
 class DetailPage extends StatefulWidget {
   final Kendaraan selectedKendaraan;
-  const DetailPage({Key? key, required this.selectedKendaraan}) : super(key: key);
+  const DetailPage({Key? key, required this.selectedKendaraan})
+      : super(key: key);
 
   @override
   _DetailPageState createState() => _DetailPageState();
@@ -392,7 +393,7 @@ class _DetailPageState extends State<DetailPage> {
                         ? const Border(
                             bottom: BorderSide(
                               width: 4.0,
-                              color: Colors.green,
+                              color: Color(0xFF183D3D),
                             ),
                           )
                         : null,
@@ -400,7 +401,9 @@ class _DetailPageState extends State<DetailPage> {
                   child: Text(
                     'Nanti Saja',
                     style: TextStyle(
-                      color: isNantiSajaSelected ? Colors.green : Colors.black,
+                      color: isNantiSajaSelected
+                          ? Color(0xFF183D3D)
+                          : Colors.black,
                       fontWeight: isNantiSajaSelected
                           ? FontWeight.bold
                           : FontWeight.normal,
@@ -428,7 +431,7 @@ class _DetailPageState extends State<DetailPage> {
                         ? const Border(
                             bottom: BorderSide(
                               width: 4.0,
-                              color: Colors.green,
+                              color: Color(0xFF183D3D),
                             ),
                           )
                         : null,
@@ -436,8 +439,9 @@ class _DetailPageState extends State<DetailPage> {
                   child: Text(
                     'Bayar Sekarang',
                     style: TextStyle(
-                      color:
-                          isBayarSekarangSelected ? Colors.green : Colors.black,
+                      color: isBayarSekarangSelected
+                          ? Color(0xFF183D3D)
+                          : Colors.black,
                       fontWeight: isBayarSekarangSelected
                           ? FontWeight.bold
                           : FontWeight.normal,

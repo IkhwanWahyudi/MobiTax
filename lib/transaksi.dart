@@ -51,7 +51,7 @@ class _transaksiState extends State<transaksi> {
               const SizedBox(height: 30),
               Container(
                 width: lebar,
-                height: tinggi * 0.69,
+                height: tinggi * 0.74,
                 decoration: const BoxDecoration(
                   color: Color.fromARGB(255, 240, 237, 237),
                   borderRadius: BorderRadius.only(
@@ -219,10 +219,16 @@ class _transaksiState extends State<transaksi> {
                             child: const Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(Icons.download),
+                                Icon(
+                                  Icons.download,
+                                  color: Colors.white,
+                                ),
                                 SizedBox(
                                     width: 8), // Jarak antara ikon dan teks
-                                Text('E-TBPKB'),
+                                Text(
+                                  'E-TBPKB',
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ],
                             ),
                           ),
@@ -242,10 +248,16 @@ class _transaksiState extends State<transaksi> {
                             child: const Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(Icons.download),
+                                Icon(
+                                  Icons.download,
+                                  color: Colors.white,
+                                ),
                                 SizedBox(
                                     width: 8), // Jarak antara ikon dan teks
-                                Text('E-STNK'),
+                                Text(
+                                  'E-STNK',
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ],
                             ),
                           )

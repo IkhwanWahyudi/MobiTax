@@ -10,7 +10,7 @@ class kendaraan extends StatefulWidget {
 }
 
 class _kendaraanState extends State<kendaraan> {
-  final TextEditingController nama = TextEditingController();
+  final TextEditingController plat = TextEditingController();
   final TextEditingController jenis = TextEditingController();
   final TextEditingController merk = TextEditingController();
   final TextEditingController type = TextEditingController();
@@ -26,8 +26,12 @@ class _kendaraanState extends State<kendaraan> {
       String uidPengguna = FirebaseAuth.instance.currentUser!.uid;
 
       // Tambahkan data kendaraan ke dokumen Firestore pengguna
-      await FirebaseFirestore.instance.collection('pengguna').doc(uidPengguna).collection('kendaraan').add({
-        'nama': nama.text,
+      await FirebaseFirestore.instance
+          .collection('pengguna')
+          .doc(uidPengguna)
+          .collection('kendaraan')
+          .add({
+        'plat': plat.text,
         'jenis': jenis.text,
         'merk': merk.text,
       });
@@ -36,7 +40,7 @@ class _kendaraanState extends State<kendaraan> {
 
       // Tampilkan pesan sukses atau pindah ke halaman lain jika diperlukan
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Kendaraan berhasil ditambahkan")),
+        const SnackBar(content: Text("Kendaraan berhasil ditambahkan")),
       );
 
       // Anda juga bisa pindah ke halaman lain setelah berhasil menambahkan kendaraan
@@ -45,7 +49,7 @@ class _kendaraanState extends State<kendaraan> {
       print("Error menambahkan kendaraan: $e");
       // Tangani kesalahan saat menambahkan kendaraan
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Terjadi kesalahan. Silakan coba lagi.")),
+        const SnackBar(content: Text("Terjadi kesalahan. Silakan coba lagi.")),
       );
     }
   }
@@ -95,7 +99,7 @@ class _kendaraanState extends State<kendaraan> {
           ),
           Container(
             width: lebar,
-            height: tinggi * 0.75,
+            height: tinggi * 0.74,
             decoration: const BoxDecoration(
               color: Color.fromARGB(255, 240, 237, 237),
               borderRadius: BorderRadius.only(
@@ -109,8 +113,11 @@ class _kendaraanState extends State<kendaraan> {
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
-                      _buildTextField(nama, 'Nama Pemilik'),
-                      _buildTextField(jenis, 'Jenis Kendaraan'),
+                      _buildTextField(plat, 'Nomor Plat Kendaraan'),
+                      _buildDropdown(jenis, 'Jenis Kendaraan'),
+                      const SizedBox(
+                        height: 15,
+                      ),
                       _buildTextField(merk, 'Merk Kendaraan'),
                       _buildTextField(type, 'Tipe Kendaraan'),
                       _buildTextField(tahun, 'Tahun Kepemilikan'),
@@ -131,17 +138,31 @@ class _kendaraanState extends State<kendaraan> {
       ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 16.0),
-        child: FloatingActionButton.extended(
-          onPressed: () {
-            tambahKendaraan();
-          },
-          backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-          label: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
-            child: Text('Simpan'),
+        child: Container(
+          margin: const EdgeInsets.all(10),
+          child: ElevatedButton(
+            onPressed: () {
+              tambahKendaraan();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
+              minimumSize: const Size(250, 50), // Atur lebar dan tinggi button
+              padding: const EdgeInsets.symmetric(
+                vertical: 10,
+                horizontal: 16,
+              ), 
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+                  15.0, // Mengatur radius untuk membuat button rounded
+                ),
+              ),
+            ),
+            child: const Text(
+              'Simpan',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
           ),
         ),
       ),
@@ -161,11 +182,49 @@ class _kendaraanState extends State<kendaraan> {
           border: const OutlineInputBorder(),
           focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.green,
+              color:
+                  Color(0xFF183D3D), // Warna outline saat dalam keadaan fokus
             ),
           ),
         ),
         maxLength: 50,
+      ),
+    );
+  }
+
+  Widget _buildDropdown(TextEditingController controller, String labelText) {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: DropdownButtonFormField<String>(
+        value: controller.text.isEmpty ? null : controller.text,
+        items: const [
+          DropdownMenuItem<String>(
+            value: 'Kendaraan Motor',
+            child: Text('Kendaraan Motor'),
+          ),
+          DropdownMenuItem<String>(
+            value: 'Kendaraan Mobil',
+            child: Text('Kendaraan Mobil'),
+          ),
+        ],
+        onChanged: (String? value) {
+          if (value != null) {
+            setState(() {
+              controller.text = value;
+            });
+          }
+        },
+        decoration: InputDecoration(
+          labelText: labelText,
+          filled: true,
+          fillColor: Colors.white,
+          border: const OutlineInputBorder(),
+          focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Color(0xFF183D3D),
+            ),
+          ),
+        ),
       ),
     );
   }

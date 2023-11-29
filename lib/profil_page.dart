@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+import 'package:mobi_tax/sign_in.dart';
 
 class Profile extends StatelessWidget {
   const Profile({Key? key});
@@ -29,25 +30,69 @@ class Profile extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 30), // Jarak antara foto profil dan teks
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Row(
                     children: [
-                      Text(
-                        'Id Pengguna',
-                        style: TextStyle(fontSize: 10, color: Colors.white),
-                        textAlign: TextAlign.left,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Id Pengguna',
+                            style: TextStyle(fontSize: 10, color: Colors.white),
+                            textAlign: TextAlign.left,
+                          ),
+                          Text(
+                            'Nama Pengguna',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                        ],
                       ),
-                      Text(
-                        'Nama Pengguna',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                      SizedBox(
+                        width: 150,
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(right: 10.0),
+                        child: IconButton(
+                          onPressed: () {
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => SignIn(),
+                              ),
+                            );
+                          },
+                          icon: const Icon(
+                            Icons.logout,
+                            size: 30,
+                            color: Colors.white,
+                          ),
                         ),
-                        textAlign: TextAlign.left,
                       ),
                     ],
                   ),
+                  // Column(
+                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //   children: [
+                  //     Text(
+                  //       'Id Pengguna',
+                  //       style: TextStyle(fontSize: 10, color: Colors.white),
+                  //       textAlign: TextAlign.left,
+                  //     ),
+                  //     Text(
+                  //       'Nama Pengguna',
+                  //       style: TextStyle(
+                  //         fontSize: 18,
+                  //         fontWeight: FontWeight.bold,
+                  //         color: Colors.white,
+                  //       ),
+                  //       textAlign: TextAlign.left,
+                  //     ),
+
+                  //   ],
+                  // ),
                 ],
               ),
               const SizedBox(height: 30),

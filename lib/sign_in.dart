@@ -27,11 +27,22 @@ class _SignInState extends State<SignIn> {
     await Auth().login(email, password);
   }
 
+  bool isPasswordVisible = false;
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      isPasswordVisible = !isPasswordVisible;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Masuk"),
+        title: const Text(
+          "Masuk",
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Color.fromRGBO(70, 152, 138, 1),
       ),
       body: Center(
@@ -41,7 +52,8 @@ class _SignInState extends State<SignIn> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                margin: const EdgeInsets.all(5),
+                margin:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
                 child: TextField(
                   autocorrect: true,
                   controller: _emailController,
@@ -61,33 +73,43 @@ class _SignInState extends State<SignIn> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.all(5),
+                margin:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
                 child: TextField(
                   autocorrect: true,
                   controller: _passwordController,
-                  decoration: const InputDecoration(
-                      labelText: 'Password',
-                      labelStyle: TextStyle(
-                        color: Color(0xFF183D3D), // warna label teks
+                  obscureText: !isPasswordVisible,
+                  decoration: InputDecoration(
+                    suffixIcon: GestureDetector(
+                      onTap: _togglePasswordVisibility,
+                      child: Icon(
+                        isPasswordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Colors.grey,
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(
-                              0xFF183D3D), // Warna outline saat dalam keadaan fokus
-                          width: 2.0, // Lebar garis
-                        ),
+                    ),
+                    labelText: 'Password',
+                    labelStyle: const TextStyle(
+                      color: Color(0xFF183D3D), // warna label teks
+                    ),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color(
+                            0xFF183D3D), // Warna outline saat dalam keadaan fokus
+                        width: 2.0, // Lebar garis
                       ),
-                      suffixIcon: Icon(Icons.visibility_off)),
-                  obscureText: true,
+                    ),
+                  ),
                 ),
               ),
               // ElevatedButton(
               //   onPressed: () {
-              //     Navigator.of(context).pushReplacement(
-              //       MaterialPageRoute(
-              //         builder: (context) => const BottomNavigation(),
-              //       ),
-              //     );
+              // Navigator.of(context).pushReplacement(
+              //   MaterialPageRoute(
+              //     builder: (context) => const BottomNavigation(),
+              //   ),
+              // );
               //   },
               //   child: const Text("Masuk"),
               // ),
@@ -96,35 +118,38 @@ class _SignInState extends State<SignIn> {
               ),
               ElevatedButton(
                 // onPressed: () {
-                  // const mySnackBar = SnackBar(
-                  //   content: Text("Berhasil Login"),
-                  //   duration: Duration(seconds: 3),
-                  //   padding: EdgeInsets.all(10),
-                  //   backgroundColor: Colors.green,
-                  //   behavior: SnackBarBehavior
-                  //       .floating, // Mengatur SnackBar untuk muncul di atas
-                  // );
-                  // ScaffoldMessenger.of(context).showSnackBar(mySnackBar);
-                  // Navigator.of(context).pushReplacement(
-                  //   MaterialPageRoute(
-                  //     builder: (context) => const BottomNavigation(),
-                  //   ),
-                  // );
+                // const mySnackBar = SnackBar(
+                //   content: Text("Berhasil Login"),
+                //   duration: Duration(seconds: 3),
+                //   padding: EdgeInsets.all(10),
+                //   backgroundColor: Colors.green,
+                //   behavior: SnackBarBehavior
+                //       .floating, // Mengatur SnackBar untuk muncul di atas
+                // );
+                // ScaffoldMessenger.of(context).showSnackBar(mySnackBar);
+                // Navigator.of(context).pushReplacement(
+                //   MaterialPageRoute(
+                //     builder: (context) => const BottomNavigation(),
+                //   ),
+                // );
                 // },
                 onPressed: () => handleSubmit(),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
                   minimumSize:
-                      const Size(150, 50), // Atur lebar dan tinggi button
+                      const Size(250, 50), // Atur lebar dan tinggi button
                   padding: const EdgeInsets.symmetric(
                       vertical: 10,
                       horizontal: 16), // Padding di sekitar icon dan teks
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(
-                        30.0), // Mengatur radius untuk membuat button rounded
+                        15.0), // Mengatur radius untuk membuat button rounded
                   ),
                 ),
-                child: const Text('Masuk'),
+                child: const Text(
+                  'Masuk',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
               SizedBox(
                 height: 10,
@@ -135,7 +160,7 @@ class _SignInState extends State<SignIn> {
                   Text('Belum punya akun?'),
                   TextButton(
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => Regis()),
                       );
