@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1014520738802",
+    "project_id": "mobitax-5eafb",
+    "storage_bucket": "mobitax-5eafb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1014520738802:android:e0a6138d3d56cd8fbef16b",
+        "android_client_info": {
+          "package_name": "com.example.mobi_tax"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-d_3dFIWAf3PQ0J1nr_DwO6edYd4dBt8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

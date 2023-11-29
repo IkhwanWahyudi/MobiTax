@@ -99,7 +99,7 @@ class MyHomePage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
                         Text(
-                          "Dhimas Eko Wiyono",
+                          "Pengguna",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class kendaraan extends StatefulWidget {
@@ -17,6 +19,36 @@ class _kendaraanState extends State<kendaraan> {
   final TextEditingController noRangka = TextEditingController();
   final TextEditingController noMesin = TextEditingController();
   final TextEditingController noBPKB = TextEditingController();
+
+  Future<void> tambahKendaraan() async {
+    try {
+      // Dapatkan UID pengguna yang saat ini terautentikasi
+      String uidPengguna = FirebaseAuth.instance.currentUser!.uid;
+
+      // Tambahkan data kendaraan ke dokumen Firestore pengguna
+      await FirebaseFirestore.instance.collection('pengguna').doc(uidPengguna).collection('kendaraan').add({
+        'nama': nama.text,
+        'jenis': jenis.text,
+        'merk': merk.text,
+      });
+
+      // Data kendaraan sekarang disimpan dalam dokumen Firestore pengguna
+
+      // Tampilkan pesan sukses atau pindah ke halaman lain jika diperlukan
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Kendaraan berhasil ditambahkan")),
+      );
+
+      // Anda juga bisa pindah ke halaman lain setelah berhasil menambahkan kendaraan
+      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HalamanBerikutnya()));
+    } catch (e) {
+      print("Error menambahkan kendaraan: $e");
+      // Tangani kesalahan saat menambahkan kendaraan
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Terjadi kesalahan. Silakan coba lagi.")),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,14 +133,7 @@ class _kendaraanState extends State<kendaraan> {
         padding: const EdgeInsets.only(bottom: 16.0),
         child: FloatingActionButton.extended(
           onPressed: () {
-            const mySnackBar = SnackBar(
-              content: Text("Berhasil Simpan data"),
-              duration: Duration(seconds: 3),
-              padding: EdgeInsets.all(10),
-              backgroundColor: Colors.green,
-              behavior: SnackBarBehavior.floating,
-            );
-            ScaffoldMessenger.of(context).showSnackBar(mySnackBar);
+            tambahKendaraan();
           },
           backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
           shape: RoundedRectangleBorder(
