@@ -25,8 +25,18 @@ import 'detail.dart';
 //       "Manual", "Bensin", 150),
 // ];
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  // Metode untuk memperbarui UI
+  void refreshUI() {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -227,17 +237,59 @@ class MyHomePage extends StatelessWidget {
                           padding: EdgeInsets.only(right: 20),
                           child: Icon(Icons.delete, color: Colors.white),
                         ),
+                        // onDismissed: (direction) {
+                        //   // kendaraans.removeAt(index);
+                        //   var docRef = FirebaseFirestore.instance
+                        //       .collection('pengguna')
+                        //       .doc(user?.uid)
+                        //       .collection('kendaraan')
+                        //       .doc(snapshot.data!.docs[index].id);
+                        //
+                        //   // Hapus dokumen dari Firestore
+                        //   docRef.delete();
+                        // },
                         onDismissed: (direction) {
-                          // kendaraans.removeAt(index);
-                          var docRef = FirebaseFirestore.instance
-                              .collection('pengguna')
-                              .doc(user?.uid)
-                              .collection('kendaraan')
-                              .doc(snapshot.data!.docs[index].id);
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('Konfirmasi'),
+                                content: Text('Apakah Anda yakin ingin menghapus kendaraan ini?'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
 
-                          // Hapus dokumen dari Firestore
-                          docRef.delete();
+                                      // Perbarui UI dengan memanggil metode refreshUI
+                                      refreshUI();
+                                    },
+                                    child: Text('Batal'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () async {
+                                      // Hapus dokumen dari Firestore
+                                      var docRef = FirebaseFirestore.instance
+                                          .collection('pengguna')
+                                          .doc(user?.uid)
+                                          .collection('kendaraan')
+                                          .doc(snapshot.data!.docs[index].id);
+
+                                      await docRef.delete(); // Perubahan di sini, menambahkan await
+
+                                      // Tutup dialog setelah menghapus
+                                      Navigator.of(context).pop();
+
+                                      // Perbarui UI dengan memanggil metode refreshUI
+                                      refreshUI();
+                                    },
+                                    child: Text('Hapus'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         },
+
                         child: GestureDetector(
                           onTap: () {
                             Navigator.push(
