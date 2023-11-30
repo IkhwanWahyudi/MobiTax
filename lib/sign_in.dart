@@ -25,10 +25,10 @@ class _SignInState extends State<SignIn> {
     if (!_formKey.currentState!.validate()) return;
     final email = _emailController.value.text;
     final password = _passwordController.value.text;
+    setState(() => _loading = true);
     try {
       // Mencoba untuk signin
       await Auth().login(email, password);
-      setState(() => _loading = true);
       // Jika signin berhasil, navigasikan ke halaman BottomNavigation
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(

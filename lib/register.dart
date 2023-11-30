@@ -28,10 +28,10 @@ class _regisState extends State<Regis> {
     final alamat = _alamatController.value.text;
     final kecamatan = _kecamatanController.value.text;
     final kota = _kotaController.value.text;
+    setState(() => _loading = true);
     try {
       // Mencoba untuk registrasi
       await Auth().regis(email, password, nama, alamat, kecamatan, kota);
-      setState(() => _loading = true);
 
       // Jika registrasi berhasil, navigasikan ke halaman Signin
       Navigator.of(context).pushReplacement(
@@ -234,9 +234,9 @@ class _regisState extends State<Regis> {
                         ),
                       )
                     : Text(
-                  'Daftar',
-                  style: TextStyle(color: Colors.white),
-                ),
+                        'Daftar',
+                        style: TextStyle(color: Colors.white),
+                      ),
               ),
               const SizedBox(
                 height: 10,
