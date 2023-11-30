@@ -63,12 +63,12 @@ class _kendaraanState extends State<kendaraan> {
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
         shadowColor: Colors.transparent,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context); // Kembali ke halaman sebelumnya
-          },
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back),
+        //   onPressed: () {
+        //     Navigator.pop(context); // Kembali ke halaman sebelumnya
+        //   },
+        // ),
       ),
       backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
       body: Column(

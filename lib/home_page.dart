@@ -185,122 +185,130 @@ class MyHomePage extends StatelessWidget {
               ),
             ),
             Expanded(
-                child: FutureBuilder<QuerySnapshot>(
-              future: FirebaseFirestore.instance
-                  .collection('pengguna')
-                  .doc(user?.uid)
-                  .collection('kendaraan')
-                  .get(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  // return CircularProgressIndicator();
-                }
+              child: StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('pengguna')
+                    .doc(user?.uid)
+                    .collection('kendaraan')
+                    .snapshots(),
+                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  }
 
-                if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return Text('Tidak ada Kendaraan');
-                }
+                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                    return Text('Tidak ada Kendaraan');
+                  }
 
-                return ListView.builder(
-                  shrinkWrap: true,
-                  //physics: const NeverScrollableScrollPhysics(),
-                  itemCount: snapshot.data!.docs.length,
-                  itemBuilder: (context, index) {
-                    var dataKendaraan = snapshot.data!.docs[index].data()
-                        as Map<String, dynamic>;
-                    var jenisKendaraan = dataKendaraan['jenis'];
-                    var plat = dataKendaraan['plat'];
-                    var merk = dataKendaraan['merk'];
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    //physics: const NeverScrollableScrollPhysics(),
+                    itemCount: snapshot.data!.docs.length,
+                    itemBuilder: (context, index) {
+                      var dataKendaraan = snapshot.data!.docs[index].data()
+                      as Map<String, dynamic>;
+                      var jenisKendaraan = dataKendaraan['jenis'];
+                      var plat = dataKendaraan['plat'];
+                      var merk = dataKendaraan['merk'];
 
-                    IconData kendaraan;
-                    if (jenisKendaraan == "Motor") {
-                      kendaraan = Icons.directions_bike;
-                    } else {
-                      kendaraan = Icons.directions_car;
-                    }
+                      IconData kendaraan;
+                      if (jenisKendaraan == "Motor") {
+                        kendaraan = Icons.directions_bike;
+                      } else {
+                        kendaraan = Icons.directions_car;
+                      }
 
-                    return Dismissible(
-                      key: UniqueKey(),
-                      direction: DismissDirection.endToStart,
-                      background: Container(
-                        color: Colors.red,
-                        alignment: Alignment.centerRight,
-                        padding: EdgeInsets.only(right: 20),
-                        child: Icon(Icons.delete, color: Colors.white),
-                      ),
-                      onDismissed: (direction) {
-                        // kendaraans.removeAt(index);
-                      },
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => DetailPage(selectedDocumentId: index), // Navigasi ke DetailPage
-                            ),
-                          );
-                        },
-                        child: Column(
-                          children: [
-                            Container(
-                              width: lebar,
-                              height: 90,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Colors.grey, // warna bayangan
-                                    blurRadius: 5, // radius blur bayangan
-                                    offset: Offset(
-                                        0, 0
-                                    ), // pergeseran bayangan (horizontal, vertical)
-                                  ),
-                                ],
-                              ),
-                              padding: EdgeInsets.all(10),
-                              margin: EdgeInsets.only(left: 10, right: 10),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: 50,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Color.fromRGBO(70, 152, 138, 1),
-                                    ),
-                                    child: Icon(
-                                      kendaraan,
-                                      color: Colors.white,
-                                      size: 30,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 15),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text("Plat Nomor $plat"),
-                                      Text("Kendaraan $merk"),
-                                      Text(
-                                          "Masa Berlaku")
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                          ],
+                      return Dismissible(
+                        key: UniqueKey(),
+                        direction: DismissDirection.endToStart,
+                        background: Container(
+                          color: Colors.red,
+                          alignment: Alignment.centerRight,
+                          padding: EdgeInsets.only(right: 20),
+                          child: Icon(Icons.delete, color: Colors.white),
                         ),
-                      ),
-                    );
-                  },
-                );
-              },
-            )),
+                        onDismissed: (direction) {
+                          // kendaraans.removeAt(index);
+                          var docRef = FirebaseFirestore.instance
+                              .collection('pengguna')
+                              .doc(user?.uid)
+                              .collection('kendaraan')
+                              .doc(snapshot.data!.docs[index].id);
+
+                          // Hapus dokumen dari Firestore
+                          docRef.delete();
+                        },
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailPage(selectedDocumentId: index), // Navigasi ke DetailPage
+                              ),
+                            );
+                          },
+                          child: Column(
+                            children: [
+                              Container(
+                                width: lebar,
+                                height: 90,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.grey, // warna bayangan
+                                      blurRadius: 5, // radius blur bayangan
+                                      offset: Offset(
+                                          0, 0
+                                      ), // pergeseran bayangan (horizontal, vertical)
+                                    ),
+                                  ],
+                                ),
+                                padding: EdgeInsets.all(10),
+                                margin: EdgeInsets.only(left: 10, right: 10),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 50,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Color.fromRGBO(70, 152, 138, 1),
+                                      ),
+                                      child: Icon(
+                                        kendaraan,
+                                        color: Colors.white,
+                                        size: 30,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 15),
+                                    Column(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text("Plat Nomor $plat"),
+                                        Text("Kendaraan $merk"),
+                                        Text(
+                                            "Masa Berlaku")
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
             Container(
               margin: EdgeInsets.all(10),
               child: ElevatedButton.icon(
