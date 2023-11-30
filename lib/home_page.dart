@@ -141,13 +141,16 @@ class MyHomePage extends StatelessWidget {
                                     Text(
                                       nama,
                                       style: TextStyle(
-                                          fontSize: 18, fontWeight: FontWeight.bold),
+                                          fontSize: 18, fontWeight: FontWeight.bold
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                     Text(
                                       "Kota $kota",
                                       style: TextStyle(
                                         fontSize: 12,
                                       ),
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                   ],
                                 ),
@@ -245,6 +248,15 @@ class MyHomePage extends StatelessWidget {
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.grey, // warna bayangan
+                                    blurRadius: 5, // radius blur bayangan
+                                    offset: Offset(
+                                        0, 0
+                                    ), // pergeseran bayangan (horizontal, vertical)
+                                  ),
+                                ],
                               ),
                               padding: EdgeInsets.all(10),
                               margin: EdgeInsets.only(left: 10, right: 10),
