@@ -18,6 +18,7 @@ class _regisState extends State<Regis> {
   final TextEditingController _kotaController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool _loading = false;
 
   handleSubmit() async {
     if (!_formKey.currentState!.validate()) return;
@@ -30,6 +31,7 @@ class _regisState extends State<Regis> {
     try {
       // Mencoba untuk registrasi
       await Auth().regis(email, password, nama, alamat, kecamatan, kota);
+      setState(() => _loading = true);
 
       // Jika registrasi berhasil, navigasikan ke halaman Signin
       Navigator.of(context).pushReplacement(
@@ -37,8 +39,10 @@ class _regisState extends State<Regis> {
           builder: (context) => const SignIn(),
         ),
       );
+      setState(() => _loading = false);
     } catch (e) {
       print('Error saat registrasi: $e');
+      setState(() => _loading = false);
     }
   }
 
@@ -220,7 +224,16 @@ class _regisState extends State<Regis> {
                         15.0), // Mengatur radius untuk membuat button rounded
                   ),
                 ),
-                child: const Text(
+                child: _loading
+                    ? const SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 2,
+                        ),
+                      )
+                    : Text(
                   'Daftar',
                   style: TextStyle(color: Colors.white),
                 ),

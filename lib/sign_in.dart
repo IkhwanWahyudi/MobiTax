@@ -19,6 +19,7 @@ class _SignInState extends State<SignIn> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool _loading = false;
 
   handleSubmit() async {
     if (!_formKey.currentState!.validate()) return;
@@ -27,15 +28,17 @@ class _SignInState extends State<SignIn> {
     try {
       // Mencoba untuk signin
       await Auth().login(email, password);
-
+      setState(() => _loading = true);
       // Jika signin berhasil, navigasikan ke halaman BottomNavigation
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => const BottomNavigation(),
         ),
       );
+      setState(() => _loading = false);
     } catch (e) {
       print('Error saat signin: $e');
+      setState(() => _loading = false);
     }
   }
 
@@ -132,10 +135,19 @@ class _SignInState extends State<SignIn> {
                         15.0), // Mengatur radius untuk membuat button rounded
                   ),
                 ),
-                child: const Text(
-                  'Masuk',
-                  style: TextStyle(color: Colors.white),
-                ),
+                child: _loading
+                    ? const SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 2,
+                        ),
+                      )
+                    : Text(
+                        'Masuk',
+                        style: TextStyle(color: Colors.white),
+                      ),
               ),
               SizedBox(
                 height: 10,
