@@ -15,252 +15,295 @@ class Profile extends StatelessWidget {
     User? user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
-      body: Column(
-        children: <Widget>[
-          const Expanded(
-            child: SingleChildScrollView(),
+      //backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
+      backgroundColor: const Color.fromARGB(255, 240, 237, 237),
+      appBar: AppBar(
+        backgroundColor: Color.fromRGBO(70, 152, 138, 1),
+        elevation: 0,
+        title: Text(
+          'Profil',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(left: 30, bottom: 10),
-                    child: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      radius: 30,
-                    ),
-                  ),
-                  SizedBox(width: 30), // Jarak antara foto profil dan teks
-                  FutureBuilder<QuerySnapshot>(
-                    // Mendapatkan koleksi data_diri dari dokumen pengguna dengan UID saat ini
-                    future: FirebaseFirestore.instance
-                        .collection('pengguna')
-                        .doc(user?.uid)
-                        .collection('data_diri')
-                        .get(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return CircularProgressIndicator();
-                      }
-
-                      var nama = snapshot.data!.docs[0]['nama'];
-
-                      return Row(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Id Pengguna',
-                                style: TextStyle(
-                                    fontSize: 10, color: Colors.white),
-                                textAlign: TextAlign.left,
-                              ),
-                              Text(
-                                nama,
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                                textAlign: TextAlign.left,
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            width: 150,
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(right: 10.0),
-                            child: IconButton(
-                              onPressed: () {
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (context) => SignIn(),
-                                  ),
-                                );
-                              },
-                              icon: const Icon(
-                                Icons.logout,
-                                size: 30,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
+        ),
+        centerTitle: true,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            // const Expanded(
+            //   child: SingleChildScrollView(),
+            // ),
+            Container(
+              height: 90,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(70, 152, 138, 1),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(15),
+                  bottomRight: Radius.circular(15),
+                ),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.grey, // warna bayangan
+                    blurRadius: 5, // radius blur bayangan
+                    offset: Offset(
+                        0, 0), // pergeseran bayangan (horizontal, vertical)
                   ),
                 ],
               ),
-              const SizedBox(height: 30),
-              Container(
-                width: lebar,
-                height: tinggi * 0.69,
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 240, 237, 237),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10),
-                  ),
+              child: Container(
+                //margin: EdgeInsets.only(left: 10, right: 10),
+                //margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                margin: EdgeInsets.all(10),
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
                 ),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(left: 10, top: 20, bottom: 20),
-                        child: Text(
-                          'Data Diri',
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
+                //margin: EdgeInsets.all(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    FutureBuilder<QuerySnapshot>(
+                      // Mendapatkan koleksi data_diri dari dokumen pengguna dengan UID saat ini
+                      future: FirebaseFirestore.instance
+                          .collection('pengguna')
+                          .doc(user?.uid)
+                          .collection('data_diri')
+                          .get(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        }
+
+                        var nama = snapshot.data!.docs[0]['nama'];
+
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              child: Center(
+                                child: Icon(
+                                  Icons.account_circle_outlined,
+                                  color: Colors.black,
+                                  size: 40,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 10), // Jarak antara ikon dan teks
+                            Container(
+                              width : 230,
+                              // decoration: BoxDecoration(
+                              //   color: Colors.blue,
+                              // ),
+                              child: Column(
+                                //crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Id Pengguna',
+                                    style: TextStyle(
+                                        fontSize: 10,
+                                        color: Colors.black,
+                                    ),
+                                    //textAlign: TextAlign.left,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  Text(
+                                    nama,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    //textAlign: TextAlign.left,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
+
+                      },
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => SignIn(),
                           ),
-                        ),
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.logout,
+                        size: 30,
+                        color: Colors.black,
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(20),
-                        margin: EdgeInsets.only(right: 10, left: 10),
-                        decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                        child: const Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Icon(Icons.list_alt_sharp,
-                                    color: Color.fromRGBO(70, 152, 138, 1)),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Text(
-                                  'Ubah Data Diri',
-                                  style: TextStyle(fontSize: 15),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(20),
-                        margin: EdgeInsets.only(right: 10, left: 10),
-                        decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                        child: const Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Icon(Icons.key,
-                                    color: Color.fromRGBO(70, 152, 138, 1)),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Text(
-                                  'Ubah Password',
-                                  style: TextStyle(fontSize: 15),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(left: 10, top: 20, bottom: 20),
-                        child: Text(
-                          'Bantuan',
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(20),
-                        margin: EdgeInsets.only(right: 10, left: 10),
-                        decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                        child: const Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Icon(Icons.question_answer,
-                                    color: Color.fromRGBO(70, 152, 138, 1)),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Text(
-                                  'FAQ',
-                                  style: TextStyle(fontSize: 15),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(20),
-                        margin: EdgeInsets.only(right: 10, left: 10),
-                        decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                        child: const Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Icon(Icons.help,
-                                    color: Color.fromRGBO(70, 152, 138, 1)),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Text(
-                                  'Panduan',
-                                  style: TextStyle(fontSize: 15),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ],
+            ),
+            Expanded(
+                child: ListView(
+                  children: [
+                    Container(
+                      //margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                      margin: EdgeInsets.only(top: 15, left: 10, right: 10),
+                      height: 60,
+                      // decoration: BoxDecoration(
+                      //   color: Colors.green,
+                      // ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.email_outlined,
+                            color: Color.fromRGBO(70, 152, 138, 1),
+                            size: 30,
+                          ),
+                          SizedBox(width: 30), // Jarak antara ikon dan teks
+                          Text(
+                            'namaemail@gmail.com',
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: 1, // Lebar garis
+                      //color: Colors.black, // Warna garis
+                      color: Colors.black.withOpacity(0.5),
+                    ),
+
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 10),
+                      //margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+                      height: 60,
+                      // decoration: BoxDecoration(
+                      //   color: Colors.green,
+                      // ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.location_on_outlined,
+                            color: Color.fromRGBO(70, 152, 138, 1),
+                            size: 30,
+                          ),
+                          SizedBox(width: 30), // Jarak antara ikon dan teks
+                          Text(
+                            'Jl.Setan',
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: 1, // Lebar garis
+                      //color: Colors.black, // Warna garis
+                      color: Colors.black.withOpacity(0.5),
+                    ),
+
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 10),
+                      //margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+                      height: 60,
+                      // decoration: BoxDecoration(
+                      //   color: Colors.green,
+                      // ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.my_location_outlined,
+                            color: Color.fromRGBO(70, 152, 138, 1),
+                            size: 30,
+                          ),
+                          SizedBox(width: 30), // Jarak antara ikon dan teks
+                          Text(
+                            'Sungai Kunjang',
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: 1, // Lebar garis
+                      //color: Colors.black, // Warna garis
+                      color: Colors.black.withOpacity(0.5),
+                    ),
+
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 10),
+                      //margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+                      height: 60,
+                      // decoration: BoxDecoration(
+                      //   color: Colors.green,
+                      // ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.location_city_outlined,
+                            color: Color.fromRGBO(70, 152, 138, 1),
+                            size: 30,
+                          ),
+                          SizedBox(width: 30), // Jarak antara ikon dan teks
+                          Text(
+                            'Kota',
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: 1, // Lebar garis
+                      //color: Colors.black, // Warna garis
+                      color: Colors.black.withOpacity(0.5),
+                    ),
+
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // Fungsi
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromRGBO(70, 152, 138, 1),
+                          // padding: EdgeInsets.symmetric(vertical: 15), // Button padding
+                          fixedSize: Size(lebar, 40),
+                        ),
+                        child: Text(
+                          'Edit Profil',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+            )
+          ],
+        ),
       ),
     );
   }

@@ -37,6 +37,7 @@ class MyHomePage extends StatelessWidget {
       backgroundColor: const Color.fromARGB(255, 240, 237, 237),
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(70, 152, 138, 1),
+        //backgroundColor: Colors.pink,
         title: const Text(
           "MOBITAX",
           style: TextStyle(
@@ -68,7 +69,7 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              height: 110,
+              height: 90,
               width: double.infinity,
               decoration: BoxDecoration(
                 color: Color.fromRGBO(70, 152, 138, 1),
@@ -114,22 +115,45 @@ class MyHomePage extends StatelessWidget {
                         var nama = snapshot.data!.docs[0]['nama'];
                         var kota = snapshot.data!.docs[0]['kota'];
 
-                        return Column(
+                        return Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                nama,
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                "Kota $kota",
-                                style: TextStyle(
-                                  fontSize: 12,
+                              Container(
+                                child: Center(
+                                  child: Icon(
+                                    Icons.account_circle_outlined,
+                                    color: Colors.black,
+                                    size: 40,
+                                  ),
                                 ),
                               ),
-                            ]);
+                              SizedBox(width: 10), // Jarak antara ikon dan teks
+                              Container(
+                                width : 230,
+                                // decoration: BoxDecoration(
+                                //   color: Colors.blue,
+                                // ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      nama,
+                                      style: TextStyle(
+                                          fontSize: 18, fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      "Kota $kota",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ]
+                        );
                       },
                     ),
                     IconButton(
