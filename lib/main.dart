@@ -58,7 +58,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   // List pages yang ditampilkan
   final List<Widget> _pages = [
-    MyHomePage(),
+    const MyHomePage(),
     transaksi(),
     const Profile(),
   ];

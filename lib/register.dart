@@ -27,7 +27,19 @@ class _regisState extends State<Regis> {
     final alamat = _alamatController.value.text;
     final kecamatan = _kecamatanController.value.text;
     final kota = _kotaController.value.text;
-    await Auth().regis(email, password, nama, alamat, kecamatan, kota);
+    try {
+      // Mencoba untuk registrasi
+      await Auth().regis(email, password, nama, alamat, kecamatan, kota);
+
+      // Jika registrasi berhasil, navigasikan ke halaman Signin
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const SignIn(),
+        ),
+      );
+    } catch (e) {
+      print('Error saat registrasi: $e');
+    }
   }
 
   bool isPasswordVisible = false;

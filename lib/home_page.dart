@@ -6,24 +6,24 @@ import 'package:flutter/material.dart';
 import 'package:mobi_tax/kendaraan.dart';
 import 'detail.dart';
 
-class Kendaraan {
-// class Kendaraan
-  String kendaraan, plat, masaBerlaku, brand, paint, type, bbm;
-  int transmisi, year;
+// class Kendaraan {
+// // class Kendaraan
+//   String kendaraan, plat, masaBerlaku, brand, paint, type, bbm;
+//   int transmisi, year;
 
-  Kendaraan(this.kendaraan, this.plat, this.masaBerlaku, this.brand, this.paint,
-      this.year, this.type, this.bbm, this.transmisi);
-}
+//   Kendaraan(this.kendaraan, this.plat, this.masaBerlaku, this.brand, this.paint,
+//       this.year, this.type, this.bbm, this.transmisi);
+// }
 
-List<Kendaraan> kendaraans = [
-// list untuk menampung semua inputan/produk
-  Kendaraan("Motor", "KT 1234 WW", "2 Juli 2025", "Honda PCX", "Hitam", 2018,
-      "Matic", "Bensin", 150),
-  Kendaraan("Mobil", "KT 3412 OP", "5 Mei 2025", "Honda CR-V", "Putih", 2020,
-      "Matic", "Bensin", 1498),
-  Kendaraan("Motor", "KT 9547 BA", "23 Oktober 2025", "MX King", "Biru", 2020,
-      "Manual", "Bensin", 150),
-];
+// List<Kendaraan> kendaraans = [
+// // list untuk menampung semua inputan/produk
+//   Kendaraan("Motor", "KT 1234 WW", "2 Juli 2025", "Honda PCX", "Hitam", 2018,
+//       "Matic", "Bensin", 150),
+//   Kendaraan("Mobil", "KT 3412 OP", "5 Mei 2025", "Honda CR-V", "Putih", 2020,
+//       "Matic", "Bensin", 1498),
+//   Kendaraan("Motor", "KT 9547 BA", "23 Oktober 2025", "MX King", "Biru", 2020,
+//       "Manual", "Bensin", 150),
+// ];
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -202,14 +202,14 @@ class MyHomePage extends StatelessWidget {
                         child: Icon(Icons.delete, color: Colors.white),
                       ),
                       onDismissed: (direction) {
-                        kendaraans.removeAt(index);
+                        // kendaraans.removeAt(index);
                       },
                       child: GestureDetector(
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => DetailPage(), // Navigasi ke DetailPage
+                              builder: (context) => DetailPage(selectedDocumentId: index), // Navigasi ke DetailPage
                             ),
                           );
                         },
@@ -248,7 +248,7 @@ class MyHomePage extends StatelessWidget {
                                       Text("Plat Nomor $plat"),
                                       Text("Kendaraan $merk"),
                                       Text(
-                                          "Masa Berlaku ${kendaraans[index].masaBerlaku}")
+                                          "Masa Berlaku")
                                     ],
                                   )
                                 ],

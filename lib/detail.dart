@@ -6,7 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DetailPage extends StatefulWidget {
-  const DetailPage({Key? key})
+  final int selectedDocumentId;
+  const DetailPage({Key? key, required this.selectedDocumentId})
       : super(key: key);
 
   @override
@@ -22,6 +23,7 @@ class _DetailPageState extends State<DetailPage> {
   Widget build(BuildContext context) {
     var lebar = MediaQuery.of(context).size.width;
     var tinggi = MediaQuery.of(context).size.height;
+    var selectedDocumentId = widget.selectedDocumentId;
 
     return Scaffold(
       backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
@@ -78,17 +80,22 @@ class _DetailPageState extends State<DetailPage> {
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return CircularProgressIndicator();
+                        // return CircularProgressIndicator();
                       }
 
-                      var dataKendaraan = snapshot.data!.docs[1]
-                          .data() as Map<String, dynamic>;
-                      var brand = dataKendaraan['brand'];
+                      if (!snapshot.hasData) {
+                        return Text('Data kendaraan tidak ditemukan');
+                      }
+
+                      var dataKendaraan =
+                          snapshot.data!.docs[selectedDocumentId].data()
+                              as Map<String, dynamic>;
+                      // var brand = dataKendaraan['brand'];
                       var tahun = dataKendaraan['tahun'];
                       var warna = dataKendaraan['warna'];
                       var type = dataKendaraan['type'];
                       // var transmisi= dataKendaraan['transmisi'];
-                      var bbm = dataKendaraan['bbm'];
+                      // var bbm = dataKendaraan['bbm'];
                       var jenis = dataKendaraan['jenis'];
                       var merk = dataKendaraan['merk'];
                       var rangka = dataKendaraan['rangka'];
@@ -99,7 +106,7 @@ class _DetailPageState extends State<DetailPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            brand,
+                            'brand',
                             style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -228,7 +235,7 @@ class _DetailPageState extends State<DetailPage> {
                                   const SizedBox(
                                       height: 5), // Jarak antara ikon dan teks
                                   Text(
-                                    bbm,
+                                    "bbm",
                                     style: const TextStyle(
                                       fontSize: 10,
                                     ),

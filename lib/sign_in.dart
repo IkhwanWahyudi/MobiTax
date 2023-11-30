@@ -25,17 +25,17 @@ class _SignInState extends State<SignIn> {
     final email = _emailController.value.text;
     final password = _passwordController.value.text;
     try {
-      // Mencoba untuk login
+      // Mencoba untuk signin
       await Auth().login(email, password);
 
-      // Jika login berhasil, navigasikan ke halaman BottomNavigation
+      // Jika signin berhasil, navigasikan ke halaman BottomNavigation
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => const BottomNavigation(),
         ),
       );
     } catch (e) {
-      print('Error saat sigin: $e');
+      print('Error saat signin: $e');
     }
   }
 
