@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class kendaraan extends StatefulWidget {
   const kendaraan({Key? key});
@@ -14,11 +15,17 @@ class _kendaraanState extends State<kendaraan> {
   final TextEditingController jenis = TextEditingController();
   final TextEditingController merk = TextEditingController();
   final TextEditingController type = TextEditingController();
-  final TextEditingController tahun = TextEditingController();
   final TextEditingController warna = TextEditingController();
+  final TextEditingController bbm = TextEditingController();
+  final TextEditingController transmisi = TextEditingController();
+  final TextEditingController brand = TextEditingController();
   final TextEditingController noRangka = TextEditingController();
   final TextEditingController noMesin = TextEditingController();
   final TextEditingController noBPKB = TextEditingController();
+  final List<int> availableYears =
+      List.generate(20, (index) => DateTime.now().year - index);
+
+  int selectedYear = DateTime.now().year;
 
   Future<void> tambahKendaraan() async {
     try {
@@ -35,11 +42,14 @@ class _kendaraanState extends State<kendaraan> {
         'jenis': jenis.text,
         'merk': merk.text,
         'type': type.text,
-        'tahun': tahun.text,
+        'tahun': selectedYear,
         'warna': warna.text,
-        'rangka': noRangka.text,
-        'mesin': noMesin.text,
-        'bpkb': noBPKB.text,
+        'rangka': int.tryParse(noRangka.text) ?? 0,
+        'mesin': int.tryParse(noMesin.text) ?? 0,
+        'bpkb': int.tryParse(noBPKB.text) ?? 0,
+        'brand': brand.text,
+        'transmisi': int.tryParse(transmisi.text) ?? 0,
+        'bbm': bbm.text,
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -119,12 +129,16 @@ class _kendaraanState extends State<kendaraan> {
                         height: 15,
                       ),
                       _buildTextField(merk, 'Merk Kendaraan'),
+                      _buildTextField(bbm, 'BBM Kendaraan'),
+                      _buildNumericTextField(
+                          transmisi, 'Transmisi Kendaraan (CC)'),
+                      _buildTextField(brand, 'Brand Kendaraan'),
                       _buildTextField(type, 'Tipe Kendaraan'),
-                      _buildTextField(tahun, 'Tahun Kepemilikan'),
+                      _buildYearDropdown(),
                       _buildTextField(warna, 'Warna Kendaraan'),
-                      _buildTextField(noRangka, 'No. Rangka'),
-                      _buildTextField(noMesin, 'No. Mesin'),
-                      _buildTextField(noBPKB, 'No. BPKB'),
+                      _buildNumericTextField(noRangka, 'No. Rangka'),
+                      _buildNumericTextField(noMesin, 'No. Mesin'),
+                      _buildNumericTextField(noBPKB, 'No. BPKB'),
                       const SizedBox(
                         height: 50,
                       )
@@ -150,7 +164,7 @@ class _kendaraanState extends State<kendaraan> {
               padding: const EdgeInsets.symmetric(
                 vertical: 10,
                 horizontal: 16,
-              ), 
+              ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(
                   15.0, // Mengatur radius untuk membuat button rounded
@@ -170,11 +184,67 @@ class _kendaraanState extends State<kendaraan> {
     );
   }
 
+  Widget _buildYearDropdown() {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Row(
+        children: [
+          const Text(
+            'Tahun Kepemilikan: ',
+            style: TextStyle(fontSize: 16),
+          ),
+          DropdownButton<int>(
+            value: selectedYear,
+            items: availableYears.map((year) {
+              return DropdownMenuItem<int>(
+                value: year,
+                child: Text('$year'),
+              );
+            }).toList(),
+            onChanged: (value) {
+              setState(() {
+                selectedYear = value!;
+              });
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildTextField(TextEditingController controller, String labelText) {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: TextField(
         controller: controller,
+        decoration: InputDecoration(
+          labelText: labelText,
+          filled: true,
+          fillColor: Colors.white,
+          border: const OutlineInputBorder(),
+          focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(
+              color:
+                  Color(0xFF183D3D), // Warna outline saat dalam keadaan fokus
+            ),
+          ),
+        ),
+        maxLength: 50,
+      ),
+    );
+  }
+
+  Widget _buildNumericTextField(
+      TextEditingController controller, String labelText) {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: TextField(
+        controller: controller,
+        keyboardType: const TextInputType.numberWithOptions(
+            decimal: false, signed: false),
+        inputFormatters: <TextInputFormatter>[
+          FilteringTextInputFormatter.digitsOnly,
+        ],
         decoration: InputDecoration(
           labelText: labelText,
           filled: true,

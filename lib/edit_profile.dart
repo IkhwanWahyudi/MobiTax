@@ -17,16 +17,17 @@ class _EditProfileState extends State<EditProfile> {
   late User _user;
   late Stream<DocumentSnapshot<Map<String, dynamic>>> _userDataStream;
 
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _alamatController = TextEditingController();
-  TextEditingController _kecamatanController = TextEditingController();
-  TextEditingController _kotaController = TextEditingController();
+  final TextEditingController _namaController = TextEditingController();
+  final TextEditingController _alamatController = TextEditingController();
+  final TextEditingController _kecamatanController = TextEditingController();
+  final TextEditingController _kotaController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     _user = _auth.currentUser!;
-    _userDataStream = _firestore.collection('data_diri').doc(_user.uid).snapshots();
+    _userDataStream =
+        _firestore.collection('data_diri').doc(_user.uid).snapshots();
   }
 
   @override
@@ -98,13 +99,14 @@ class _EditProfileState extends State<EditProfile> {
                           .get(),
                       builder: (BuildContext context,
                           AsyncSnapshot<QuerySnapshot> snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
                           return CircularProgressIndicator();
                         }
 
                         var nama = snapshot.data!.docs[0]['nama'];
 
-                        return Row(
+                        return Row( 
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -119,7 +121,7 @@ class _EditProfileState extends State<EditProfile> {
                             ),
                             SizedBox(width: 10), // Jarak antara ikon dan teks
                             Container(
-                              width : 230,
+                              width: 230,
                               // decoration: BoxDecoration(
                               //   color: Colors.blue,
                               // ),
@@ -131,8 +133,8 @@ class _EditProfileState extends State<EditProfile> {
                                   Text(
                                     'Id Pengguna',
                                     style: TextStyle(
-                                        fontSize: 10,
-                                        color: Colors.black,
+                                      fontSize: 10,
+                                      color: Colors.black,
                                     ),
                                     //textAlign: TextAlign.left,
                                     overflow: TextOverflow.ellipsis,
@@ -152,162 +154,161 @@ class _EditProfileState extends State<EditProfile> {
                             ),
                           ],
                         );
-
                       },
                     ),
-                  
                   ],
                 ),
               ),
             ),
-            SizedBox(height: 50,),
+            SizedBox(
+              height: 50,
+            ),
             Expanded(
                 child: ListView(
-                  children: [
-                    Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    height: 70,
-                    child: Column(
-                      children: [
-                        SizedBox(height: 15),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.email_outlined,
-                              color: Color.fromRGBO(70, 152, 138, 1),
-                              size: 30,
-                            ),
-                            SizedBox(width: 30),
-                            Expanded(
-                              child: TextFormField(
-                                controller: _emailController,
-                                decoration: InputDecoration(
-                                  labelText: 'Email',
-                                  border: OutlineInputBorder(),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        // SizedBox(height: 15)
-                      ],
-                    ),
-                  ),
-                    Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    height: 70,
-                    child: Column(
-                      children: [
-                        SizedBox(height: 15),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.location_on_outlined,
-                              color: Color.fromRGBO(70, 152, 138, 1),
-                              size: 30,
-                            ),
-                            SizedBox(width: 30),
-                            Expanded(
-                              child: TextFormField(
-                                controller: _alamatController,
-                                decoration: InputDecoration(
-                                  labelText: 'Alamat',
-                                  border: OutlineInputBorder(),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        // SizedBox(height: 15)
-                      ],
-                    ),
-                  ),
-                    Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    height: 70,
-                    child: Column(
-                      children: [
-                        SizedBox(height: 15),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.my_location_outlined,
-                              color: Color.fromRGBO(70, 152, 138, 1),
-                              size: 30,
-                            ),
-                            SizedBox(width: 30),
-                            Expanded(
-                              child: TextFormField(
-                                controller: _kecamatanController,
-                                decoration: InputDecoration(
-                                  labelText: 'Kecamatan',
-                                  border: OutlineInputBorder(),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        // SizedBox(height: 15)
-                      ],
-                    ),
-                  ),
-Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    height: 70,
-                    child: Column(
-                      children: [
-                        SizedBox(height: 15),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.location_city_outlined,
-                              color: Color.fromRGBO(70, 152, 138, 1),
-                              size: 30,
-                            ),
-                            SizedBox(width: 30),
-                            Expanded(
-                              child: TextFormField(
-                                controller: _kotaController,
-                                decoration: InputDecoration(
-                                  labelText: 'Kota',
-                                  border: OutlineInputBorder(),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        // SizedBox(height: 15)
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 30,),
-                  Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromRGBO(70, 152, 138, 1),
-                          // padding: EdgeInsets.symmetric(vertical: 15), // Button padding
-                          fixedSize: Size(lebar, 40),
-                        ),
-                        child: Text(
-                          'Update Data',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+              children: [
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
+                  height: 70,
+                  child: Column(
+                    children: [
+                      SizedBox(height: 15),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.email_outlined,
+                            color: Color.fromRGBO(70, 152, 138, 1),
+                            size: 30,
                           ),
-                        ),
+                          SizedBox(width: 30),
+                          Expanded(
+                            child: TextFormField(
+                              controller: _namaController,
+                              decoration: InputDecoration(
+                                labelText: 'Nama Lengkap',
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      // SizedBox(height: 15)
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
+                  height: 70,
+                  child: Column(
+                    children: [
+                      SizedBox(height: 15),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.location_on_outlined,
+                            color: Color.fromRGBO(70, 152, 138, 1),
+                            size: 30,
+                          ),
+                          SizedBox(width: 30),
+                          Expanded(
+                            child: TextFormField(
+                              controller: _alamatController,
+                              decoration: InputDecoration(
+                                labelText: 'Alamat',
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      // SizedBox(height: 15)
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
+                  height: 70,
+                  child: Column(
+                    children: [
+                      SizedBox(height: 15),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.my_location_outlined,
+                            color: Color.fromRGBO(70, 152, 138, 1),
+                            size: 30,
+                          ),
+                          SizedBox(width: 30),
+                          Expanded(
+                            child: TextFormField(
+                              controller: _kecamatanController,
+                              decoration: InputDecoration(
+                                labelText: 'Kecamatan',
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      // SizedBox(height: 15)
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
+                  height: 70,
+                  child: Column(
+                    children: [
+                      SizedBox(height: 15),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.location_city_outlined,
+                            color: Color.fromRGBO(70, 152, 138, 1),
+                            size: 30,
+                          ),
+                          SizedBox(width: 30),
+                          Expanded(
+                            child: TextFormField(
+                              controller: _kotaController,
+                              decoration: InputDecoration(
+                                labelText: 'Kota',
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      // SizedBox(height: 15)
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Container(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromRGBO(70, 152, 138, 1),
+                      // padding: EdgeInsets.symmetric(vertical: 15), // Button padding
+                      fixedSize: Size(lebar, 40),
+                    ),
+                    child: Text(
+                      'Update Data',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-
-                    
-                  ],
-                )
-            )
+                  ),
+                ),
+              ],
+            ))
           ],
         ),
       ),
     );
   }
-  
 }

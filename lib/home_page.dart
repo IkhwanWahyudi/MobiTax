@@ -203,7 +203,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     .snapshots(),
                 builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
                   }
 
                   if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
@@ -237,17 +236,6 @@ class _MyHomePageState extends State<MyHomePage> {
                           padding: EdgeInsets.only(right: 20),
                           child: Icon(Icons.delete, color: Colors.white),
                         ),
-                        // onDismissed: (direction) {
-                        //   // kendaraans.removeAt(index);
-                        //   var docRef = FirebaseFirestore.instance
-                        //       .collection('pengguna')
-                        //       .doc(user?.uid)
-                        //       .collection('kendaraan')
-                        //       .doc(snapshot.data!.docs[index].id);
-                        //
-                        //   // Hapus dokumen dari Firestore
-                        //   docRef.delete();
-                        // },
                         onDismissed: (direction) {
                           showDialog(
                             context: context,
@@ -340,8 +328,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                       CrossAxisAlignment.start,
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        Text("Plat Nomor $plat"),
-                                        Text("Kendaraan $merk"),
+                                        Text("$plat"),
+                                        Text("$merk"),
                                         Text(
                                             "Masa Berlaku")
                                       ],

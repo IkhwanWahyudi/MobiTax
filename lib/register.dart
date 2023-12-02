@@ -233,7 +233,7 @@ class _regisState extends State<Regis> {
                           strokeWidth: 2,
                         ),
                       )
-                    : Text(
+                    : const Text(
                         'Daftar',
                         style: TextStyle(color: Colors.white),
                       ),

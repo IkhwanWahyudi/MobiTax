@@ -90,12 +90,12 @@ class _DetailPageState extends State<DetailPage> {
                       var dataKendaraan =
                           snapshot.data!.docs[selectedDocumentId].data()
                               as Map<String, dynamic>;
-                      // var brand = dataKendaraan['brand'];
+                      var brand = dataKendaraan['brand'];
                       var tahun = dataKendaraan['tahun'];
                       var warna = dataKendaraan['warna'];
                       var type = dataKendaraan['type'];
-                      // var transmisi= dataKendaraan['transmisi'];
-                      // var bbm = dataKendaraan['bbm'];
+                      var transmisi = dataKendaraan['transmisi'];
+                      var bbm = dataKendaraan['bbm'];
                       var jenis = dataKendaraan['jenis'];
                       var merk = dataKendaraan['merk'];
                       var rangka = dataKendaraan['rangka'];
@@ -106,7 +106,7 @@ class _DetailPageState extends State<DetailPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'brand',
+                            brand,
                             style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -135,7 +135,7 @@ class _DetailPageState extends State<DetailPage> {
                                   const SizedBox(
                                       height: 5), // Jarak antara ikon dan teks
                                   Text(
-                                    tahun,
+                                    tahun.toString(),
                                     style: const TextStyle(
                                       fontSize: 10,
                                     ),
@@ -210,7 +210,7 @@ class _DetailPageState extends State<DetailPage> {
                                   const SizedBox(
                                       height: 5), // Jarak antara ikon dan teks
                                   Text(
-                                    'CC',
+                                    '${transmisi.toString()} CC',
                                     style: const TextStyle(
                                       fontSize: 10,
                                     ),
@@ -235,7 +235,7 @@ class _DetailPageState extends State<DetailPage> {
                                   const SizedBox(
                                       height: 5), // Jarak antara ikon dan teks
                                   Text(
-                                    "bbm",
+                                    bbm,
                                     style: const TextStyle(
                                       fontSize: 10,
                                     ),
@@ -349,7 +349,7 @@ class _DetailPageState extends State<DetailPage> {
                               Padding(
                                 padding: EdgeInsets.only(right: 20),
                                 child: Text(
-                                  rangka,
+                                  rangka.toString(),
                                   style: TextStyle(fontSize: 15),
                                 ),
                               ),
@@ -369,7 +369,7 @@ class _DetailPageState extends State<DetailPage> {
                               Padding(
                                 padding: EdgeInsets.only(right: 20),
                                 child: Text(
-                                  mesin,
+                                  mesin.toString(),
                                   style: TextStyle(fontSize: 15),
                                 ),
                               ),
@@ -389,7 +389,7 @@ class _DetailPageState extends State<DetailPage> {
                               Padding(
                                 padding: EdgeInsets.only(right: 20),
                                 child: Text(
-                                  bpkb,
+                                  bpkb.toString(),
                                   style: TextStyle(fontSize: 15),
                                 ),
                               ),
