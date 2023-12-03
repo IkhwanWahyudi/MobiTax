@@ -25,7 +25,7 @@ class _EditProfileState extends State<EditProfile> {
       // Dapatkan UID pengguna yang saat ini terautentikasi
       String uidPengguna = FirebaseAuth.instance.currentUser!.uid;
 
-// Mendapatkan koleksi data_diri dari dokumen pengguna dengan UID saat ini
+      // Mendapatkan koleksi data_diri dari dokumen pengguna dengan UID saat ini
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('pengguna')
           .doc(uidPengguna)
@@ -97,6 +97,12 @@ class _EditProfileState extends State<EditProfile> {
                 Expanded(
                   child: TextFormField(
                     controller: _namaController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Nama Lengkap wajib diisi';
+                      }
+                      return null; // Return null for no validation errors
+                    },
                     decoration: InputDecoration(
                       labelText: 'Nama Lengkap',
                       border: OutlineInputBorder(),
@@ -157,6 +163,12 @@ class _EditProfileState extends State<EditProfile> {
                 Expanded(
                   child: TextFormField(
                     controller: _alamatController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Alamat wajib diisi';
+                      }
+                      return null; // Return null for no validation errors
+                    },
                     decoration: InputDecoration(
                       labelText: 'Alamat',
                       border: OutlineInputBorder(),
@@ -180,6 +192,12 @@ class _EditProfileState extends State<EditProfile> {
                 Expanded(
                   child: TextFormField(
                     controller: _kecamatanController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Kecamatan wajib diisi';
+                      }
+                      return null; // Return null for no validation errors
+                    },
                     decoration: InputDecoration(
                       labelText: 'Kecamatan',
                       border: OutlineInputBorder(),
@@ -203,6 +221,12 @@ class _EditProfileState extends State<EditProfile> {
                 Expanded(
                   child: TextFormField(
                     controller: _kotaController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Kota wajib diisi';
+                      }
+                      return null; // Return null for no validation errors
+                    },
                     decoration: InputDecoration(
                       labelText: 'Kota',
                       border: OutlineInputBorder(),

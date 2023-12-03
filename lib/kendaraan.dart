@@ -440,13 +440,11 @@ class _kendaraanState extends State<kendaraan> {
   Widget _buildNumericTextField(
       TextEditingController controller, String labelText) {
     int jumlahKarakter = 100;
-    if (labelText == 'Nomor Plat Kendaraan' ||
-        labelText == 'Bahan Bakar Kendaraan' ||
-        labelText == 'Warna Kendaraan') {
-      jumlahKarakter = 10;
-    } else if (labelText == 'Merk Kendaraan' ||
-        labelText == 'Brand Kendaraan' ||
-        labelText == 'Tipe Kendaraan') {
+    if (labelText == 'Transmisi Kendaraan (CC)') {
+      jumlahKarakter = 5;
+    } else if (labelText == 'No. Rangka' ||
+        labelText == 'No. Mesin' ||
+        labelText == 'No. BPKB') {
       jumlahKarakter = 15;
     }
     return Padding(
