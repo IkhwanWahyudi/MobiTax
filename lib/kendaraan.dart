@@ -55,7 +55,8 @@ class _kendaraanState extends State<kendaraan> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Kendaraan berhasil ditambahkan")),
       );
-
+      
+      Navigator.pop(context);
       // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HalamanBerikutnya()));
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(

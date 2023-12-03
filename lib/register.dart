@@ -94,9 +94,17 @@ class _regisState extends State<Regis> {
               ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
-                child: TextField(
+                child: TextFormField(
                   autocorrect: true,
                   controller: _emailController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Email wajib diisi';
+                    } else if (!value.contains('@')) {
+                      return 'Email tidak valid';
+                    }
+                    return null; // Return null for no validation errors
+                  },
                   decoration: const InputDecoration(
                     labelText: 'Email',
                     labelStyle: TextStyle(
@@ -114,10 +122,18 @@ class _regisState extends State<Regis> {
               ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
-                child: TextField(
+                child: TextFormField(
                   autocorrect: true,
                   controller: _passwordController,
                   obscureText: !isPasswordVisible,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Password wajib diisi';
+                    } else if (value.length < 6) {
+                      return 'Password setidaknya sebanyak 6 karakter';
+                    }
+                    return null; // Return null for no validation errors
+                  },
                   decoration: InputDecoration(
                     suffixIcon: GestureDetector(
                       onTap: _togglePasswordVisibility,
