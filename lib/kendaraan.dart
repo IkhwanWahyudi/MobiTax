@@ -331,9 +331,9 @@ class _kendaraanState extends State<kendaraan> {
         'type': type.text,
         'tahun': int.parse(selectedYearController.text),
         'warna': warna.text,
-        'rangka': int.tryParse(noRangka.text) ?? 0,
-        'mesin': int.tryParse(noMesin.text) ?? 0,
-        'bpkb': int.tryParse(noBPKB.text) ?? 0,
+        'rangka': noRangka.text,
+        'mesin': noMesin.text,
+        'bpkb': noBPKB.text,
         'brand': brand.text,
         'transmisi': int.tryParse(transmisi.text) ?? 0,
         'bbm': bbm.text,
@@ -368,12 +368,6 @@ class _kendaraanState extends State<kendaraan> {
             color: Colors.white,
           ),
         ),
-        // leading: IconButton(
-        //   icon: const Icon(Icons.arrow_back),
-        //   onPressed: () {
-        //     Navigator.pop(context); // Kembali ke halaman sebelumnya
-        //   },
-        // ),
       ),
       backgroundColor: const Color.fromARGB(255, 240, 237, 237),
       body: Column(
