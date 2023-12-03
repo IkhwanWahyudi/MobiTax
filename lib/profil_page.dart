@@ -12,7 +12,7 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var lebar = MediaQuery.of(context).size.width;
-    var tinggi = MediaQuery.of(context).size.height;
+    // var tinggi = MediaQuery.of(context).size.height;
     User? user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
@@ -78,7 +78,8 @@ class Profile extends StatelessWidget {
                           .get(),
                       builder: (BuildContext context,
                           AsyncSnapshot<QuerySnapshot> snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
                           return CircularProgressIndicator();
                         }
 
@@ -99,7 +100,7 @@ class Profile extends StatelessWidget {
                             ),
                             SizedBox(width: 10), // Jarak antara ikon dan teks
                             Container(
-                              width : 230,
+                              width: 230,
                               // decoration: BoxDecoration(
                               //   color: Colors.blue,
                               // ),
@@ -111,8 +112,8 @@ class Profile extends StatelessWidget {
                                   Text(
                                     'Id Pengguna',
                                     style: TextStyle(
-                                        fontSize: 10,
-                                        color: Colors.black,
+                                      fontSize: 10,
+                                      color: Colors.black,
                                     ),
                                     //textAlign: TextAlign.left,
                                     overflow: TextOverflow.ellipsis,
@@ -132,11 +133,11 @@ class Profile extends StatelessWidget {
                             ),
                           ],
                         );
-
                       },
                     ),
                     IconButton(
                       onPressed: () {
+                        FirebaseAuth.instance.signOut();
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (context) => SignIn(),
@@ -154,161 +155,183 @@ class Profile extends StatelessWidget {
               ),
             ),
             Expanded(
-                child: ListView(
-                  children: [
-                    Container(
-                      //margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                      margin: EdgeInsets.only(top: 15, left: 10, right: 10),
-                      height: 60,
-                      // decoration: BoxDecoration(
-                      //   color: Colors.green,
-                      // ),
-                      child: Row(
+                child: FutureBuilder<QuerySnapshot>(
+                    // Mendapatkan koleksi data_diri dari dokumen pengguna dengan UID saat ini
+                    future: FirebaseFirestore.instance
+                        .collection('pengguna')
+                        .doc(user?.uid)
+                        .collection('data_diri')
+                        .get(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return CircularProgressIndicator();
+                      }
+
+                      var nama = snapshot.data!.docs[0]['nama'];
+                      var alamat = snapshot.data!.docs[0]['alamat'];
+                      var kecamatan = snapshot.data!.docs[0]['kecamatan'];
+                      var kota = snapshot.data!.docs[0]['kota'];
+
+                      return ListView(
                         children: [
-                          Icon(
-                            Icons.email_outlined,
-                            color: Color.fromRGBO(70, 152, 138, 1),
-                            size: 30,
+                          Container(
+                            //margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                            margin:
+                                EdgeInsets.only(top: 15, left: 10, right: 10),
+                            height: 60,
+                            // decoration: BoxDecoration(
+                            //   color: Colors.green,
+                            // ),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.person,
+                                  color: Color.fromRGBO(70, 152, 138, 1),
+                                  size: 30,
+                                ),
+                                SizedBox(
+                                    width: 30), // Jarak antara ikon dan teks
+                                Text(
+                                  nama,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                          SizedBox(width: 30), // Jarak antara ikon dan teks
-                          Text(
-                            'namaemail@gmail.com',
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.black,
+                          Container(
+                            height: 1, // Lebar garis
+                            //color: Colors.black, // Warna garis
+                            color: Colors.black.withOpacity(0.5),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 10),
+                            //margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+                            height: 60,
+                            // decoration: BoxDecoration(
+                            //   color: Colors.green,
+                            // ),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.location_on_outlined,
+                                  color: Color.fromRGBO(70, 152, 138, 1),
+                                  size: 30,
+                                ),
+                                SizedBox(
+                                    width: 30), // Jarak antara ikon dan teks
+                                Text(
+                                  alamat,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            height: 1, // Lebar garis
+                            //color: Colors.black, // Warna garis
+                            color: Colors.black.withOpacity(0.5),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 10),
+                            //margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+                            height: 60,
+                            // decoration: BoxDecoration(
+                            //   color: Colors.green,
+                            // ),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.my_location_outlined,
+                                  color: Color.fromRGBO(70, 152, 138, 1),
+                                  size: 30,
+                                ),
+                                SizedBox(
+                                    width: 30), // Jarak antara ikon dan teks
+                                Text(
+                                  kecamatan,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            height: 1, // Lebar garis
+                            //color: Colors.black, // Warna garis
+                            color: Colors.black.withOpacity(0.5),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 10),
+                            //margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+                            height: 60,
+                            // decoration: BoxDecoration(
+                            //   color: Colors.green,
+                            // ),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.location_city_outlined,
+                                  color: Color.fromRGBO(70, 152, 138, 1),
+                                  size: 30,
+                                ),
+                                SizedBox(
+                                    width: 30), // Jarak antara ikon dan teks
+                                Text(
+                                  'Kota $kota',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            height: 1, // Lebar garis
+                            //color: Colors.black, // Warna garis
+                            color: Colors.black.withOpacity(0.5),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 20),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        EditProfile(), // Navigasi ke edit_profile
+                                  ),
+                                );
+                                // Fungsi
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    Color.fromRGBO(70, 152, 138, 1),
+                                // padding: EdgeInsets.symmetric(vertical: 15), // Button padding
+                                fixedSize: Size(lebar, 40),
+                              ),
+                              child: Text(
+                                'Edit Profil',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                           ),
                         ],
-                      ),
-                    ),
-                    Container(
-                      height: 1, // Lebar garis
-                      //color: Colors.black, // Warna garis
-                      color: Colors.black.withOpacity(0.5),
-                    ),
-
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 10),
-                      //margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-                      height: 60,
-                      // decoration: BoxDecoration(
-                      //   color: Colors.green,
-                      // ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.location_on_outlined,
-                            color: Color.fromRGBO(70, 152, 138, 1),
-                            size: 30,
-                          ),
-                          SizedBox(width: 30), // Jarak antara ikon dan teks
-                          Text(
-                            'Jl.Setan',
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: 1, // Lebar garis
-                      //color: Colors.black, // Warna garis
-                      color: Colors.black.withOpacity(0.5),
-                    ),
-
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 10),
-                      //margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-                      height: 60,
-                      // decoration: BoxDecoration(
-                      //   color: Colors.green,
-                      // ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.my_location_outlined,
-                            color: Color.fromRGBO(70, 152, 138, 1),
-                            size: 30,
-                          ),
-                          SizedBox(width: 30), // Jarak antara ikon dan teks
-                          Text(
-                            'Sungai Kunjang',
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: 1, // Lebar garis
-                      //color: Colors.black, // Warna garis
-                      color: Colors.black.withOpacity(0.5),
-                    ),
-
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 10),
-                      //margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-                      height: 60,
-                      // decoration: BoxDecoration(
-                      //   color: Colors.green,
-                      // ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.location_city_outlined,
-                            color: Color.fromRGBO(70, 152, 138, 1),
-                            size: 30,
-                          ),
-                          SizedBox(width: 30), // Jarak antara ikon dan teks
-                          Text(
-                            'Kota',
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: 1, // Lebar garis
-                      //color: Colors.black, // Warna garis
-                      color: Colors.black.withOpacity(0.5),
-                    ),
-
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                      child: ElevatedButton(
-                        onPressed: () {Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          EditProfile(), // Navigasi ke kendaraan
-                    ),
-                  );
-                          // Fungsi
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromRGBO(70, 152, 138, 1),
-                          // padding: EdgeInsets.symmetric(vertical: 15), // Button padding
-                          fixedSize: Size(lebar, 40),
-                        ),
-                        child: Text(
-                          'Edit Profil',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-            )
+                      );
+                    }))
           ],
         ),
       ),

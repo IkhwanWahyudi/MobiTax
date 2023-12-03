@@ -12,28 +12,53 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  late User _user;
-  late Stream<DocumentSnapshot<Map<String, dynamic>>> _userDataStream;
-
   final TextEditingController _namaController = TextEditingController();
   final TextEditingController _alamatController = TextEditingController();
   final TextEditingController _kecamatanController = TextEditingController();
   final TextEditingController _kotaController = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-    _user = _auth.currentUser!;
-    _userDataStream =
-        _firestore.collection('data_diri').doc(_user.uid).snapshots();
+  Future<void> editDataDiri() async {
+    try {
+      // Dapatkan UID pengguna yang saat ini terautentikasi
+      String uidPengguna = FirebaseAuth.instance.currentUser!.uid;
+
+// Mendapatkan koleksi data_diri dari dokumen pengguna dengan UID saat ini
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('pengguna')
+          .doc(uidPengguna)
+          .collection('data_diri')
+          .get();
+      // Mengambil ID dokumen dari dokumen pertama dalam koleksi
+      String idDokumenDataDiri = querySnapshot.docs[0].id;
+      await FirebaseFirestore.instance
+          .collection('pengguna')
+          .doc(uidPengguna)
+          .collection('data_diri')
+          .doc(idDokumenDataDiri)
+          .update({
+        'nama': _namaController.text,
+        'alamat': _alamatController.text,
+        'kota': _kotaController.text,
+        'kecamatan': _kecamatanController.text,
+        // Tambahkan field lain yang ingin Anda update
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Data diri berhasil diubah")),
+      );
+
+      Navigator.pop(context);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Terjadi kesalahan. Silakan coba lagi.")),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     var lebar = MediaQuery.of(context).size.width;
-    var tinggi = MediaQuery.of(context).size.height;
+    // var tinggi = MediaQuery.of(context).size.height;
     User? user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
@@ -106,7 +131,7 @@ class _EditProfileState extends State<EditProfile> {
 
                         var nama = snapshot.data!.docs[0]['nama'];
 
-                        return Row( 
+                        return Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -175,7 +200,7 @@ class _EditProfileState extends State<EditProfile> {
                       Row(
                         children: [
                           Icon(
-                            Icons.email_outlined,
+                            Icons.person,
                             color: Color.fromRGBO(70, 152, 138, 1),
                             size: 30,
                           ),
@@ -289,7 +314,9 @@ class _EditProfileState extends State<EditProfile> {
                   margin:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      editDataDiri();
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color.fromRGBO(70, 152, 138, 1),
                       // padding: EdgeInsets.symmetric(vertical: 15), // Button padding
