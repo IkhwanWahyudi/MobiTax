@@ -1,5 +1,6 @@
 // import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mobi_tax/auth.dart';
 import 'package:mobi_tax/sign_in.dart';
 
@@ -13,6 +14,7 @@ class Regis extends StatefulWidget {
 class _regisState extends State<Regis> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _namaController = TextEditingController();
+  final TextEditingController _nikController = TextEditingController();
   final TextEditingController _alamatController = TextEditingController();
   final TextEditingController _kecamatanController = TextEditingController();
   final TextEditingController _kotaController = TextEditingController();
@@ -25,13 +27,14 @@ class _regisState extends State<Regis> {
     final email = _emailController.value.text;
     final password = _passwordController.value.text;
     final nama = _namaController.value.text;
+    final nik = _nikController.value.text;
     final alamat = _alamatController.value.text;
     final kecamatan = _kecamatanController.value.text;
     final kota = _kotaController.value.text;
     setState(() => _loading = true);
     try {
       // Mencoba untuk registrasi
-      await Auth().regis(email, password, nama, alamat, kecamatan, kota);
+      await Auth().regis(email, password, nama, nik, alamat, kecamatan, kota);
 
       // Jika registrasi berhasil, navigasikan ke halaman Signin
       Navigator.of(context).pushReplacement(
@@ -64,12 +67,47 @@ class _regisState extends State<Regis> {
         ),
         backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: Form(
           key: _formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
+                child: TextFormField(
+                  controller: _nikController,
+                  style: const TextStyle(
+                    fontSize: 14,
+                  ),
+                  keyboardType: const TextInputType.numberWithOptions(
+                      decimal: false, signed: false),
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'NIK wajib diisi';
+                    } else if (value.length < 15) {
+                      return 'NIK setidaknya sebanyak 15 karakter';
+                    }
+                    return null; // Return null for no validation errors
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'NIK',
+                    labelStyle: TextStyle(
+                      color: Color(0xFF183D3D), // warna label teks
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color(
+                            0xFF183D3D), // Warna outline saat dalam keadaan fokus
+                        width: 2.0, // Lebar garis
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
                 child: TextField(

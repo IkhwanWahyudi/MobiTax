@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class Auth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  Future<void> regis(String email, String password, String nama, String alamat,
+  Future<void> regis(String email, String password, String nama, String nik, String alamat,
       String kecamatan, String kota) async {
     final regisUser = await _auth.createUserWithEmailAndPassword(
       email: email,
@@ -19,6 +19,7 @@ class Auth {
         .collection('data_diri')
         .add({
       'nama': nama,
+      'nik': nik,
       'alamat': alamat,
       'kecamatan': kecamatan,
       'kota': kota,

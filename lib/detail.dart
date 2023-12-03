@@ -258,23 +258,23 @@ class _DetailPageState extends State<DetailPage> {
                           const SizedBox(
                             height: 20,
                           ),
-                          const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Nama Pemilik',
-                                style: TextStyle(fontSize: 15),
-                              ),
-                              Spacer(),
-                              Padding(
-                                padding: EdgeInsets.only(right: 20),
-                                child: Text(
-                                  'Nana',
-                                  style: TextStyle(fontSize: 15),
-                                ),
-                              ),
-                            ],
-                          ),
+                          // const Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //   children: [
+                          //     Text(
+                          //       'Nama Pemilik',
+                          //       style: TextStyle(fontSize: 15),
+                          //     ),
+                          //     Spacer(),
+                          //     Padding(
+                          //       padding: EdgeInsets.only(right: 20),
+                          //       child: Text(
+                          //         'Nana',
+                          //         style: TextStyle(fontSize: 15),
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
                           const SizedBox(
                             height: 8,
                           ),

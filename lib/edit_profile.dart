@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key});
@@ -12,6 +13,7 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
+  final TextEditingController _nikController = TextEditingController();
   final TextEditingController _namaController = TextEditingController();
   final TextEditingController _alamatController = TextEditingController();
   final TextEditingController _kecamatanController = TextEditingController();
@@ -36,6 +38,7 @@ class _EditProfileState extends State<EditProfile> {
           .collection('data_diri')
           .doc(idDokumenDataDiri)
           .update({
+        'nik': _nikController.text,
         'nama': _namaController.text,
         'alamat': _alamatController.text,
         'kota': _kotaController.text,
@@ -130,6 +133,7 @@ class _EditProfileState extends State<EditProfile> {
                         }
 
                         var nama = snapshot.data!.docs[0]['nama'];
+                        var nik = snapshot.data!.docs[0]['nik'];
 
                         return Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,7 +160,7 @@ class _EditProfileState extends State<EditProfile> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    'Id Pengguna',
+                                    nik,
                                     style: TextStyle(
                                       fontSize: 10,
                                       color: Colors.black,
@@ -210,6 +214,49 @@ class _EditProfileState extends State<EditProfile> {
                               controller: _namaController,
                               decoration: InputDecoration(
                                 labelText: 'Nama Lengkap',
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      // SizedBox(height: 15)
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
+                  height: 70,
+                  child: Column(
+                    children: [
+                      SizedBox(height: 15),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.person,
+                            color: Color.fromRGBO(70, 152, 138, 1),
+                            size: 30,
+                          ),
+                          SizedBox(width: 30),
+                          Expanded(
+                            child: TextFormField(
+                              controller: _nikController,
+                              keyboardType:
+                                  const TextInputType.numberWithOptions(
+                                      decimal: false, signed: false),
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'NIK wajib diisi';
+                                } else if (value.length < 15) {
+                                  return 'NIK setidaknya sebanyak 15 karakter';
+                                }
+                                return null; // Return null for no validation errors
+                              },
+                              decoration: InputDecoration(
+                                labelText: 'NIK',
                                 border: OutlineInputBorder(),
                               ),
                             ),

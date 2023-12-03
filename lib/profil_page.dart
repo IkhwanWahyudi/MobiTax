@@ -84,6 +84,7 @@ class Profile extends StatelessWidget {
                         }
 
                         var nama = snapshot.data!.docs[0]['nama'];
+                        var nik = snapshot.data!.docs[0]['nik'];
 
                         return Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,7 +100,7 @@ class Profile extends StatelessWidget {
                               ),
                             ),
                             SizedBox(width: 10), // Jarak antara ikon dan teks
-                            Container(
+                            SizedBox(
                               width: 230,
                               // decoration: BoxDecoration(
                               //   color: Colors.blue,
@@ -110,7 +111,7 @@ class Profile extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    'Id Pengguna',
+                                    nik,
                                     style: TextStyle(
                                       fontSize: 10,
                                       color: Colors.black,
@@ -162,10 +163,11 @@ class Profile extends StatelessWidget {
                         .doc(user?.uid)
                         .collection('data_diri')
                         .get(),
+
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return CircularProgressIndicator();
+                        return Text('Data sedang dimuat');
                       }
 
                       var nama = snapshot.data!.docs[0]['nama'];
