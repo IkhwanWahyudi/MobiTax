@@ -69,13 +69,13 @@ class Profile extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    FutureBuilder<QuerySnapshot>(
-                      // Mendapatkan koleksi data_diri dari dokumen pengguna dengan UID saat ini
-                      future: FirebaseFirestore.instance
+                    StreamBuilder<QuerySnapshot>(
+                      // Use stream instead of future
+                      stream: FirebaseFirestore.instance
                           .collection('pengguna')
                           .doc(user?.uid)
                           .collection('data_diri')
-                          .get(),
+                          .snapshots(),
                       builder: (BuildContext context,
                           AsyncSnapshot<QuerySnapshot> snapshot) {
                         if (snapshot.connectionState ==
@@ -99,14 +99,10 @@ class Profile extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 10), // Jarak antara ikon dan teks
+                            SizedBox(width: 10),
                             SizedBox(
                               width: 230,
-                              // decoration: BoxDecoration(
-                              //   color: Colors.blue,
-                              // ),
                               child: Column(
-                                //crossAxisAlignment: CrossAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -116,7 +112,6 @@ class Profile extends StatelessWidget {
                                       fontSize: 10,
                                       color: Colors.black,
                                     ),
-                                    //textAlign: TextAlign.left,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                   Text(
@@ -127,7 +122,6 @@ class Profile extends StatelessWidget {
                                       color: Colors.black,
                                     ),
                                     overflow: TextOverflow.ellipsis,
-                                    //textAlign: TextAlign.left,
                                   ),
                                 ],
                               ),
@@ -156,184 +150,185 @@ class Profile extends StatelessWidget {
               ),
             ),
             Expanded(
-                child: FutureBuilder<QuerySnapshot>(
-                    // Mendapatkan koleksi data_diri dari dokumen pengguna dengan UID saat ini
-                    future: FirebaseFirestore.instance
-                        .collection('pengguna')
-                        .doc(user?.uid)
-                        .collection('data_diri')
-                        .get(),
+                child: StreamBuilder<QuerySnapshot>(
+                  // Mendapatkan koleksi data_diri dari dokumen pengguna dengan UID saat ini
+                  stream: FirebaseFirestore.instance
+                      .collection('pengguna')
+                      .doc(user?.uid)
+                      .collection('data_diri')
+                      .snapshots(),
 
-                    builder: (BuildContext context,
-                        AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Text('Data sedang dimuat');
-                      }
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Text('Data sedang dimuat');
+                    }
 
-                      var nama = snapshot.data!.docs[0]['nama'];
-                      var alamat = snapshot.data!.docs[0]['alamat'];
-                      var kecamatan = snapshot.data!.docs[0]['kecamatan'];
-                      var kota = snapshot.data!.docs[0]['kota'];
+                    var nama = snapshot.data!.docs[0]['nama'];
+                    var alamat = snapshot.data!.docs[0]['alamat'];
+                    var kecamatan = snapshot.data!.docs[0]['kecamatan'];
+                    var kota = snapshot.data!.docs[0]['kota'];
 
-                      return ListView(
-                        children: [
-                          Container(
-                            //margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                            margin:
-                                EdgeInsets.only(top: 15, left: 10, right: 10),
-                            height: 60,
-                            // decoration: BoxDecoration(
-                            //   color: Colors.green,
-                            // ),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.person,
-                                  color: Color.fromRGBO(70, 152, 138, 1),
-                                  size: 30,
-                                ),
-                                SizedBox(
-                                    width: 30), // Jarak antara ikon dan teks
-                                Text(
-                                  nama,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            height: 1, // Lebar garis
-                            //color: Colors.black, // Warna garis
-                            color: Colors.black.withOpacity(0.5),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 10),
-                            //margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-                            height: 60,
-                            // decoration: BoxDecoration(
-                            //   color: Colors.green,
-                            // ),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.location_on_outlined,
-                                  color: Color.fromRGBO(70, 152, 138, 1),
-                                  size: 30,
-                                ),
-                                SizedBox(
-                                    width: 30), // Jarak antara ikon dan teks
-                                Text(
-                                  alamat,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            height: 1, // Lebar garis
-                            //color: Colors.black, // Warna garis
-                            color: Colors.black.withOpacity(0.5),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 10),
-                            //margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-                            height: 60,
-                            // decoration: BoxDecoration(
-                            //   color: Colors.green,
-                            // ),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.my_location_outlined,
-                                  color: Color.fromRGBO(70, 152, 138, 1),
-                                  size: 30,
-                                ),
-                                SizedBox(
-                                    width: 30), // Jarak antara ikon dan teks
-                                Text(
-                                  kecamatan,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            height: 1, // Lebar garis
-                            //color: Colors.black, // Warna garis
-                            color: Colors.black.withOpacity(0.5),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 10),
-                            //margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-                            height: 60,
-                            // decoration: BoxDecoration(
-                            //   color: Colors.green,
-                            // ),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.location_city_outlined,
-                                  color: Color.fromRGBO(70, 152, 138, 1),
-                                  size: 30,
-                                ),
-                                SizedBox(
-                                    width: 30), // Jarak antara ikon dan teks
-                                Text(
-                                  'Kota $kota',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            height: 1, // Lebar garis
-                            //color: Colors.black, // Warna garis
-                            color: Colors.black.withOpacity(0.5),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 20),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        EditProfile(), // Navigasi ke edit_profile
-                                  ),
-                                );
-                                // Fungsi
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    Color.fromRGBO(70, 152, 138, 1),
-                                // padding: EdgeInsets.symmetric(vertical: 15), // Button padding
-                                fixedSize: Size(lebar, 40),
+                    return ListView(
+                      children: [
+                        Container(
+                          //margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                          margin:
+                              EdgeInsets.only(top: 15, left: 10, right: 10),
+                          height: 60,
+                          // decoration: BoxDecoration(
+                          //   color: Colors.green,
+                          // ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.person,
+                                color: Color.fromRGBO(70, 152, 138, 1),
+                                size: 30,
                               ),
-                              child: Text(
-                                'Edit Profil',
+                              SizedBox(
+                                  width: 30), // Jarak antara ikon dan teks
+                              Text(
+                                nama,
                                 style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                  color: Colors.black,
                                 ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          height: 1, // Lebar garis
+                          //color: Colors.black, // Warna garis
+                          color: Colors.black.withOpacity(0.5),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          //margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+                          height: 60,
+                          // decoration: BoxDecoration(
+                          //   color: Colors.green,
+                          // ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.location_on_outlined,
+                                color: Color.fromRGBO(70, 152, 138, 1),
+                                size: 30,
+                              ),
+                              SizedBox(
+                                  width: 30), // Jarak antara ikon dan teks
+                              Text(
+                                alamat,
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          height: 1, // Lebar garis
+                          //color: Colors.black, // Warna garis
+                          color: Colors.black.withOpacity(0.5),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          //margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+                          height: 60,
+                          // decoration: BoxDecoration(
+                          //   color: Colors.green,
+                          // ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.my_location_outlined,
+                                color: Color.fromRGBO(70, 152, 138, 1),
+                                size: 30,
+                              ),
+                              SizedBox(
+                                  width: 30), // Jarak antara ikon dan teks
+                              Text(
+                                kecamatan,
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          height: 1, // Lebar garis
+                          //color: Colors.black, // Warna garis
+                          color: Colors.black.withOpacity(0.5),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          //margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+                          height: 60,
+                          // decoration: BoxDecoration(
+                          //   color: Colors.green,
+                          // ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.location_city_outlined,
+                                color: Color.fromRGBO(70, 152, 138, 1),
+                                size: 30,
+                              ),
+                              SizedBox(
+                                  width: 30), // Jarak antara ikon dan teks
+                              Text(
+                                'Kota $kota',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          height: 1, // Lebar garis
+                          //color: Colors.black, // Warna garis
+                          color: Colors.black.withOpacity(0.5),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 20),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      EditProfile(), // Navigasi ke edit_profile
+                                ),
+                              );
+                              // Fungsi
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  Color.fromRGBO(70, 152, 138, 1),
+                              // padding: EdgeInsets.symmetric(vertical: 15), // Button padding
+                              fixedSize: Size(lebar, 40),
+                            ),
+                            child: Text(
+                              'Edit Profil',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                        ],
-                      );
-                    }))
+                        ),
+                      ],
+                    );
+                  })
+            )
           ],
         ),
       ),

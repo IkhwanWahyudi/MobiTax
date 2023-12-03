@@ -89,13 +89,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    FutureBuilder<QuerySnapshot>(
+                    StreamBuilder<QuerySnapshot>(
                       // Mendapatkan koleksi data_diri dari dokumen pengguna dengan UID saat ini
-                      future: FirebaseFirestore.instance
+                      stream: FirebaseFirestore.instance
                           .collection('pengguna')
                           .doc(user?.uid)
                           .collection('data_diri')
-                          .get(),
+                          .snapshots(),
                       builder: (BuildContext context,
                           AsyncSnapshot<QuerySnapshot> snapshot) {
                         if (snapshot.connectionState ==

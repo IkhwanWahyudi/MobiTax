@@ -19,6 +19,7 @@ class _EditProfileState extends State<EditProfile> {
   final TextEditingController _kecamatanController = TextEditingController();
   final TextEditingController _kotaController = TextEditingController();
 
+
   Future<void> editDataDiri() async {
     try {
       // Dapatkan UID pengguna yang saat ini terautentikasi
@@ -71,7 +72,7 @@ class _EditProfileState extends State<EditProfile> {
         backgroundColor: Color.fromRGBO(70, 152, 138, 1),
         elevation: 0,
         title: Text(
-          'Profil',
+          ' Edit Profil',
           style: TextStyle(
             color: Colors.white,
             fontSize: 20,
@@ -80,309 +81,163 @@ class _EditProfileState extends State<EditProfile> {
         ),
         centerTitle: true,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            // const Expanded(
-            //   child: SingleChildScrollView(),
-            // ),
-            Container(
-              height: 90,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(70, 152, 138, 1),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(15),
-                  bottomRight: Radius.circular(15),
-                ),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.grey, // warna bayangan
-                    blurRadius: 5, // radius blur bayangan
-                    offset: Offset(
-                        0, 0), // pergeseran bayangan (horizontal, vertical)
-                  ),
-                ],
-              ),
-              child: Container(
-                //margin: EdgeInsets.only(left: 10, right: 10),
-                //margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                margin: EdgeInsets.all(10),
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                //margin: EdgeInsets.all(10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    FutureBuilder<QuerySnapshot>(
-                      // Mendapatkan koleksi data_diri dari dokumen pengguna dengan UID saat ini
-                      future: FirebaseFirestore.instance
-                          .collection('pengguna')
-                          .doc(user?.uid)
-                          .collection('data_diri')
-                          .get(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<QuerySnapshot> snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return CircularProgressIndicator();
-                        }
-
-                        var nama = snapshot.data!.docs[0]['nama'];
-                        var nik = snapshot.data!.docs[0]['nik'];
-
-                        return Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              child: Center(
-                                child: Icon(
-                                  Icons.account_circle_outlined,
-                                  color: Colors.black,
-                                  size: 40,
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 10), // Jarak antara ikon dan teks
-                            Container(
-                              width: 230,
-                              // decoration: BoxDecoration(
-                              //   color: Colors.blue,
-                              // ),
-                              child: Column(
-                                //crossAxisAlignment: CrossAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    nik,
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      color: Colors.black,
-                                    ),
-                                    //textAlign: TextAlign.left,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  Text(
-                                    nama,
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                    //textAlign: TextAlign.left,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 50,
-            ),
-            Expanded(
-                child: ListView(
+      body: ListView(
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            height: 70,
+            child: Row(
               children: [
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 10),
-                  height: 70,
-                  child: Column(
-                    children: [
-                      SizedBox(height: 15),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.person,
-                            color: Color.fromRGBO(70, 152, 138, 1),
-                            size: 30,
-                          ),
-                          SizedBox(width: 30),
-                          Expanded(
-                            child: TextFormField(
-                              controller: _namaController,
-                              decoration: InputDecoration(
-                                labelText: 'Nama Lengkap',
-                                border: OutlineInputBorder(),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      // SizedBox(height: 15)
-                    ],
-                  ),
+                Icon(
+                  Icons.person,
+                  color: Color.fromRGBO(70, 152, 138, 1),
+                  size: 30,
                 ),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 10),
-                  height: 70,
-                  child: Column(
-                    children: [
-                      SizedBox(height: 15),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.person,
-                            color: Color.fromRGBO(70, 152, 138, 1),
-                            size: 30,
-                          ),
-                          SizedBox(width: 30),
-                          Expanded(
-                            child: TextFormField(
-                              controller: _nikController,
-                              keyboardType:
-                                  const TextInputType.numberWithOptions(
-                                      decimal: false, signed: false),
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly,
-                              ],
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'NIK wajib diisi';
-                                } else if (value.length < 15) {
-                                  return 'NIK setidaknya sebanyak 15 karakter';
-                                }
-                                return null; // Return null for no validation errors
-                              },
-                              decoration: InputDecoration(
-                                labelText: 'NIK',
-                                border: OutlineInputBorder(),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      // SizedBox(height: 15)
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 10),
-                  height: 70,
-                  child: Column(
-                    children: [
-                      SizedBox(height: 15),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.location_on_outlined,
-                            color: Color.fromRGBO(70, 152, 138, 1),
-                            size: 30,
-                          ),
-                          SizedBox(width: 30),
-                          Expanded(
-                            child: TextFormField(
-                              controller: _alamatController,
-                              decoration: InputDecoration(
-                                labelText: 'Alamat',
-                                border: OutlineInputBorder(),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      // SizedBox(height: 15)
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 10),
-                  height: 70,
-                  child: Column(
-                    children: [
-                      SizedBox(height: 15),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.my_location_outlined,
-                            color: Color.fromRGBO(70, 152, 138, 1),
-                            size: 30,
-                          ),
-                          SizedBox(width: 30),
-                          Expanded(
-                            child: TextFormField(
-                              controller: _kecamatanController,
-                              decoration: InputDecoration(
-                                labelText: 'Kecamatan',
-                                border: OutlineInputBorder(),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      // SizedBox(height: 15)
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 10),
-                  height: 70,
-                  child: Column(
-                    children: [
-                      SizedBox(height: 15),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.location_city_outlined,
-                            color: Color.fromRGBO(70, 152, 138, 1),
-                            size: 30,
-                          ),
-                          SizedBox(width: 30),
-                          Expanded(
-                            child: TextFormField(
-                              controller: _kotaController,
-                              decoration: InputDecoration(
-                                labelText: 'Kota',
-                                border: OutlineInputBorder(),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      // SizedBox(height: 15)
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      editDataDiri();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromRGBO(70, 152, 138, 1),
-                      // padding: EdgeInsets.symmetric(vertical: 15), // Button padding
-                      fixedSize: Size(lebar, 40),
-                    ),
-                    child: Text(
-                      'Update Data',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+                SizedBox(width: 30),
+                Expanded(
+                  child: TextFormField(
+                    controller: _namaController,
+                    decoration: InputDecoration(
+                      labelText: 'Nama Lengkap',
+                      border: OutlineInputBorder(),
                     ),
                   ),
                 ),
               ],
-            ))
-          ],
-        ),
-      ),
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            height: 70,
+            child: Row(
+              children: [
+                Icon(
+                  Icons.credit_card,
+                  color: Color.fromRGBO(70, 152, 138, 1),
+                  size: 30,
+                ),
+                SizedBox(width: 30),
+                Expanded(
+                  child: TextFormField(
+                    controller: _nikController,
+                    keyboardType:
+                    const TextInputType.numberWithOptions(
+                        decimal: false, signed: false),
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'NIK wajib diisi';
+                      } else if (value.length < 15) {
+                        return 'NIK setidaknya sebanyak 15 karakter';
+                      }
+                      return null; // Return null for no validation errors
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'NIK',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            height: 70,
+            child: Row(
+              children: [
+                Icon(
+                  Icons.location_on_outlined,
+                  color: Color.fromRGBO(70, 152, 138, 1),
+                  size: 30,
+                ),
+                SizedBox(width: 30),
+                Expanded(
+                  child: TextFormField(
+                    controller: _alamatController,
+                    decoration: InputDecoration(
+                      labelText: 'Alamat',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            height: 70,
+            child: Row(
+              children: [
+                Icon(
+                  Icons.my_location_outlined,
+                  color: Color.fromRGBO(70, 152, 138, 1),
+                  size: 30,
+                ),
+                SizedBox(width: 30),
+                Expanded(
+                  child: TextFormField(
+                    controller: _kecamatanController,
+                    decoration: InputDecoration(
+                      labelText: 'Kecamatan',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            height: 70,
+            child: Row(
+              children: [
+                Icon(
+                  Icons.location_city_outlined,
+                  color: Color.fromRGBO(70, 152, 138, 1),
+                  size: 30,
+                ),
+                SizedBox(width: 30),
+                Expanded(
+                  child: TextFormField(
+                    controller: _kotaController,
+                    decoration: InputDecoration(
+                      labelText: 'Kota',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Container(
+            margin:
+            const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            child: ElevatedButton(
+              onPressed: () {
+                editDataDiri();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromRGBO(70, 152, 138, 1),
+                // padding: EdgeInsets.symmetric(vertical: 15), // Button padding
+                fixedSize: Size(lebar, 40),
+              ),
+              child: Text(
+                'Update Data',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        ],
+      )
     );
   }
 }
