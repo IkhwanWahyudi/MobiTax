@@ -109,6 +109,7 @@ class _regisState extends State<Regis> {
                     labelText: 'Email',
                     labelStyle: TextStyle(
                       color: Color(0xFF183D3D), // warna label teks
+                      fontSize: 14,
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -147,6 +148,7 @@ class _regisState extends State<Regis> {
                     labelText: 'Password',
                     labelStyle: const TextStyle(
                       color: Color(0xFF183D3D), // warna label teks
+                      fontSize: 14,
                     ),
                     focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
