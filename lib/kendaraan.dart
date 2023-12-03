@@ -23,46 +23,9 @@ class _kendaraanState extends State<kendaraan> {
   final TextEditingController noMesin = TextEditingController();
   final TextEditingController noBPKB = TextEditingController();
   final TextEditingController selectedYearController = TextEditingController();
-  final List<int> availableYears = List.generate(20, (index) => DateTime.now().year - index);
+  final List<int> availableYears =
+      List.generate(20, (index) => DateTime.now().year - index);
   int selectedYear = DateTime.now().year;
-
-  // Future<void> tambahKendaraan() async {
-  //   try {
-  //     // Dapatkan UID pengguna yang saat ini terautentikasi
-  //     String uidPengguna = FirebaseAuth.instance.currentUser!.uid;
-  //
-  //     // Tambahkan data kendaraan ke dokumen Firestore pengguna
-  //     await FirebaseFirestore.instance
-  //         .collection('pengguna')
-  //         .doc(uidPengguna)
-  //         .collection('kendaraan')
-  //         .add({
-  //       'plat': plat.text,
-  //       'jenis': jenis.text,
-  //       'merk': merk.text,
-  //       'type': type.text,
-  //       'tahun': selectedYear,
-  //       'warna': warna.text,
-  //       'rangka': int.tryParse(noRangka.text) ?? 0,
-  //       'mesin': int.tryParse(noMesin.text) ?? 0,
-  //       'bpkb': int.tryParse(noBPKB.text) ?? 0,
-  //       'brand': brand.text,
-  //       'transmisi': int.tryParse(transmisi.text) ?? 0,
-  //       'bbm': bbm.text,
-  //     });
-  //
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(content: Text("Kendaraan berhasil ditambahkan")),
-  //     );
-  //
-  //     Navigator.pop(context);
-  //     // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HalamanBerikutnya()));
-  //   } catch (e) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(content: Text("Terjadi kesalahan. Silakan coba lagi.")),
-  //     );
-  //   }
-  // }
 
   @override
   void initState() {
@@ -90,14 +53,14 @@ class _kendaraanState extends State<kendaraan> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Peringatan'),
-              content: Text('Plat masih kosong.'),
+              title: const Text('Peringatan'),
+              content: const Text('Plat masih kosong.'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('OK'),
+                  child: const Text('OK'),
                 ),
               ],
             );
@@ -109,14 +72,14 @@ class _kendaraanState extends State<kendaraan> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Peringatan'),
-              content: Text('Jenis kendaraan masih kosong.'),
+              title: const Text('Peringatan'),
+              content: const Text('Jenis kendaraan masih kosong.'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('OK'),
+                  child: const Text('OK'),
                 ),
               ],
             );
@@ -128,14 +91,14 @@ class _kendaraanState extends State<kendaraan> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Peringatan'),
-              content: Text('Merek kendaraan masih kosong.'),
+              title: const Text('Peringatan'),
+              content: const Text('Merek kendaraan masih kosong.'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('OK'),
+                  child: const Text('OK'),
                 ),
               ],
             );
@@ -147,14 +110,14 @@ class _kendaraanState extends State<kendaraan> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Peringatan'),
-              content: Text('Bahan Bakar kendaraan masih kosong.'),
+              title: const Text('Peringatan'),
+              content: const Text('Bahan Bakar kendaraan masih kosong.'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('OK'),
+                  child: const Text('OK'),
                 ),
               ],
             );
@@ -166,14 +129,14 @@ class _kendaraanState extends State<kendaraan> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Peringatan'),
-              content: Text('Transmisi kendaraan masih kosong.'),
+              title: const Text('Peringatan'),
+              content: const Text('Transmisi kendaraan masih kosong.'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('OK'),
+                  child: const Text('OK'),
                 ),
               ],
             );
@@ -185,14 +148,14 @@ class _kendaraanState extends State<kendaraan> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Peringatan'),
-              content: Text('Brand kendaraan masih kosong.'),
+              title: const Text('Peringatan'),
+              content: const Text('Brand kendaraan masih kosong.'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('OK'),
+                  child: const Text('OK'),
                 ),
               ],
             );
@@ -204,14 +167,14 @@ class _kendaraanState extends State<kendaraan> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Peringatan'),
-              content: Text('Tipe kendaraan masih kosong.'),
+              title: const Text('Peringatan'),
+              content: const Text('Tipe kendaraan masih kosong.'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('OK'),
+                  child: const Text('OK'),
                 ),
               ],
             );
@@ -223,14 +186,14 @@ class _kendaraanState extends State<kendaraan> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Peringatan'),
-              content: Text('Tahun Kepemilikan masih kosong.'),
+              title: const Text('Peringatan'),
+              content: const Text('Tahun Kepemilikan masih kosong.'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('OK'),
+                  child: const Text('OK'),
                 ),
               ],
             );
@@ -242,14 +205,14 @@ class _kendaraanState extends State<kendaraan> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Peringatan'),
-              content: Text('Warna Kendaraan masih kosong.'),
+              title: const Text('Peringatan'),
+              content: const Text('Warna Kendaraan masih kosong.'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('OK'),
+                  child: const Text('OK'),
                 ),
               ],
             );
@@ -261,14 +224,14 @@ class _kendaraanState extends State<kendaraan> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Peringatan'),
-              content: Text('Nomor Rangka masih kosong.'),
+              title: const Text('Peringatan'),
+              content: const Text('Nomor Rangka masih kosong.'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('OK'),
+                  child: const Text('OK'),
                 ),
               ],
             );
@@ -280,14 +243,14 @@ class _kendaraanState extends State<kendaraan> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Peringatan'),
-              content: Text('Nomor Mesin masih kosong.'),
+              title: const Text('Peringatan'),
+              content: const Text('Nomor Mesin masih kosong.'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('OK'),
+                  child: const Text('OK'),
                 ),
               ],
             );
@@ -299,14 +262,14 @@ class _kendaraanState extends State<kendaraan> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Peringatan'),
-              content: Text('Nomor BPKB masih kosong.'),
+              title: const Text('Peringatan'),
+              content: const Text('Nomor BPKB masih kosong.'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('OK'),
+                  child: const Text('OK'),
                 ),
               ],
             );
@@ -314,7 +277,6 @@ class _kendaraanState extends State<kendaraan> {
         );
         return;
       }
-
 
       // Dapatkan UID pengguna yang saat ini terautentikasi
       String uidPengguna = FirebaseAuth.instance.currentUser!.uid;
@@ -351,7 +313,6 @@ class _kendaraanState extends State<kendaraan> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     var lebar = MediaQuery.of(context).size.width;
@@ -373,28 +334,28 @@ class _kendaraanState extends State<kendaraan> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           Expanded(
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
                   children: [
-                    _textfieldPlat(plat, 'Nomor Plat Kendaraan'),
+                    _textfield(plat, 'Nomor Plat Kendaraan'),
                     _buildDropdown(jenis, 'Jenis Kendaraan'),
                     const SizedBox(
                       height: 15,
                     ),
-                    _textfieldMerek(merk, 'Merk Kendaraan'),
-                    _textfieldBBM(bbm, 'Bahan Bakar Kendaraan'),
-                    _textfieldCC(transmisi, 'Transmisi Kendaraan (CC)'),
-                    _textfieldBrand(brand, 'Brand Kendaraan'),
-                    _textfieldTipe(type, 'Tipe Kendaraan'),
+                    _textfield(merk, 'Merk Kendaraan'),
+                    _textfield(bbm, 'Bahan Bakar Kendaraan'),
+                    _buildNumericTextField(
+                        transmisi, 'Transmisi Kendaraan (CC)'),
+                    _textfield(brand, 'Brand Kendaraan'),
+                    _textfield(type, 'Tipe Kendaraan'),
                     _dropdownYear(selectedYearController, 'Tahun Kepemilikan'),
                     const SizedBox(
                       height: 15,
                     ),
-                    _textfieldWarna(warna, 'Warna Kendaraan'),
+                    _textfield(warna, 'Warna Kendaraan'),
                     _buildNumericTextField(noRangka, 'No. Rangka'),
                     _buildNumericTextField(noMesin, 'No. Mesin'),
                     _buildNumericTextField(noBPKB, 'No. BPKB'),
@@ -443,7 +404,17 @@ class _kendaraanState extends State<kendaraan> {
   }
 
   //======= WIDGET TEXT FIELD ============
-  Widget _textfieldPlat(TextEditingController controller, String labelText) {
+  Widget _textfield(TextEditingController controller, String labelText) {
+    int jumlahKarakter = 100;
+    if (labelText == 'Nomor Plat Kendaraan' ||
+        labelText == 'Bahan Bakar Kendaraan' ||
+        labelText == 'Warna Kendaraan') {
+      jumlahKarakter = 10;
+    } else if (labelText == 'Merk Kendaraan' ||
+        labelText == 'Brand Kendaraan' ||
+        labelText == 'Tipe Kendaraan') {
+      jumlahKarakter = 15;
+    }
     return Padding(
       padding: const EdgeInsets.all(10),
       child: TextField(
@@ -456,153 +427,27 @@ class _kendaraanState extends State<kendaraan> {
           focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(
               color:
-              Color(0xFF183D3D), // Warna outline saat dalam keadaan fokus
+                  Color(0xFF183D3D), // Warna outline saat dalam keadaan fokus
             ),
           ),
         ),
-        maxLength: 10,
+        maxLength: jumlahKarakter,
       ),
     );
   }
 
-  Widget _textfieldMerek(TextEditingController controller, String labelText) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: TextField(
-        controller: controller,
-        decoration: InputDecoration(
-          labelText: labelText,
-          filled: true,
-          fillColor: Colors.white,
-          border: const OutlineInputBorder(),
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color:
-              Color(0xFF183D3D), // Warna outline saat dalam keadaan fokus
-            ),
-          ),
-        ),
-        maxLength: 15,
-      ),
-    );
-  }
-
-  Widget _textfieldBBM(TextEditingController controller, String labelText) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: TextField(
-        controller: controller,
-        decoration: InputDecoration(
-          labelText: labelText,
-          filled: true,
-          fillColor: Colors.white,
-          border: const OutlineInputBorder(),
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color:
-              Color(0xFF183D3D), // Warna outline saat dalam keadaan fokus
-            ),
-          ),
-        ),
-        maxLength: 10,
-      ),
-    );
-  }
-
-  Widget _textfieldCC(TextEditingController controller, String labelText) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: TextField(
-        controller: controller,
-        keyboardType: const TextInputType.numberWithOptions(
-            decimal: false, signed: false),
-        inputFormatters: <TextInputFormatter>[
-          FilteringTextInputFormatter.digitsOnly,
-        ],
-        decoration: InputDecoration(
-          labelText: labelText,
-          filled: true,
-          fillColor: Colors.white,
-          border: const OutlineInputBorder(),
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color:
-              Color(0xFF183D3D), // Warna outline saat dalam keadaan fokus
-            ),
-          ),
-        ),
-        maxLength: 4,
-      ),
-    );
-  }
-
-  Widget _textfieldBrand(TextEditingController controller, String labelText) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: TextField(
-        controller: controller,
-        decoration: InputDecoration(
-          labelText: labelText,
-          filled: true,
-          fillColor: Colors.white,
-          border: const OutlineInputBorder(),
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color:
-              Color(0xFF183D3D), // Warna outline saat dalam keadaan fokus
-            ),
-          ),
-        ),
-        maxLength: 15,
-      ),
-    );
-  }
-
-  Widget _textfieldTipe(TextEditingController controller, String labelText) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: TextField(
-        controller: controller,
-        decoration: InputDecoration(
-          labelText: labelText,
-          filled: true,
-          fillColor: Colors.white,
-          border: const OutlineInputBorder(),
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color:
-              Color(0xFF183D3D), // Warna outline saat dalam keadaan fokus
-            ),
-          ),
-        ),
-        maxLength: 15,
-      ),
-    );
-  }
-
-  Widget _textfieldWarna(TextEditingController controller, String labelText) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: TextField(
-        controller: controller,
-        decoration: InputDecoration(
-          labelText: labelText,
-          filled: true,
-          fillColor: Colors.white,
-          border: const OutlineInputBorder(),
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color:
-              Color(0xFF183D3D), // Warna outline saat dalam keadaan fokus
-            ),
-          ),
-        ),
-        maxLength: 10,
-      ),
-    );
-  }
-
-  Widget _buildNumericTextField(TextEditingController controller, String labelText) {
+  Widget _buildNumericTextField(
+      TextEditingController controller, String labelText) {
+    int jumlahKarakter = 100;
+    if (labelText == 'Nomor Plat Kendaraan' ||
+        labelText == 'Bahan Bakar Kendaraan' ||
+        labelText == 'Warna Kendaraan') {
+      jumlahKarakter = 10;
+    } else if (labelText == 'Merk Kendaraan' ||
+        labelText == 'Brand Kendaraan' ||
+        labelText == 'Tipe Kendaraan') {
+      jumlahKarakter = 15;
+    }
     return Padding(
       padding: const EdgeInsets.all(10),
       child: TextField(
@@ -624,11 +469,10 @@ class _kendaraanState extends State<kendaraan> {
             ),
           ),
         ),
-        maxLength: 20,
+        maxLength: jumlahKarakter,
       ),
     );
   }
-
 
   //==========WIDGET DROPDOWN============
   Widget _buildDropdown(TextEditingController controller, String labelText) {
@@ -700,32 +544,4 @@ class _kendaraanState extends State<kendaraan> {
       ),
     );
   }
-
-  // Widget _buildYearDropdown() {
-  //   return Padding(
-  //     padding: const EdgeInsets.all(10),
-  //     child: Row(
-  //       children: [
-  //         const Text(
-  //           'Tahun Kepemilikan: ',
-  //           style: TextStyle(fontSize: 16),
-  //         ),
-  //         DropdownButton<int>(
-  //           value: selectedYear,
-  //           items: availableYears.map((year) {
-  //             return DropdownMenuItem<int>(
-  //               value: year,
-  //               child: Text('$year'),
-  //             );
-  //           }).toList(),
-  //           onChanged: (value) {
-  //             setState(() {
-  //               selectedYear = value!;
-  //             });
-  //           },
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 }

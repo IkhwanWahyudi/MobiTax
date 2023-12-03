@@ -55,7 +55,6 @@ class _DetailPageState extends State<DetailPage> {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       // return CircularProgressIndicator();
                     }
-
                     if (!snapshot.hasData) {
                       return Text('Data kendaraan tidak ditemukan');
                     }
@@ -362,7 +361,7 @@ class _DetailPageState extends State<DetailPage> {
                 // Logika ketika tombol Bayar ditekan
               },
               style: ElevatedButton.styleFrom(
-                primary: Color.fromRGBO(70, 152, 138, 1),
+                backgroundColor: Color.fromRGBO(70, 152, 138, 1),
               ),
               child: Text(
                 'Bayar',

@@ -91,7 +91,7 @@ class _regisState extends State<Regis> {
                     } else if (value.length < 15) {
                       return 'NIK setidaknya sebanyak 15 karakter';
                     }
-                    return null; // Return null for no validation errors
+                    return null;
                   },
                   decoration: const InputDecoration(
                     labelText: 'NIK',
@@ -110,11 +110,17 @@ class _regisState extends State<Regis> {
               ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
-                child: TextField(
+                child: TextFormField(
                   controller: _namaController,
                   style: const TextStyle(
                     fontSize: 14,
                   ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Nama Lengkap wajib diisi';
+                    }
+                    return null;
+                  },
                   decoration: const InputDecoration(
                     labelText: 'Nama Lengkap',
                     labelStyle: TextStyle(
@@ -141,7 +147,7 @@ class _regisState extends State<Regis> {
                     } else if (!value.contains('@')) {
                       return 'Email tidak valid';
                     }
-                    return null; // Return null for no validation errors
+                    return null;
                   },
                   decoration: const InputDecoration(
                     labelText: 'Email',
@@ -171,7 +177,7 @@ class _regisState extends State<Regis> {
                     } else if (value.length < 6) {
                       return 'Password setidaknya sebanyak 6 karakter';
                     }
-                    return null; // Return null for no validation errors
+                    return null;
                   },
                   decoration: InputDecoration(
                     suffixIcon: GestureDetector(
@@ -200,11 +206,17 @@ class _regisState extends State<Regis> {
               ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
-                child: TextField(
+                child: TextFormField(
                   controller: _alamatController,
                   style: const TextStyle(
                     fontSize: 14,
                   ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Alamat wajib diisi';
+                    }
+                    return null; // Return null for no validation errors
+                  },
                   decoration: const InputDecoration(
                     labelText: 'Alamat',
                     labelStyle: TextStyle(
@@ -222,11 +234,17 @@ class _regisState extends State<Regis> {
               ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
-                child: TextField(
+                child: TextFormField(
                   controller: _kecamatanController,
                   style: const TextStyle(
                     fontSize: 14,
                   ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Kecamatan wajib diisi';
+                    }
+                    return null; // Return null for no validation errors
+                  },
                   decoration: const InputDecoration(
                     labelText: 'Kecamatan',
                     labelStyle: TextStyle(
@@ -244,11 +262,17 @@ class _regisState extends State<Regis> {
               ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
-                child: TextField(
+                child: TextFormField(
                   controller: _kotaController,
                   style: const TextStyle(
                     fontSize: 14,
                   ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Kota wajib diisi';
+                    }
+                    return null; // Return null for no validation errors
+                  },
                   decoration: const InputDecoration(
                     labelText: 'Kota',
                     labelStyle: TextStyle(

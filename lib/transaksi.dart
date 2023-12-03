@@ -120,7 +120,7 @@ class _transaksiState extends State<transaksi> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 30),
+                            SizedBox(height: 20),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
