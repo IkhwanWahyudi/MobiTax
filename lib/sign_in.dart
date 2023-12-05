@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, unused_import
+// ignore_for_file: prefer_const_constructors, unused_import, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:mobi_tax/auth.dart';
@@ -35,11 +35,30 @@ class _SignInState extends State<SignIn> {
           builder: (context) => const BottomNavigation(),
         ),
       );
-      setState(() => _loading = false);
     } catch (e) {
-      print('Error saat signin: $e');
-      setState(() => _loading = false);
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Login Error'),
+            content: const Text(
+                'Email atau Password tidak valid. Silakan coba lagi.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+      print('Error Saat Sign In: $e');
     }
+    setState(() {
+      _loading = false;
+    });
   }
 
   bool isPasswordVisible = false;
@@ -69,9 +88,15 @@ class _SignInState extends State<SignIn> {
               Container(
                 margin:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                child: TextField(
+                child: TextFormField(
                   autocorrect: true,
                   controller: _emailController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Email masih kosong';
+                    }
+                    return null;
+                  },
                   decoration: const InputDecoration(
                     labelText: 'Email',
                     labelStyle: TextStyle(
@@ -90,10 +115,16 @@ class _SignInState extends State<SignIn> {
               Container(
                 margin:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                child: TextField(
+                child: TextFormField(
                   autocorrect: true,
                   controller: _passwordController,
                   obscureText: !isPasswordVisible,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Password masih kosong';
+                    }
+                    return null;
+                  },
                   decoration: InputDecoration(
                     suffixIcon: GestureDetector(
                       onTap: _togglePasswordVisibility,

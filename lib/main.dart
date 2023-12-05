@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobi_tax/firebase_options.dart';
+import 'package:mobi_tax/introductionPage.dart';
 import 'package:mobi_tax/profil_page.dart';
 import 'package:mobi_tax/sign_in.dart';
 
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'MobiTax',
       // theme: ThemeData(
       //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       //   useMaterial3: true,
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
           if (snapshot.hasData) {
             return const BottomNavigation();
           } else {
-            return const SignIn();
+            return const IntroductionPage();
           }
         },
       ),

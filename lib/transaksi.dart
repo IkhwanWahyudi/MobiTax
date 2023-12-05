@@ -20,9 +20,9 @@ class _transaksiState extends State<transaksi> {
     User? user = FirebaseAuth.instance.currentUser;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(70, 152, 138, 1),
+        backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
         elevation: 0,
-        title: Text(
+        title: const Text(
           'Transaksi',
           style: TextStyle(
             color: Colors.white,
@@ -45,24 +45,27 @@ class _transaksiState extends State<transaksi> {
                     .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.connectionState ==
-                      ConnectionState.waiting) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Text('Data sedang dimuat');
                   }
                   if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {}
 
                   double pajak = 0;
 
-                  for (int i = 0; i < snapshot.data!.docs.length ; i++) {
+                  for (int i = 0; i < snapshot.data!.docs.length; i++) {
                     if (snapshot.data!.docs[i]['transmisi'] < 100) {
                       pajak += 50000;
-                    } else if (snapshot.data!.docs[i]['transmisi'] >= 100 && snapshot.data!.docs[i]['transmisi'] < 150) {
+                    } else if (snapshot.data!.docs[i]['transmisi'] >= 100 &&
+                        snapshot.data!.docs[i]['transmisi'] < 150) {
                       pajak += 200000;
-                    } else if (snapshot.data!.docs[i]['transmisi'] >= 150 && snapshot.data!.docs[i]['transmisi'] < 200) {
+                    } else if (snapshot.data!.docs[i]['transmisi'] >= 150 &&
+                        snapshot.data!.docs[i]['transmisi'] < 200) {
                       pajak += 400000;
-                    } else if (snapshot.data!.docs[i]['transmisi'] >= 200 && snapshot.data!.docs[i]['transmisi'] < 1000) {
+                    } else if (snapshot.data!.docs[i]['transmisi'] >= 200 &&
+                        snapshot.data!.docs[i]['transmisi'] < 1000) {
                       pajak += 700000;
-                    } else if (snapshot.data!.docs[i]['transmisi'] >= 1000 && snapshot.data!.docs[i]['transmisi'] < 2000) {
+                    } else if (snapshot.data!.docs[i]['transmisi'] >= 1000 &&
+                        snapshot.data!.docs[i]['transmisi'] < 2000) {
                       pajak += 1000000;
                     } else if (snapshot.data!.docs[i]['transmisi'] >= 2000) {
                       pajak += 2000000;
@@ -85,40 +88,42 @@ class _transaksiState extends State<transaksi> {
                             Container(
                               height: 90,
                               width: double.infinity,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: Color.fromRGBO(70, 152, 138, 1),
                                 borderRadius: BorderRadius.only(
                                   bottomLeft: Radius.circular(15),
                                   bottomRight: Radius.circular(15),
                                 ),
-                                boxShadow: const [
+                                boxShadow: [
                                   BoxShadow(
                                     color: Colors.grey, // warna bayangan
                                     blurRadius: 5, // radius blur bayangan
-                                    offset: Offset(
-                                        0, 0), // pergeseran bayangan (horizontal, vertical)
+                                    offset: Offset(0,
+                                        0), // pergeseran bayangan (horizontal, vertical)
                                   ),
                                 ],
                               ),
                             ),
                             Center(
-                              child :Positioned(
+                              child: Positioned(
                                 child: Container(
                                   padding: const EdgeInsets.all(20),
-                                  height: 150,
+                                  height: tinggi * 0.8,
                                   //margin: const EdgeInsets.only(right: 40),
-                                  margin:
-                                  const EdgeInsets.only(right: 10, left: 10),
+                                  margin: const EdgeInsets.only(
+                                      right: 10, left: 10),
                                   decoration: const BoxDecoration(
                                       color: Colors.white,
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10))),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           const Text(
                                             'Biaya Pajak Kendaraan',
@@ -127,7 +132,8 @@ class _transaksiState extends State<transaksi> {
                                           Container(
                                             child: Text(
                                               'Rp $pajak',
-                                              style: const TextStyle(fontSize: 15),
+                                              style:
+                                                  const TextStyle(fontSize: 15),
                                             ),
                                           ),
                                         ],
@@ -136,7 +142,8 @@ class _transaksiState extends State<transaksi> {
                                         height: 10,
                                       ),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           const Text(
                                             'Biaya Admin',
@@ -145,12 +152,12 @@ class _transaksiState extends State<transaksi> {
                                           Container(
                                             child: Text(
                                               'Rp $biayaAdmin',
-                                              style: const TextStyle(fontSize: 15),
+                                              style:
+                                                  const TextStyle(fontSize: 15),
                                             ),
                                           ),
                                         ],
                                       ),
-
                                       const SizedBox(height: 20),
                                       Container(
                                         height: 1, // Lebar garis
@@ -158,10 +165,9 @@ class _transaksiState extends State<transaksi> {
                                         color: Colors.black.withOpacity(0.5),
                                       ),
                                       const SizedBox(height: 20),
-
                                       Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           const Text(
                                             'Total',
@@ -187,9 +193,9 @@ class _transaksiState extends State<transaksi> {
                           ],
                         ),
                       ),
-
                       Container(
-                        margin: const EdgeInsets.only(left: 10, top: 10, bottom: 20),
+                        margin: const EdgeInsets.only(
+                            left: 10, top: 10, bottom: 20),
                         //padding: const EdgeInsets.all(20),
                         child: const Text(
                           'Alamat Pengiriman',
@@ -205,8 +211,7 @@ class _transaksiState extends State<transaksi> {
                         margin: const EdgeInsets.only(right: 10, left: 10),
                         decoration: const BoxDecoration(
                           color: Colors.white,
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(10)),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -241,15 +246,13 @@ class _transaksiState extends State<transaksi> {
                                   return const CircularProgressIndicator();
                                 }
 
-                                var jalan =
-                                snapshot.data!.docs[0]['alamat'];
+                                var jalan = snapshot.data!.docs[0]['alamat'];
                                 var kecamatan =
-                                snapshot.data!.docs[0]['kecamatan'];
+                                    snapshot.data!.docs[0]['kecamatan'];
                                 var kota = snapshot.data!.docs[0]['kota'];
 
                                 return Column(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
                                       jalan,
@@ -281,7 +284,7 @@ class _transaksiState extends State<transaksi> {
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
-                              const Color.fromRGBO(70, 152, 138, 1),
+                                  const Color.fromRGBO(70, 152, 138, 1),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15),
                               ),
@@ -310,7 +313,7 @@ class _transaksiState extends State<transaksi> {
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
-                              const Color.fromRGBO(70, 152, 138, 1),
+                                  const Color.fromRGBO(70, 152, 138, 1),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15.0),
                               ),

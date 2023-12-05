@@ -121,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               ),
                               SizedBox(width: 10), // Jarak antara ikon dan teks
                               Container(
-                                width : 230,
+                                width: 230,
                                 // decoration: BoxDecoration(
                                 //   color: Colors.blue,
                                 // ),
@@ -132,8 +132,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                     Text(
                                       nama,
                                       style: TextStyle(
-                                          fontSize: 18, fontWeight: FontWeight.bold
-                                      ),
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                     Text(
@@ -146,21 +146,20 @@ class _MyHomePageState extends State<MyHomePage> {
                                   ],
                                 ),
                               ),
-                            ]
-                        );
+                            ]);
                       },
                     ),
-                    IconButton(
-                      //padding: EdgeInsets.all(10),
-                      icon: Icon(
-                        Icons.edit,
-                        color: Colors.black,
-                        size: 30,
-                      ),
-                      onPressed: () {
-                        // Logika ketika tombol di tekan
-                      },
-                    ),
+                    // IconButton(
+                    //   //padding: EdgeInsets.all(10),
+                    //   icon: Icon(
+                    //     Icons.edit,
+                    //     color: Colors.black,
+                    //     size: 30,
+                    //   ),
+                    //   onPressed: () {
+                    //     // Logika ketika tombol di tekan
+                    //   },
+                    // ),
                   ],
                 ),
               ),
@@ -182,9 +181,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     .doc(user?.uid)
                     .collection('kendaraan')
                     .snapshots(),
-                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                  }
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {}
 
                   if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                     return Text('Tidak ada Kendaraan');
@@ -196,7 +195,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     itemCount: snapshot.data!.docs.length,
                     itemBuilder: (context, index) {
                       var dataKendaraan = snapshot.data!.docs[index].data()
-                      as Map<String, dynamic>;
+                          as Map<String, dynamic>;
                       var jenisKendaraan = dataKendaraan['jenis'];
                       var plat = dataKendaraan['plat'];
                       var merk = dataKendaraan['merk'];
@@ -223,7 +222,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             builder: (BuildContext context) {
                               return AlertDialog(
                                 title: Text('Konfirmasi'),
-                                content: Text('Apakah Anda yakin ingin menghapus kendaraan ini?'),
+                                content: Text(
+                                    'Apakah Anda yakin ingin menghapus kendaraan ini?'),
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () {
@@ -243,7 +243,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                           .collection('kendaraan')
                                           .doc(snapshot.data!.docs[index].id);
 
-                                      await docRef.delete(); // Perubahan di sini, menambahkan await
+                                      await docRef
+                                          .delete(); // Perubahan di sini, menambahkan await
 
                                       // Tutup dialog setelah menghapus
                                       Navigator.of(context).pop();
@@ -258,13 +259,14 @@ class _MyHomePageState extends State<MyHomePage> {
                             },
                           );
                         },
-
                         child: GestureDetector(
                           onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => DetailPage(selectedDocumentId: index), // Navigasi ke DetailPage
+                                builder: (context) => DetailPage(
+                                    selectedDocumentId:
+                                        index), // Navigasi ke DetailPage
                               ),
                             );
                           },
@@ -280,9 +282,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                     BoxShadow(
                                       color: Colors.grey, // warna bayangan
                                       blurRadius: 5, // radius blur bayangan
-                                      offset: Offset(
-                                          0, 0
-                                      ), // pergeseran bayangan (horizontal, vertical)
+                                      offset: Offset(0,
+                                          0), // pergeseran bayangan (horizontal, vertical)
                                     ),
                                   ],
                                 ),
@@ -306,13 +307,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                     const SizedBox(width: 15),
                                     Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text("$plat"),
                                         Text("$merk"),
-                                        Text(
-                                            "Masa Berlaku")
+                                        Text("Masa Berlaku")
                                       ],
                                     )
                                   ],
