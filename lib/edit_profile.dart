@@ -13,12 +13,45 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  final TextEditingController _nikController = TextEditingController();
-  final TextEditingController _namaController = TextEditingController();
-  final TextEditingController _alamatController = TextEditingController();
-  final TextEditingController _kecamatanController = TextEditingController();
-  final TextEditingController _kotaController = TextEditingController();
+  // final TextEditingController _nikController = TextEditingController();
+  // final TextEditingController _namaController = TextEditingController();
+  // final TextEditingController _alamatController = TextEditingController();
+  // final TextEditingController _kecamatanController = TextEditingController();
+  // final TextEditingController _kotaController = TextEditingController();
 
+  // Define controllers for each TextField
+  TextEditingController _nikController = TextEditingController();
+  TextEditingController _namaController = TextEditingController();
+  TextEditingController _alamatController = TextEditingController();
+  TextEditingController _kecamatanController = TextEditingController();
+  TextEditingController _kotaController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    // Inisialisasi nilai controller dengan data dari akun saat ini
+    getUserData();
+  }
+
+  // Mengambil data dari akun saat ini dan mengisi nilai controller
+  void getUserData() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    var snapshot = await FirebaseFirestore.instance
+        .collection('pengguna')
+        .doc(user?.uid)
+        .collection('data_diri')
+        .get();
+
+    var data = snapshot.docs[0].data();
+
+    setState(() {
+      _nikController.text = data['nik'];
+      _namaController.text = data['nama'];
+      _alamatController.text = data['alamat'];
+      _kecamatanController.text = data['kecamatan'];
+      _kotaController.text = data['kota'];
+    });
+  }
 
   Future<void> editDataDiri() async {
     try {
