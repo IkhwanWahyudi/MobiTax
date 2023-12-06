@@ -26,6 +26,7 @@ class _kendaraanState extends State<kendaraan> {
   final List<int> availableYears =
       List.generate(20, (index) => DateTime.now().year - index);
   int selectedYear = DateTime.now().year;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -46,129 +47,16 @@ class _kendaraanState extends State<kendaraan> {
   }
 
   Future<void> tambahKendaraan() async {
+    if (!_formKey.currentState!.validate()) return;
     try {
       // =========== VALIDASI INPUT KENDARAAN ===============
-      if (plat.text.isEmpty) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Peringatan'),
-              content: const Text('Plat masih kosong.'),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-        return;
-      } else if (jenis.text.isEmpty) {
+      if (jenis.text.isEmpty) {
         showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
               title: const Text('Peringatan'),
               content: const Text('Jenis kendaraan masih kosong.'),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-        return;
-      } else if (merk.text.isEmpty) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Peringatan'),
-              content: const Text('Merek kendaraan masih kosong.'),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-        return;
-      } else if (bbm.text.isEmpty) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Peringatan'),
-              content: const Text('Bahan Bakar kendaraan masih kosong.'),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-        return;
-      } else if (transmisi.text.isEmpty) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Peringatan'),
-              content: const Text('Transmisi kendaraan masih kosong.'),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-        return;
-      } else if (brand.text.isEmpty) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Peringatan'),
-              content: const Text('Brand kendaraan masih kosong.'),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-        return;
-      } else if (type.text.isEmpty) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Peringatan'),
-              content: const Text('Tipe kendaraan masih kosong.'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
@@ -188,82 +76,6 @@ class _kendaraanState extends State<kendaraan> {
             return AlertDialog(
               title: const Text('Peringatan'),
               content: const Text('Tahun Kepemilikan masih kosong.'),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-        return;
-      } else if (warna.text.isEmpty) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Peringatan'),
-              content: const Text('Warna Kendaraan masih kosong.'),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-        return;
-      } else if (noRangka.text.isEmpty) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Peringatan'),
-              content: const Text('Nomor Rangka masih kosong.'),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-        return;
-      } else if (noMesin.text.isEmpty) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Peringatan'),
-              content: const Text('Nomor Mesin masih kosong.'),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-        return;
-      } else if (noBPKB.text.isEmpty) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Peringatan'),
-              content: const Text('Nomor BPKB masih kosong.'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
@@ -339,31 +151,35 @@ class _kendaraanState extends State<kendaraan> {
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    _textfield(plat, 'Nomor Plat Kendaraan'),
-                    _buildDropdown(jenis, 'Jenis Kendaraan'),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    _textfield(merk, 'Merk Kendaraan'),
-                    _textfield(bbm, 'Bahan Bakar Kendaraan'),
-                    _buildNumericTextField(
-                        transmisi, 'Transmisi Kendaraan (CC)'),
-                    _textfield(brand, 'Brand Kendaraan'),
-                    _textfield(type, 'Tipe Kendaraan'),
-                    _dropdownYear(selectedYearController, 'Tahun Kepemilikan'),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    _textfield(warna, 'Warna Kendaraan'),
-                    _buildNumericTextField(noRangka, 'No. Rangka'),
-                    _buildNumericTextField(noMesin, 'No. Mesin'),
-                    _buildNumericTextField(noBPKB, 'No. BPKB'),
-                    const SizedBox(
-                      height: 50,
-                    )
-                  ],
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      _textfield(plat, 'Nomor Plat Kendaraan'),
+                      _buildDropdown(jenis, 'Jenis Kendaraan'),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      _textfield(merk, 'Merk Kendaraan'),
+                      _textfield(bbm, 'Bahan Bakar Kendaraan'),
+                      _buildNumericTextField(
+                          transmisi, 'Transmisi Kendaraan (CC)'),
+                      _textfield(brand, 'Brand Kendaraan'),
+                      _textfield(type, 'Tipe Kendaraan'),
+                      _dropdownYear(
+                          selectedYearController, 'Tahun Kepemilikan'),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      _textfield(warna, 'Warna Kendaraan'),
+                      _buildNumericTextField(noRangka, 'No. Rangka'),
+                      _buildNumericTextField(noMesin, 'No. Mesin'),
+                      _buildNumericTextField(noBPKB, 'No. BPKB'),
+                      const SizedBox(
+                        height: 50,
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -418,8 +234,14 @@ class _kendaraanState extends State<kendaraan> {
     }
     return Padding(
       padding: const EdgeInsets.all(10),
-      child: TextField(
+      child: TextFormField(
         controller: controller,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return '$labelText wajib diisi';
+          }
+          return null;
+        },
         decoration: InputDecoration(
           labelText: labelText,
           filled: true,
@@ -449,13 +271,19 @@ class _kendaraanState extends State<kendaraan> {
     }
     return Padding(
       padding: const EdgeInsets.all(10),
-      child: TextField(
+      child: TextFormField(
         controller: controller,
         keyboardType: const TextInputType.numberWithOptions(
             decimal: false, signed: false),
         inputFormatters: <TextInputFormatter>[
           FilteringTextInputFormatter.digitsOnly,
         ],
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return '$labelText wajib diisi';
+          }
+          return null;
+        },
         decoration: InputDecoration(
           labelText: labelText,
           filled: true,
