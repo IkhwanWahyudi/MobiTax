@@ -1,9 +1,9 @@
-import 'dart:html';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'themeModeData.dart';
 
 class kendaraan extends StatefulWidget {
   const kendaraan({Key? key});
@@ -26,7 +26,7 @@ class _kendaraanState extends State<kendaraan> {
   final TextEditingController noBPKB = TextEditingController();
   final TextEditingController selectedYearController = TextEditingController();
   final List<int> availableYears =
-      List.generate(20, (index) => DateTime.now().year - index);
+  List.generate(20, (index) => DateTime.now().year - index);
   int selectedYear = DateTime.now().year;
   final _formKey = GlobalKey<FormState>();
 
@@ -132,11 +132,11 @@ class _kendaraanState extends State<kendaraan> {
   Widget build(BuildContext context) {
     var lebar = MediaQuery.of(context).size.width;
     var tinggi = MediaQuery.of(context).size.height;
+    ThemeData selectedTheme = Provider.of<ThemeModeData>(context).getTheme();
 
     return Scaffold(
-      backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
+        backgroundColor: selectedTheme.primaryColor,
         shadowColor: Colors.transparent,
         centerTitle: true,
         title: const Text(
@@ -145,8 +145,11 @@ class _kendaraanState extends State<kendaraan> {
             color: Colors.white,
           ),
         ),
+        iconTheme: IconThemeData(
+          color: Colors.white, // Ganti warna sesuai keinginan Anda
+        ),
       ),
-      // backgroundColor: const Color.fromARGB(255, 240, 237, 237),
+      backgroundColor: const Color.fromARGB(255, 240, 237, 237),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -198,7 +201,7 @@ class _kendaraanState extends State<kendaraan> {
               tambahKendaraan();
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
+              backgroundColor: selectedTheme.primaryColor,
               minimumSize: const Size(250, 50), // Atur lebar dan tinggi button
               padding: const EdgeInsets.symmetric(
                 vertical: 10,
@@ -225,8 +228,6 @@ class _kendaraanState extends State<kendaraan> {
 
   //======= WIDGET TEXT FIELD ============
   Widget _textfield(TextEditingController controller, String labelText) {
-    TextStyle? textStyle = Theme.of(context).textTheme.displaySmall;
-
     int jumlahKarakter = 100;
     if (labelText == 'Nomor Plat Kendaraan' ||
         labelText == 'Bahan Bakar Kendaraan' ||
@@ -252,15 +253,14 @@ class _kendaraanState extends State<kendaraan> {
           filled: true,
           fillColor: Colors.white,
           border: const OutlineInputBorder(),
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color:
-                  Color(0xFF183D3D), // Warna outline saat dalam keadaan fokus
-            ),
-          ),
+          // focusedBorder: const OutlineInputBorder(
+          //   borderSide: BorderSide(
+          //     color:
+          //     Color(0xFF183D3D), // Warna outline saat dalam keadaan fokus
+          //   ),
+          // ),
         ),
         maxLength: jumlahKarakter,
-        style: textStyle, // Gunakan style yang telah ditentukan
       ),
     );
   }
@@ -268,7 +268,6 @@ class _kendaraanState extends State<kendaraan> {
   Widget _buildNumericTextField(
       TextEditingController controller, String labelText) {
     int jumlahKarakter = 100;
-    TextStyle? textStyle = Theme.of(context).textTheme.displaySmall;
     if (labelText == 'Transmisi Kendaraan (CC)') {
       jumlahKarakter = 5;
     } else if (labelText == 'No. Rangka' ||
@@ -296,15 +295,14 @@ class _kendaraanState extends State<kendaraan> {
           filled: true,
           fillColor: Colors.white,
           border: const OutlineInputBorder(),
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color:
-                  Color(0xFF183D3D), // Warna outline saat dalam keadaan fokus
-            ),
-          ),
+          // focusedBorder: const OutlineInputBorder(
+          //   borderSide: BorderSide(
+          //     color:
+          //     Color(0xFF183D3D), // Warna outline saat dalam keadaan fokus
+          //   ),
+          // ),
         ),
         maxLength: jumlahKarakter,
-        style: textStyle,
       ),
     );
   }
@@ -315,20 +313,14 @@ class _kendaraanState extends State<kendaraan> {
       padding: const EdgeInsets.all(10),
       child: DropdownButtonFormField<String>(
         value: controller.text.isEmpty ? null : controller.text,
-        items: [
+        items: const [
           DropdownMenuItem<String>(
             value: 'Motor',
-            child: Text(
-              'Motor',
-              style: Theme.of(context).textTheme.labelSmall,
-            ),
+            child: Text('Motor'),
           ),
           DropdownMenuItem<String>(
             value: 'Mobil',
-            child: Text(
-              'Mobil',
-              style: Theme.of(context).textTheme.labelSmall,
-            ),
+            child: Text('Mobil'),
           ),
         ],
         onChanged: (String? value) {
@@ -338,27 +330,16 @@ class _kendaraanState extends State<kendaraan> {
             });
           }
         },
-        selectedItemBuilder: (BuildContext context) {
-          return [
-            for (var item in ['Motor', 'Mobil'])
-              Text(
-                item,
-                style: const TextStyle(
-                    color:
-                        Colors.black), // Mengatur warna teks item yang dipilih
-              ),
-          ];
-        },
         decoration: InputDecoration(
           labelText: labelText,
           filled: true,
           fillColor: Colors.white,
           border: const OutlineInputBorder(),
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Color(0xFF183D3D),
-            ),
-          ),
+          // focusedBorder: const OutlineInputBorder(
+          //   borderSide: BorderSide(
+          //     color: Color(0xFF183D3D),
+          //   ),
+          // ),
         ),
       ),
     );
@@ -372,9 +353,7 @@ class _kendaraanState extends State<kendaraan> {
         items: availableYears.map((year) {
           return DropdownMenuItem<String>(
             value: year.toString(),
-            child: Text(
-              '$year',
-            ),
+            child: Text('$year'),
           );
         }).toList(),
         onChanged: (String? value) {
@@ -389,11 +368,11 @@ class _kendaraanState extends State<kendaraan> {
           filled: true,
           fillColor: Colors.white,
           border: const OutlineInputBorder(),
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Color(0xFF183D3D),
-            ),
-          ),
+          // focusedBorder: const OutlineInputBorder(
+          //   borderSide: BorderSide(
+          //     color: Color(0xFF183D3D),
+          //   ),
+          // ),
         ),
       ),
     );

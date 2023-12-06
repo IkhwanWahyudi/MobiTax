@@ -16,8 +16,8 @@ class Profile extends StatelessWidget {
     User? user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
-      backgroundColor: Theme.of(context).canvasColor,
-      // backgroundColor: const Color.fromARGB(255, 240, 237, 237),
+      //backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
+      backgroundColor: const Color.fromARGB(255, 240, 237, 237),
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(70, 152, 138, 1),
         elevation: 0,
@@ -151,7 +151,7 @@ class Profile extends StatelessWidget {
             ),
             Expanded(
                 child: StreamBuilder<QuerySnapshot>(
-                    // Mendapatkan koleksi data_diri dari dokumen pengguna dengan UID saat ini
+                  // Mendapatkan koleksi data_diri dari dokumen pengguna dengan UID saat ini
                     stream: FirebaseFirestore.instance
                         .collection('pengguna')
                         .doc(user?.uid)
@@ -173,7 +173,7 @@ class Profile extends StatelessWidget {
                           Container(
                             //margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
                             margin:
-                                EdgeInsets.only(top: 15, left: 10, right: 10),
+                            EdgeInsets.only(top: 15, left: 10, right: 10),
                             height: 60,
                             // decoration: BoxDecoration(
                             //   color: Colors.green,
@@ -189,8 +189,10 @@ class Profile extends StatelessWidget {
                                     width: 30), // Jarak antara ikon dan teks
                                 Text(
                                   nama,
-                                  style:
-                                      Theme.of(context).textTheme.displayMedium,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.black,
+                                  ),
                                 ),
                               ],
                             ),
@@ -218,8 +220,10 @@ class Profile extends StatelessWidget {
                                     width: 30), // Jarak antara ikon dan teks
                                 Text(
                                   alamat,
-                                  style:
-                                      Theme.of(context).textTheme.displayMedium,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.black,
+                                  ),
                                 ),
                               ],
                             ),
@@ -247,8 +251,10 @@ class Profile extends StatelessWidget {
                                     width: 30), // Jarak antara ikon dan teks
                                 Text(
                                   kecamatan,
-                                  style:
-                                      Theme.of(context).textTheme.displayMedium,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.black,
+                                  ),
                                 ),
                               ],
                             ),
@@ -276,8 +282,10 @@ class Profile extends StatelessWidget {
                                     width: 30), // Jarak antara ikon dan teks
                                 Text(
                                   'Kota $kota',
-                                  style:
-                                      Theme.of(context).textTheme.displayMedium,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.black,
+                                  ),
                                 ),
                               ],
                             ),
@@ -303,7 +311,7 @@ class Profile extends StatelessWidget {
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor:
-                                    Color.fromRGBO(70, 152, 138, 1),
+                                Color.fromRGBO(70, 152, 138, 1),
                                 // padding: EdgeInsets.symmetric(vertical: 15), // Button padding
                                 fixedSize: Size(lebar, 40),
                               ),

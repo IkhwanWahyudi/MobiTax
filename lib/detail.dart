@@ -4,7 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
+import 'themeModeData.dart';
 class DetailPage extends StatefulWidget {
   final int selectedDocumentId;
   const DetailPage({Key? key, required this.selectedDocumentId})
@@ -62,10 +63,11 @@ class _DetailPageState extends State<DetailPage> {
     var tinggi = MediaQuery.of(context).size.height;
     var selectedDocumentId = widget.selectedDocumentId;
     int pajak = 0;
+    ThemeData selectedTheme = Provider.of<ThemeModeData>(context).getTheme();
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
+        backgroundColor: selectedTheme.primaryColor,
         shadowColor: Colors.transparent,
         centerTitle: true,
         title: const Text(
@@ -136,9 +138,9 @@ class _DetailPageState extends State<DetailPage> {
                               Container(
                                 width: 30, // Atur ukuran ikon
                                 height: 30,
-                                decoration: const BoxDecoration(
+                                decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Color.fromRGBO(70, 152, 138, 1),
+                                  color: selectedTheme.primaryColor,
                                 ),
                                 child: const Icon(
                                   CupertinoIcons.timer,
@@ -161,9 +163,9 @@ class _DetailPageState extends State<DetailPage> {
                               Container(
                                 width: 30, // Atur ukuran ikon
                                 height: 30,
-                                decoration: const BoxDecoration(
+                                decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Color.fromRGBO(70, 152, 138, 1),
+                                  color: selectedTheme.primaryColor,
                                 ),
                                 child: const Icon(
                                   CupertinoIcons.paintbrush,
@@ -186,9 +188,9 @@ class _DetailPageState extends State<DetailPage> {
                               Container(
                                 width: 30, // Atur ukuran ikon
                                 height: 30,
-                                decoration: const BoxDecoration(
+                                decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Color.fromRGBO(70, 152, 138, 1),
+                                  color: selectedTheme.primaryColor,
                                 ),
                                 child: const Icon(
                                   CupertinoIcons.barcode,
@@ -211,9 +213,9 @@ class _DetailPageState extends State<DetailPage> {
                               Container(
                                 width: 30, // Atur ukuran ikon
                                 height: 30,
-                                decoration: const BoxDecoration(
+                                decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Color.fromRGBO(70, 152, 138, 1),
+                                  color: selectedTheme.primaryColor,
                                 ),
                                 child: const Icon(
                                   CupertinoIcons.speedometer,
@@ -236,9 +238,9 @@ class _DetailPageState extends State<DetailPage> {
                               Container(
                                 width: 30, // Atur ukuran ikon
                                 height: 30,
-                                decoration: const BoxDecoration(
+                                decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Color.fromRGBO(70, 152, 138, 1),
+                                  color: selectedTheme.primaryColor,
                                 ),
                                 child: const Icon(
                                   CupertinoIcons.flame,
@@ -265,10 +267,10 @@ class _DetailPageState extends State<DetailPage> {
                         alignment: Alignment.topLeft,
                         child: Text(
                           'Detail Informasi',
-                          style: const TextStyle(
+                          style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 117, 117, 117)),
+                              color: selectedTheme.primaryColor,),
                         ),
                       ),
                       const SizedBox(
@@ -468,7 +470,7 @@ class _DetailPageState extends State<DetailPage> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: isTerbayar
                           ? Colors.grey
-                          : Color.fromRGBO(70, 152, 138, 1),
+                          : selectedTheme.primaryColor,
                     ),
                     child: Text(
                       'Bayar',
