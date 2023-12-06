@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobi_tax/edit_profile.dart';
 import 'package:mobi_tax/sign_in.dart';
+import 'package:provider/provider.dart';
+import 'themeModeData.dart';
 
 class Profile extends StatelessWidget {
   const Profile({Key? key});
@@ -14,12 +16,13 @@ class Profile extends StatelessWidget {
     var lebar = MediaQuery.of(context).size.width;
     // var tinggi = MediaQuery.of(context).size.height;
     User? user = FirebaseAuth.instance.currentUser;
+    ThemeData selectedTheme = Provider.of<ThemeModeData>(context).getTheme();
 
     return Scaffold(
       //backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
       backgroundColor: const Color.fromARGB(255, 240, 237, 237),
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(70, 152, 138, 1),
+        backgroundColor: selectedTheme.primaryColor,
         elevation: 0,
         title: Text(
           'Profil',
@@ -42,7 +45,7 @@ class Profile extends StatelessWidget {
               height: 90,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Color.fromRGBO(70, 152, 138, 1),
+                color: selectedTheme.primaryColor,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(15),
                   bottomRight: Radius.circular(15),
@@ -57,52 +60,48 @@ class Profile extends StatelessWidget {
                 ],
               ),
               child: Container(
-                //margin: EdgeInsets.only(left: 10, right: 10),
-                //margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
                 margin: EdgeInsets.all(10),
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
                 ),
-                //margin: EdgeInsets.all(10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    StreamBuilder<QuerySnapshot>(
-                      // Use stream instead of future
-                      stream: FirebaseFirestore.instance
-                          .collection('pengguna')
-                          .doc(user?.uid)
-                          .collection('data_diri')
-                          .snapshots(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<QuerySnapshot> snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return CircularProgressIndicator();
-                        }
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('pengguna')
+                      .doc(user?.uid)
+                      .collection('data_diri')
+                      .snapshots(),
+                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    }
 
-                        var nama = snapshot.data!.docs[0]['nama'];
-                        var nik = snapshot.data!.docs[0]['nik'];
+                    var nama = snapshot.data!.docs[0]['nama'];
+                    var nik = snapshot.data!.docs[0]['nik'];
 
-                        return Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              child: Center(
-                                child: Icon(
-                                  Icons.account_circle_outlined,
-                                  color: Colors.black,
-                                  size: 40,
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          // decoration: BoxDecoration(
+                          //   color: Colors.green,
+                          // ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                child: Center(
+                                  child: Icon(
+                                    Icons.account_circle_outlined,
+                                    color: Colors.black,
+                                    size: 40,
+                                  ),
                                 ),
                               ),
-                            ),
-                            SizedBox(width: 10),
-                            SizedBox(
-                              width: 230,
-                              child: Column(
+                              SizedBox(width: 10),
+                              Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -125,27 +124,27 @@ class Profile extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        FirebaseAuth.instance.signOut();
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => SignIn(),
+                            ],
                           ),
-                        );
-                      },
-                      icon: const Icon(
-                        Icons.logout,
-                        size: 30,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            FirebaseAuth.instance.signOut();
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => SignIn(),
+                              ),
+                            );
+                          },
+                          icon: const Icon(
+                            Icons.logout,
+                            size: 30,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ),
             ),
@@ -171,32 +170,30 @@ class Profile extends StatelessWidget {
                       return ListView(
                         children: [
                           Container(
-                            //margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                            margin:
-                            EdgeInsets.only(top: 15, left: 10, right: 10),
+                            margin: EdgeInsets.only(top: 15, left: 10, right: 10),
                             height: 60,
-                            // decoration: BoxDecoration(
-                            //   color: Colors.green,
-                            // ),
                             child: Row(
                               children: [
                                 Icon(
                                   Icons.person,
-                                  color: Color.fromRGBO(70, 152, 138, 1),
+                                  color: selectedTheme.primaryColor,
                                   size: 30,
                                 ),
-                                SizedBox(
-                                    width: 30), // Jarak antara ikon dan teks
-                                Text(
-                                  nama,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black,
+                                SizedBox(width: 30),
+                                Expanded(
+                                  child: Text(
+                                    nama,
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.black,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
                               ],
                             ),
                           ),
+
                           Container(
                             height: 1, // Lebar garis
                             //color: Colors.black, // Warna garis
@@ -213,16 +210,18 @@ class Profile extends StatelessWidget {
                               children: [
                                 Icon(
                                   Icons.location_on_outlined,
-                                  color: Color.fromRGBO(70, 152, 138, 1),
+                                  color: selectedTheme.primaryColor,
                                   size: 30,
                                 ),
-                                SizedBox(
-                                    width: 30), // Jarak antara ikon dan teks
-                                Text(
-                                  alamat,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black,
+                                SizedBox(width: 30), // Jarak antara ikon dan teks
+                                Expanded(
+                                  child: Text(
+                                    alamat,
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.black,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
                               ],
@@ -244,16 +243,18 @@ class Profile extends StatelessWidget {
                               children: [
                                 Icon(
                                   Icons.my_location_outlined,
-                                  color: Color.fromRGBO(70, 152, 138, 1),
+                                  color: selectedTheme.primaryColor,
                                   size: 30,
                                 ),
-                                SizedBox(
-                                    width: 30), // Jarak antara ikon dan teks
-                                Text(
-                                  kecamatan,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black,
+                                SizedBox(width: 30), // Jarak antara ikon dan teks
+                                Expanded(
+                                  child: Text(
+                                    kecamatan,
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.black,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
                               ],
@@ -275,16 +276,18 @@ class Profile extends StatelessWidget {
                               children: [
                                 Icon(
                                   Icons.location_city_outlined,
-                                  color: Color.fromRGBO(70, 152, 138, 1),
+                                  color: selectedTheme.primaryColor,
                                   size: 30,
                                 ),
-                                SizedBox(
-                                    width: 30), // Jarak antara ikon dan teks
-                                Text(
-                                  'Kota $kota',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black,
+                                SizedBox(width: 30), // Jarak antara ikon dan teks
+                                Expanded(
+                                  child: Text(
+                                    'Kota $kota',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.black,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
                               ],
@@ -310,8 +313,7 @@ class Profile extends StatelessWidget {
                                 // Fungsi
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                Color.fromRGBO(70, 152, 138, 1),
+                                backgroundColor: selectedTheme.primaryColor,
                                 // padding: EdgeInsets.symmetric(vertical: 15), // Button padding
                                 fixedSize: Size(lebar, 40),
                               ),

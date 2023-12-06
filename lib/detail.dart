@@ -76,6 +76,9 @@ class _DetailPageState extends State<DetailPage> {
             color: Colors.white,
           ),
         ),
+        iconTheme: IconThemeData(
+          color: Colors.white,
+        ),
       ),
       backgroundColor: const Color.fromARGB(255, 240, 237, 237),
       body: Column(

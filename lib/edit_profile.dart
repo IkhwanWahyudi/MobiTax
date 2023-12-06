@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'themeModeData.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key});
@@ -98,12 +100,13 @@ class _EditProfileState extends State<EditProfile> {
     var lebar = MediaQuery.of(context).size.width;
     // var tinggi = MediaQuery.of(context).size.height;
     User? user = FirebaseAuth.instance.currentUser;
+    ThemeData selectedTheme = Provider.of<ThemeModeData>(context).getTheme();
 
     return Scaffold(
         backgroundColor: Theme.of(context).canvasColor,
         // backgroundColor: const Color.fromARGB(255, 240, 237, 237),
         appBar: AppBar(
-          backgroundColor: Color.fromRGBO(70, 152, 138, 1),
+          backgroundColor: selectedTheme.primaryColor,
           elevation: 0,
           title: Text(
             'Edit Profil',
@@ -113,54 +116,62 @@ class _EditProfileState extends State<EditProfile> {
               fontWeight: FontWeight.bold,
             ),
           ),
+          iconTheme: IconThemeData(
+            color: Colors.white,
+          ),
           centerTitle: true,
         ),
         body: Form(
           key: _formKey,
           child: ListView(
             children: [
-              Center(
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 10),
-                  height: 70,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.person,
-                        color: Color.fromRGBO(70, 152, 138, 1),
-                        size: 30,
-                      ),
-                      SizedBox(width: 30),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _namaController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Nama Lengkap wajib diisi';
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                            labelText: 'Nama Lengkap',
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              SizedBox(height: 10),
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 10),
-                height: 70,
+                margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 child: Row(
                   children: [
-                    Icon(
-                      Icons.credit_card,
-                      color: Color.fromRGBO(70, 152, 138, 1),
-                      size: 30,
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 18),
+                      child: Icon(
+                        Icons.person,
+                        color: selectedTheme.primaryColor,
+                        size: 30,
+                      ),
                     ),
-                    SizedBox(width: 30),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: TextFormField(
+                        controller: _namaController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Nama Lengkap wajib diisi';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Nama Lengkap',
+                          border: OutlineInputBorder(),
+                        ),
+                        maxLength: 30,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                child: Row(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 18),
+                      child: Icon(
+                        Icons.credit_card,
+                        color: selectedTheme.primaryColor,
+                        size: 30,
+                      ),
+                    ),
+                    SizedBox(width: 10),
                     Expanded(
                       child: TextFormField(
                         controller: _nikController,
@@ -172,8 +183,8 @@ class _EditProfileState extends State<EditProfile> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'NIK wajib diisi';
-                          } else if (value.length < 15) {
-                            return 'NIK setidaknya sebanyak 15 karakter';
+                          } else if (value.length < 16) {
+                            return 'NIK setidaknya sebanyak 16 karakter';
                           }
                           return null; // Return null for no validation errors
                         },
@@ -181,22 +192,26 @@ class _EditProfileState extends State<EditProfile> {
                           labelText: 'NIK',
                           border: OutlineInputBorder(),
                         ),
+                        maxLength: 16,
                       ),
                     ),
                   ],
                 ),
               ),
+
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 10),
-                height: 70,
+                margin: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
                 child: Row(
                   children: [
-                    Icon(
-                      Icons.location_on_outlined,
-                      color: Color.fromRGBO(70, 152, 138, 1),
-                      size: 30,
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 18),
+                      child: Icon(
+                        Icons.location_on_outlined,
+                        color: selectedTheme.primaryColor,
+                        size: 30,
+                      ),
                     ),
-                    SizedBox(width: 30),
+                    SizedBox(width: 10),
                     Expanded(
                       child: TextFormField(
                         controller: _alamatController,
@@ -210,22 +225,26 @@ class _EditProfileState extends State<EditProfile> {
                           labelText: 'Alamat',
                           border: OutlineInputBorder(),
                         ),
+                        maxLength: 100,
                       ),
                     ),
                   ],
                 ),
               ),
+
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 10),
-                height: 70,
+                margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 child: Row(
                   children: [
-                    Icon(
-                      Icons.my_location_outlined,
-                      color: Color.fromRGBO(70, 152, 138, 1),
-                      size: 30,
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 18),
+                      child: Icon(
+                        Icons.my_location_outlined,
+                        color: selectedTheme.primaryColor,
+                        size: 30,
+                      ),
                     ),
-                    SizedBox(width: 30),
+                    SizedBox(width: 10),
                     Expanded(
                       child: TextFormField(
                         autocorrect: true,
@@ -240,22 +259,26 @@ class _EditProfileState extends State<EditProfile> {
                           labelText: 'Kecamatan',
                           border: OutlineInputBorder(),
                         ),
+                        maxLength: 30,
                       ),
                     ),
                   ],
                 ),
               ),
+
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 10),
-                height: 70,
+                margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 child: Row(
                   children: [
-                    Icon(
-                      Icons.location_city_outlined,
-                      color: Color.fromRGBO(70, 152, 138, 1),
-                      size: 30,
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 18),
+                      child: Icon(
+                        Icons.location_city_outlined,
+                        color: selectedTheme.primaryColor,
+                        size: 30,
+                      ),
                     ),
-                    SizedBox(width: 30),
+                    SizedBox(width: 10),
                     Expanded(
                       child: TextFormField(
                         controller: _kotaController,
@@ -269,21 +292,23 @@ class _EditProfileState extends State<EditProfile> {
                           labelText: 'Kota',
                           border: OutlineInputBorder(),
                         ),
+                        maxLength: 30,
                       ),
                     ),
                   ],
                 ),
               ),
+
               SizedBox(
-                height: 30,
+                height: 20,
               ),
               Container(
                 margin:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 child: ElevatedButton(
                   onPressed: () => editDataDiri(),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromRGBO(70, 152, 138, 1),
+                    backgroundColor: selectedTheme.primaryColor,
                     // padding: EdgeInsets.symmetric(vertical: 15), // Button padding
                     fixedSize: Size(lebar, 40),
                   ),

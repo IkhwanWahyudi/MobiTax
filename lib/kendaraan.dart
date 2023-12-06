@@ -146,7 +146,7 @@ class _kendaraanState extends State<kendaraan> {
           ),
         ),
         iconTheme: IconThemeData(
-          color: Colors.white, // Ganti warna sesuai keinginan Anda
+          color: Colors.white,
         ),
       ),
       backgroundColor: const Color.fromARGB(255, 240, 237, 237),
