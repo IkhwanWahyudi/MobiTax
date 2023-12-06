@@ -100,8 +100,8 @@ class _EditProfileState extends State<EditProfile> {
     User? user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
-        //backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
-        backgroundColor: const Color.fromARGB(255, 240, 237, 237),
+        backgroundColor: Theme.of(context).canvasColor,
+        // backgroundColor: const Color.fromARGB(255, 240, 237, 237),
         appBar: AppBar(
           backgroundColor: Color.fromRGBO(70, 152, 138, 1),
           elevation: 0,
@@ -290,6 +290,7 @@ class _EditProfileState extends State<EditProfile> {
                   child: Text(
                     'Update Data',
                     style: TextStyle(
+                      color: Colors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),

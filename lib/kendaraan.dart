@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -132,6 +134,7 @@ class _kendaraanState extends State<kendaraan> {
     var tinggi = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
         shadowColor: Colors.transparent,
@@ -143,7 +146,7 @@ class _kendaraanState extends State<kendaraan> {
           ),
         ),
       ),
-      backgroundColor: const Color.fromARGB(255, 240, 237, 237),
+      // backgroundColor: const Color.fromARGB(255, 240, 237, 237),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -222,6 +225,8 @@ class _kendaraanState extends State<kendaraan> {
 
   //======= WIDGET TEXT FIELD ============
   Widget _textfield(TextEditingController controller, String labelText) {
+    TextStyle? textStyle = Theme.of(context).textTheme.displaySmall;
+
     int jumlahKarakter = 100;
     if (labelText == 'Nomor Plat Kendaraan' ||
         labelText == 'Bahan Bakar Kendaraan' ||
@@ -255,6 +260,7 @@ class _kendaraanState extends State<kendaraan> {
           ),
         ),
         maxLength: jumlahKarakter,
+        style: textStyle, // Gunakan style yang telah ditentukan
       ),
     );
   }
@@ -262,6 +268,7 @@ class _kendaraanState extends State<kendaraan> {
   Widget _buildNumericTextField(
       TextEditingController controller, String labelText) {
     int jumlahKarakter = 100;
+    TextStyle? textStyle = Theme.of(context).textTheme.displaySmall;
     if (labelText == 'Transmisi Kendaraan (CC)') {
       jumlahKarakter = 5;
     } else if (labelText == 'No. Rangka' ||
@@ -297,6 +304,7 @@ class _kendaraanState extends State<kendaraan> {
           ),
         ),
         maxLength: jumlahKarakter,
+        style: textStyle,
       ),
     );
   }
@@ -307,14 +315,20 @@ class _kendaraanState extends State<kendaraan> {
       padding: const EdgeInsets.all(10),
       child: DropdownButtonFormField<String>(
         value: controller.text.isEmpty ? null : controller.text,
-        items: const [
+        items: [
           DropdownMenuItem<String>(
             value: 'Motor',
-            child: Text('Motor'),
+            child: Text(
+              'Motor',
+              style: Theme.of(context).textTheme.labelSmall,
+            ),
           ),
           DropdownMenuItem<String>(
             value: 'Mobil',
-            child: Text('Mobil'),
+            child: Text(
+              'Mobil',
+              style: Theme.of(context).textTheme.labelSmall,
+            ),
           ),
         ],
         onChanged: (String? value) {
@@ -323,6 +337,17 @@ class _kendaraanState extends State<kendaraan> {
               controller.text = value;
             });
           }
+        },
+        selectedItemBuilder: (BuildContext context) {
+          return [
+            for (var item in ['Motor', 'Mobil'])
+              Text(
+                item,
+                style: const TextStyle(
+                    color:
+                        Colors.black), // Mengatur warna teks item yang dipilih
+              ),
+          ];
         },
         decoration: InputDecoration(
           labelText: labelText,
@@ -347,7 +372,9 @@ class _kendaraanState extends State<kendaraan> {
         items: availableYears.map((year) {
           return DropdownMenuItem<String>(
             value: year.toString(),
-            child: Text('$year'),
+            child: Text(
+              '$year',
+            ),
           );
         }).toList(),
         onChanged: (String? value) {

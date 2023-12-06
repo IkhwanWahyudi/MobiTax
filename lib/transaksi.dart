@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mobi_tax/detailTransaksi.dart';
 
 class transaksi extends StatefulWidget {
   @override
@@ -19,6 +20,7 @@ class _transaksiState extends State<transaksi> {
     var tinggi = MediaQuery.of(context).size.height;
     User? user = FirebaseAuth.instance.currentUser;
     return Scaffold(
+      backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
         elevation: 0,
@@ -32,7 +34,7 @@ class _transaksiState extends State<transaksi> {
         ),
         centerTitle: true,
       ),
-      backgroundColor: const Color.fromARGB(255, 240, 237, 237),
+      // backgroundColor: const Color.fromARGB(255, 240, 237, 237),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -105,7 +107,17 @@ class _transaksiState extends State<transaksi> {
                               ),
                             ),
                             Center(
-                              child: Positioned(
+                              child: GestureDetector(
+                                onTap: () {
+                                  // Pindah ke halaman lain saat kontainer diklik
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const detailTransaksi(), // Navigasi ke DetailTransaksi
+                                    ),
+                                  );
+                                },
                                 child: Container(
                                   padding: const EdgeInsets.all(20),
                                   height: tinggi * 0.8,
@@ -113,9 +125,19 @@ class _transaksiState extends State<transaksi> {
                                   margin: const EdgeInsets.only(
                                       right: 10, left: 10),
                                   decoration: const BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10))),
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(10),
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey, // warna bayangan
+                                        blurRadius: 5, // radius blur bayangan
+                                        offset: Offset(0,
+                                            0), // pergeseran bayangan (horizontal, vertical)
+                                      ),
+                                    ],
+                                  ),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -127,13 +149,16 @@ class _transaksiState extends State<transaksi> {
                                         children: [
                                           const Text(
                                             'Biaya Pajak Kendaraan',
-                                            style: TextStyle(fontSize: 15),
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.black),
                                           ),
                                           Container(
                                             child: Text(
                                               'Rp $pajak',
-                                              style:
-                                                  const TextStyle(fontSize: 15),
+                                              style: const TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.black),
                                             ),
                                           ),
                                         ],
@@ -147,13 +172,16 @@ class _transaksiState extends State<transaksi> {
                                         children: [
                                           const Text(
                                             'Biaya Admin',
-                                            style: TextStyle(fontSize: 15),
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.black),
                                           ),
                                           Container(
                                             child: Text(
                                               'Rp $biayaAdmin',
-                                              style:
-                                                  const TextStyle(fontSize: 15),
+                                              style: const TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.black),
                                             ),
                                           ),
                                         ],
@@ -172,6 +200,7 @@ class _transaksiState extends State<transaksi> {
                                           const Text(
                                             'Total',
                                             style: TextStyle(
+                                                color: Colors.black,
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.w800),
                                           ),
@@ -179,6 +208,7 @@ class _transaksiState extends State<transaksi> {
                                             child: Text(
                                               'Rp $totalPajak',
                                               style: const TextStyle(
+                                                  color: Colors.black,
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.w800),
                                             ),
@@ -189,7 +219,7 @@ class _transaksiState extends State<transaksi> {
                                   ),
                                 ),
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -200,6 +230,7 @@ class _transaksiState extends State<transaksi> {
                         child: const Text(
                           'Alamat Pengiriman',
                           style: TextStyle(
+                            color: Colors.black,
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
                           ),
@@ -211,7 +242,17 @@ class _transaksiState extends State<transaksi> {
                         margin: const EdgeInsets.only(right: 10, left: 10),
                         decoration: const BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey, // warna bayangan
+                              blurRadius: 5, // radius blur bayangan
+                              offset: Offset(0,
+                                  0), // pergeseran bayangan (horizontal, vertical)
+                            ),
+                          ],
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -219,12 +260,16 @@ class _transaksiState extends State<transaksi> {
                           children: [
                             const Row(
                               children: [
-                                Icon(CupertinoIcons.location),
+                                Icon(
+                                  CupertinoIcons.location,
+                                  color: Colors.black,
+                                ),
                                 Padding(
                                   padding: EdgeInsets.only(left: 20),
                                   child: Text(
                                     'Rumah',
-                                    style: TextStyle(fontSize: 15),
+                                    style: TextStyle(
+                                        fontSize: 15, color: Colors.black),
                                   ),
                                 ),
                               ],
@@ -256,14 +301,16 @@ class _transaksiState extends State<transaksi> {
                                   children: [
                                     Text(
                                       jalan,
-                                      style: const TextStyle(fontSize: 15),
+                                      style: const TextStyle(
+                                          fontSize: 15, color: Colors.black),
                                     ),
                                     const SizedBox(
                                       height: 8,
                                     ),
                                     Text(
                                       '$kecamatan, Kota $kota',
-                                      style: const TextStyle(fontSize: 15),
+                                      style: const TextStyle(
+                                          fontSize: 15, color: Colors.black),
                                     ),
                                   ],
                                 );

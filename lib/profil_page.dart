@@ -16,8 +16,8 @@ class Profile extends StatelessWidget {
     User? user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
-      //backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
-      backgroundColor: const Color.fromARGB(255, 240, 237, 237),
+      backgroundColor: Theme.of(context).canvasColor,
+      // backgroundColor: const Color.fromARGB(255, 240, 237, 237),
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(70, 152, 138, 1),
         elevation: 0,
@@ -189,10 +189,8 @@ class Profile extends StatelessWidget {
                                     width: 30), // Jarak antara ikon dan teks
                                 Text(
                                   nama,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black,
-                                  ),
+                                  style:
+                                      Theme.of(context).textTheme.displayMedium,
                                 ),
                               ],
                             ),
@@ -220,10 +218,8 @@ class Profile extends StatelessWidget {
                                     width: 30), // Jarak antara ikon dan teks
                                 Text(
                                   alamat,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black,
-                                  ),
+                                  style:
+                                      Theme.of(context).textTheme.displayMedium,
                                 ),
                               ],
                             ),
@@ -251,10 +247,8 @@ class Profile extends StatelessWidget {
                                     width: 30), // Jarak antara ikon dan teks
                                 Text(
                                   kecamatan,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black,
-                                  ),
+                                  style:
+                                      Theme.of(context).textTheme.displayMedium,
                                 ),
                               ],
                             ),
@@ -282,10 +276,8 @@ class Profile extends StatelessWidget {
                                     width: 30), // Jarak antara ikon dan teks
                                 Text(
                                   'Kota $kota',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black,
-                                  ),
+                                  style:
+                                      Theme.of(context).textTheme.displayMedium,
                                 ),
                               ],
                             ),

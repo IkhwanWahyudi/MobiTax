@@ -8,8 +8,10 @@ import 'package:mobi_tax/firebase_options.dart';
 import 'package:mobi_tax/introductionPage.dart';
 import 'package:mobi_tax/profil_page.dart';
 import 'package:mobi_tax/sign_in.dart';
+import 'package:provider/provider.dart';
 
 import 'home_page.dart';
+import 'themeModeData.dart';
 import 'transaksi.dart';
 
 void main() async {
@@ -17,21 +19,86 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+
+  runApp(
+    MultiProvider(
+      providers: [
+        // ChangeNotifierProvider(create: (context) => ThemeProvider()),
+        ChangeNotifierProvider(create: (context) => ThemeModeData()),
+        // Tambahkan provider lain jika diperlukan di sini
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+  MyApp({super.key});
   @override
   Widget build(BuildContext context) {
+    ColorScheme lightScheme = ColorScheme.fromSeed(
+      seedColor: Colors.white,
+    );
+    ColorScheme darkScheme = ColorScheme.fromSeed(
+      seedColor: Colors.black,
+      brightness: Brightness.dark,
+    );
+
     return MaterialApp(
       title: 'MobiTax',
-      // theme: ThemeData(
-      //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      //   useMaterial3: true,
-      // ),
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        useMaterial3: true,
+        brightness: Brightness.light,
+        // Penyesuaian warna font dan latar belakang untuk tema terang
+        textTheme: const TextTheme(
+          displayMedium: TextStyle(
+            color: Colors.black,
+            fontSize: 15,
+          ),
+          displaySmall: TextStyle(
+            color: Colors.white,
+            fontSize: 15,
+          ),
+          labelMedium: TextStyle(
+              color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+          labelSmall: TextStyle(color: Colors.black, fontSize: 12),
+        ),
+        canvasColor: Colors.white,
+        colorScheme: lightScheme,
+        dialogBackgroundColor: Colors.black,
+        iconTheme: const IconThemeData(
+          color: Colors.black,
+        ),
+      ),
+
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        brightness: Brightness.dark,
+        // Penyesuaian warna font dan latar belakang untuk tema gelap
+        textTheme: const TextTheme(
+          displayMedium: TextStyle(
+            color: Colors.white,
+            fontSize: 15,
+          ),
+          displaySmall: TextStyle(
+            color: Colors.black,
+            fontSize: 15,
+          ),
+          labelMedium: TextStyle(
+              color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+          labelSmall: TextStyle(
+            color: Colors.white,
+            fontSize: 12,
+          ),
+        ),
+        canvasColor: Colors.black,
+        colorScheme: darkScheme,
+        dialogBackgroundColor: Colors.white,
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ),
+      ),
       home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
@@ -42,6 +109,10 @@ class MyApp extends StatelessWidget {
           }
         },
       ),
+      // theme: Provider.of<ThemeProvider>(context).currentTheme,
+      themeMode: context
+          .watch<ThemeModeData>()
+          .themeMode, // Gunakan ThemeMode dari penyedia ThemeModeData
       //home: MyHomePage(),
     );
   }
@@ -71,7 +142,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: const Color.fromRGBO(70, 152, 138, 1),
         unselectedItemColor:
-            const Color.fromARGB(255, 161, 161, 159).withOpacity(0.5),
+            // const Color.fromARGB(255, 161, 161, 159).withOpacity(0.5),
+            Theme.of(context).iconTheme.color,
         //unselectedItemColor: Colors.black,
         currentIndex: _selectedIndex,
         onTap: (index) {

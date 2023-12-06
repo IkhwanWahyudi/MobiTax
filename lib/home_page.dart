@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobi_tax/kendaraan.dart';
+import 'package:mobi_tax/themeModeData.dart';
+import 'package:provider/provider.dart';
 import 'detail.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -25,7 +27,8 @@ class _MyHomePageState extends State<MyHomePage> {
     User? user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 240, 237, 237),
+      // backgroundColor: const Color.fromARGB(255, 240, 237, 237),
+      backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(70, 152, 138, 1),
         //backgroundColor: Colors.pink,
@@ -39,18 +42,28 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         elevation: 0,
         actions: [
-          Container(
-            margin: EdgeInsets.only(right: 10.0),
-            child: IconButton(
-              onPressed: () {
-                // Buat ke setting
-              },
-              icon: Icon(
-                Icons.settings,
-                size: 30,
-                color: Colors.white,
-              ),
-            ),
+          Consumer<ThemeModeData>(
+            builder: (context, themeModeData, _) {
+              final isDarkModeActive = themeModeData.isDarkModeActive;
+
+              return IconButton(
+                onPressed: () {
+                  themeModeData.changeTheme(
+                      isDarkModeActive ? ThemeMode.light : ThemeMode.dark);
+                },
+                icon: isDarkModeActive
+                    ? Icon(
+                        Icons.wb_sunny,
+                        size: 30,
+                        color: Colors.white,
+                      )
+                    : Icon(
+                        Icons.nights_stay,
+                        size: 30,
+                        color: Colors.white,
+                      ),
+              );
+            },
           ),
         ],
         automaticallyImplyLeading: false,
@@ -83,7 +96,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 width: 50,
                 height: 10,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  // color: Colors.white,
+                  color: Theme.of(context).canvasColor,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Row(
@@ -114,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 child: Center(
                                   child: Icon(
                                     Icons.account_circle_outlined,
-                                    color: Colors.black,
+                                    color: Theme.of(context).iconTheme.color,
                                     size: 40,
                                   ),
                                 ),
@@ -122,25 +136,22 @@ class _MyHomePageState extends State<MyHomePage> {
                               SizedBox(width: 10), // Jarak antara ikon dan teks
                               Container(
                                 width: 230,
-                                // decoration: BoxDecoration(
-                                //   color: Colors.blue,
-                                // ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
                                       nama,
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                     Text(
                                       "Kota $kota",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                      ),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ],
@@ -149,17 +160,6 @@ class _MyHomePageState extends State<MyHomePage> {
                             ]);
                       },
                     ),
-                    // IconButton(
-                    //   //padding: EdgeInsets.all(10),
-                    //   icon: Icon(
-                    //     Icons.edit,
-                    //     color: Colors.black,
-                    //     size: 30,
-                    //   ),
-                    //   onPressed: () {
-                    //     // Logika ketika tombol di tekan
-                    //   },
-                    // ),
                   ],
                 ),
               ),
@@ -311,9 +311,18 @@ class _MyHomePageState extends State<MyHomePage> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Text("$plat"),
-                                        Text("$merk"),
-                                        Text("Masa Berlaku")
+                                        Text(
+                                          "$plat",
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                        Text(
+                                          "$merk",
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                        Text(
+                                          "Masa Berlaku",
+                                          style: TextStyle(color: Colors.black),
+                                        )
                                       ],
                                     )
                                   ],
