@@ -23,7 +23,7 @@ class _transaksiState extends State<transaksi> {
     User? user = FirebaseAuth.instance.currentUser;
     ThemeData selectedTheme = Provider.of<ThemeModeData>(context).getTheme();
     return Scaffold(
-      backgroundColor: Theme.of(context).canvasColor,
+      backgroundColor: const Color.fromARGB(255, 240, 237, 237),
       appBar: AppBar(
         backgroundColor: selectedTheme.primaryColor,
         elevation: 0,
@@ -37,7 +37,6 @@ class _transaksiState extends State<transaksi> {
         ),
         centerTitle: true,
       ),
-      // backgroundColor: const Color.fromARGB(255, 240, 237, 237),
       body: Center(
         child: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
@@ -116,116 +115,104 @@ class _transaksiState extends State<transaksi> {
                               ),
                             ),
                             Center(
-                              child: GestureDetector(
-                                onTap: () {
-                                  // Pindah ke halaman lain saat kontainer diklik
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const detailTransaksi(), // Navigasi ke DetailTransaksi
-                                    ),
-                                  );
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.all(20),
-                                  height: tinggi * 0.8,
-                                  //margin: const EdgeInsets.only(right: 40),
-                                  margin: const EdgeInsets.only(
-                                      right: 10, left: 10),
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(10),
-                                    ),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey, // warna bayangan
-                                        blurRadius: 5, // radius blur bayangan
-                                        offset: Offset(0,
-                                            0), // pergeseran bayangan (horizontal, vertical)
-                                      ),
-                                    ],
+                              child: Container(
+                                padding: const EdgeInsets.all(20),
+                                height: tinggi * 0.8,
+                                //margin: const EdgeInsets.only(right: 40),
+                                margin: const EdgeInsets.only(
+                                    right: 10, left: 10),
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10),
                                   ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          const Text(
-                                            'Biaya Pajak Kendaraan',
-                                            style: TextStyle(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey, // warna bayangan
+                                      blurRadius: 5, // radius blur bayangan
+                                      offset: Offset(0,
+                                          0), // pergeseran bayangan (horizontal, vertical)
+                                    ),
+                                  ],
+                                ),
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text(
+                                          'Biaya Pajak Kendaraan',
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.black),
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            'Rp $pajak',
+                                            style: const TextStyle(
                                                 fontSize: 15,
                                                 color: Colors.black),
                                           ),
-                                          Container(
-                                            child: Text(
-                                              'Rp $pajak',
-                                              style: const TextStyle(
-                                                  fontSize: 15,
-                                                  color: Colors.black),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          const Text(
-                                            'Biaya Admin',
-                                            style: TextStyle(
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text(
+                                          'Biaya Admin',
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.black),
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            'Rp $biayaAdmin',
+                                            style: const TextStyle(
                                                 fontSize: 15,
                                                 color: Colors.black),
                                           ),
-                                          Container(
-                                            child: Text(
-                                              'Rp $biayaAdmin',
-                                              style: const TextStyle(
-                                                  fontSize: 15,
-                                                  color: Colors.black),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 20),
-                                      Container(
-                                        height: 1, // Lebar garis
-                                        //color: Colors.black, // Warna garis
-                                        color: Colors.black.withOpacity(0.5),
-                                      ),
-                                      const SizedBox(height: 20),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          const Text(
-                                            'Total',
-                                            style: TextStyle(
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Container(
+                                      height: 1, // Lebar garis
+                                      //color: Colors.black, // Warna garis
+                                      color: Colors.black.withOpacity(0.5),
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text(
+                                          'Total',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w800),
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            'Rp $totalPajak',
+                                            style: const TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.w800),
                                           ),
-                                          Container(
-                                            child: Text(
-                                              'Rp $totalPajak',
-                                              style: const TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w800),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -258,6 +245,7 @@ class _transaksiState extends State<transaksi> {
                         var jenisKendaraan = dataKendaraan['jenis'];
                         var plat = dataKendaraan['plat'];
                         var merk = dataKendaraan['merk'];
+                        var tanggal_pembayaran = dataKendaraan['tanggal_pembayaran'];
                         int harga = 0;
 
                         IconData iconKendaraan;
@@ -318,11 +306,12 @@ class _transaksiState extends State<transaksi> {
                                     style: const TextStyle(
                                         fontSize: 15,
                                         color: Colors.black,
-                                        fontWeight: FontWeight.bold),
+                                        fontWeight: FontWeight.bold
+                                    ),
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                  const Text(
-                                    'Tanggal',
+                                  Text(
+                                    tanggal_pembayaran,
                                     style: TextStyle(
                                       fontSize: 12,
                                       color: Colors.black,

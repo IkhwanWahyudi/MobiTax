@@ -5,6 +5,8 @@ import 'package:mobi_tax/auth.dart';
 import 'package:mobi_tax/detail.dart';
 import 'package:mobi_tax/home_page.dart';
 import 'package:mobi_tax/register.dart';
+import 'package:provider/provider.dart';
+import 'themeModeData.dart';
 
 import 'main.dart';
 
@@ -71,20 +73,32 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData selectedTheme = Provider.of<ThemeModeData>(context).getTheme();
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Masuk",
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Color.fromRGBO(70, 152, 138, 1),
-      ),
+      // appBar: AppBar(
+      //   title: const Text(
+      //     "Masuk",
+      //     style: TextStyle(color: Colors.white),
+      //   ),
+      //   backgroundColor: Color.fromRGBO(70, 152, 138, 1),
+      // ),
       body: Center(
         child: Form(
           key: _formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Container(
+                width: 270,
+                height: 270,
+                decoration: BoxDecoration(
+                  //color: Colors.red,
+                  image: DecorationImage(
+                    image: AssetImage('assets/logo.png',),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
               Container(
                 margin:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
@@ -97,24 +111,25 @@ class _SignInState extends State<SignIn> {
                     }
                     return null;
                   },
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Email',
                     labelStyle: TextStyle(
-                      color: Color(0xFF183D3D), // warna label teks
+                      color: selectedTheme.primaryColor,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,// warna label teks
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: Color(
-                            0xFF183D3D), // Warna outline saat dalam keadaan fokus
+                        color: selectedTheme.primaryColor,
                         width: 2.0, // Lebar garis
                       ),
-                    ), // Teks Rp. yang akan ditampilkan di sebelah kiri inputan
+                    ),
                   ),
                 ),
               ),
               Container(
                 margin:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
                 child: TextFormField(
                   autocorrect: true,
                   controller: _passwordController,
@@ -136,13 +151,14 @@ class _SignInState extends State<SignIn> {
                       ),
                     ),
                     labelText: 'Password',
-                    labelStyle: const TextStyle(
-                      color: Color(0xFF183D3D), // warna label teks
+                    labelStyle: TextStyle(
+                      color: selectedTheme.primaryColor,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,// warna label teks
                     ),
-                    focusedBorder: const OutlineInputBorder(
+                    focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: Color(
-                            0xFF183D3D), // Warna outline saat dalam keadaan fokus
+                        color: selectedTheme.primaryColor,
                         width: 2.0, // Lebar garis
                       ),
                     ),
@@ -155,7 +171,7 @@ class _SignInState extends State<SignIn> {
               ElevatedButton(
                 onPressed: () => handleSubmit(),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
+                  backgroundColor: selectedTheme.primaryColor,
                   minimumSize:
                       const Size(250, 50), // Atur lebar dan tinggi button
                   padding: const EdgeInsets.symmetric(
@@ -203,26 +219,6 @@ class _SignInState extends State<SignIn> {
                   )
                 ],
               )
-              // Slider(
-              //   value: 0, // Nilai slider
-              //   onChanged: null, // Mengatur onChanged ke null
-              // ),
-              // Slider(
-              //   value: 1 / 4, // Nilai slider
-              //   onChanged: null, // Mengatur onChanged ke null
-              // ),
-              // Slider(
-              //   value: 2 / 4, // Nilai slider
-              //   onChanged: null, // Mengatur onChanged ke null
-              // ),
-              // Slider(
-              //   value: 3 / 4, // Nilai slider
-              //   onChanged: null, // Mengatur onChanged ke null
-              // ),
-              // Slider(
-              //   value: 4 / 4, // Nilai slider
-              //   onChanged: null, // Mengatur onChanged ke null
-              // ),
             ],
           ),
         ),

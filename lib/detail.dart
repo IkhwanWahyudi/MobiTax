@@ -22,10 +22,46 @@ class _DetailPageState extends State<DetailPage> {
     setState(() {});
   }
 
+  // Future<void> bayar(String id) async {
+  //   try {
+  //     // Dapatkan UID pengguna yang saat ini terautentikasi
+  //     String uidPengguna = FirebaseAuth.instance.currentUser!.uid;
+  //
+  //
+  //     // Mendapatkan koleksi data_diri dari dokumen pengguna dengan UID saat ini
+  //     await FirebaseFirestore.instance
+  //         .collection('pengguna')
+  //         .doc(uidPengguna)
+  //         .collection('kendaraan')
+  //         .doc(id)
+  //         .update({
+  //       'status': 'Sudah dibayar',
+  //       'tanggal_pembayaran': DateTime.now(),
+  //       // Tambahkan field lain yang ingin Anda update
+  //     });
+  //
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(content: Text("Pajak berhasil dibayar")),
+  //     );
+  //
+  //     Navigator.pop(context);
+  //   } catch (e) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(content: Text("Terjadi kesalahan. Silakan coba lagi.")),
+  //     );
+  //   }
+  // }
   Future<void> bayar(String id) async {
     try {
       // Dapatkan UID pengguna yang saat ini terautentikasi
       String uidPengguna = FirebaseAuth.instance.currentUser!.uid;
+
+      // Mendapatkan tanggal saat ini
+      DateTime now = DateTime.now();
+
+      // Memformat tanggal dengan format "dd-MM-yyyy"
+      String formattedDate =
+          '${now.day.toString().padLeft(2, '0')}-${now.month.toString().padLeft(2, '0')}-${now.year}';
 
       // Mendapatkan koleksi data_diri dari dokumen pengguna dengan UID saat ini
       await FirebaseFirestore.instance
@@ -35,6 +71,7 @@ class _DetailPageState extends State<DetailPage> {
           .doc(id)
           .update({
         'status': 'Sudah dibayar',
+        'tanggal_pembayaran': formattedDate,
         // Tambahkan field lain yang ingin Anda update
       });
 
@@ -49,6 +86,7 @@ class _DetailPageState extends State<DetailPage> {
       );
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +122,7 @@ class _DetailPageState extends State<DetailPage> {
           builder: (BuildContext context,
               AsyncSnapshot<DocumentSnapshot<Object?>> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              // return CircularProgressIndicator();
+              return CircularProgressIndicator();
             }
             if (!snapshot.hasData) {
               return Text('Data kendaraan tidak ditemukan');

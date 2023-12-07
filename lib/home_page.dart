@@ -71,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             Container(
               height: 90,
-              width: double.infinity,
+              width: lebar,
               decoration: BoxDecoration(
                 color: selectedTheme.primaryColor,
                 borderRadius: BorderRadius.only(
@@ -87,93 +87,75 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ],
               ),
-              child: Container(
-                margin: EdgeInsets.all(10),
-                padding: EdgeInsets.all(10),
-                width: 50,
-                height: 10,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    StreamBuilder<QuerySnapshot>(
-                      // Mendapatkan koleksi data_diri dari dokumen pengguna dengan UID saat ini
-                      stream: FirebaseFirestore.instance
-                          .collection('pengguna')
-                          .doc(user?.uid)
-                          .collection('data_diri')
-                          .snapshots(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<QuerySnapshot> snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return CircularProgressIndicator();
-                        }
 
-                        var nama = snapshot.data!.docs[0]['nama'];
-                        var kota = snapshot.data!.docs[0]['kota'];
+              child: StreamBuilder<QuerySnapshot>(
+                // Mendapatkan koleksi data_diri dari dokumen pengguna dengan UID saat ini
+                stream: FirebaseFirestore.instance
+                    .collection('pengguna')
+                    .doc(user?.uid)
+                    .collection('data_diri')
+                    .snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  }
 
-                        return Row(
+                  var nama = snapshot.data!.docs[0]['nama'];
+                  var kota = snapshot.data!.docs[0]['kota'];
+
+                  return Container(
+                    margin: EdgeInsets.all(10),
+                    padding: EdgeInsets.all(10),
+                    width: 50,
+                    height: 10,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          child: Center(
+                            child: Icon(
+                              Icons.account_circle_outlined,
+                              color: Colors.black,
+                              size: 40,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 10), // Jarak antara ikon dan teks
+
+                        Expanded(
+                          child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Container(
-                                child: Center(
-                                  child: Icon(
-                                    Icons.account_circle_outlined,
-                                    color: Colors.black,
-                                    size: 40,
-                                  ),
-                                ),
+                              Text(
+                                nama,
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                                overflow: TextOverflow.ellipsis,
                               ),
-                              SizedBox(width: 10), // Jarak antara ikon dan teks
-                              Container(
-                                width: 230,
-                                // decoration: BoxDecoration(
-                                //   color: Colors.blue,
-                                // ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      nama,
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    Text(
-                                      "Kota $kota",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                      ),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ],
+                              Text(
+                                "Kota $kota",
+                                style: TextStyle(
+                                  fontSize: 12,
                                 ),
+                                overflow: TextOverflow.ellipsis,
                               ),
-                            ]);
-                      },
+                            ],
+                          ),
+                        )
+                      ],
                     ),
-                    // IconButton(
-                    //   //padding: EdgeInsets.all(10),
-                    //   icon: Icon(
-                    //     Icons.edit,
-                    //     color: Colors.black,
-                    //     size: 30,
-                    //   ),
-                    //   onPressed: () {
-                    //     // Logika ketika tombol di tekan
-                    //   },
-                    // ),
-                  ],
-                ),
+                  );
+                },
               ),
             ),
+
             Container(
               height: 20,
               width: lebar,
@@ -196,7 +178,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   if (snapshot.connectionState == ConnectionState.waiting) {}
 
                   if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                    return Text('Tidak ada Kendaraan');
+                    //return Text('Tidak ada Kendaraan');
+                    return const Center(
+                      child: Text('Tidak ada Kendaraan'),
+                    );
                   }
 
                   return ListView.builder(
@@ -304,8 +289,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                 child: Row(
                                   children: [
                                     Container(
-                                      width: 50,
-                                      height: 50,
+                                      width: 60,
+                                      height: 60,
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         color: selectedTheme.primaryColor,
@@ -313,42 +298,66 @@ class _MyHomePageState extends State<MyHomePage> {
                                       child: Icon(
                                         iconKendaraan,
                                         color: Colors.white,
-                                        size: 30,
+                                        size: 35,
                                       ),
                                     ),
                                     const SizedBox(width: 15),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text("$plat"),
-                                        Text("$merk"),
-                                        Text("Masa Berlaku")
-                                      ],
-                                    ),
-                                    SizedBox(
-                                        width: 50,
-                                        height: 50,
-                                        child: ElevatedButton(
-                                          child: Icon(
-                                            Icons.edit,
-                                            color: Colors.black,
-                                            size: 30,
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "$plat",
+                                            style: const TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
                                           ),
-                                          onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) => kendaraan(
-                                                  idKendaraan: idKendaraan,
-                                                  isEdit: true,
-                                                ), // Navigasi ke kendaraan
-                                              ),
-                                            );
-                                          },
-                                        )),
+                                          const SizedBox(height: 5),
+
+                                          Text(
+                                            "$merk",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                color: selectedTheme.primaryColor,
+                                                //fontWeight: FontWeight.bold
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(height: 7),
+
+                                          Text(
+                                            "Masa Berlaku : ",
+                                            style: const TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.black,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    IconButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => kendaraan(
+                                                idKendaraan: idKendaraan,
+                                                isEdit: true,
+                                              ), // Navigasi ke kendaraan
+                                            ),
+                                          );
+                                        },
+                                        icon: Icon(
+                                          Icons.edit,
+                                          color: Colors.black,
+                                          size: 30,
+                                        ),
+                                    ),
                                   ],
                                 ),
                               ),
