@@ -1,4 +1,6 @@
 // import 'package:flutter/cupertino.dart';
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,32 +27,6 @@ class _regisState extends State<Regis> {
   final _formKey = GlobalKey<FormState>();
   bool _loading = false;
 
-  // handleSubmit() async {
-  //   if (!_formKey.currentState!.validate()) return;
-  //   final email = _emailController.value.text;
-  //   final password = _passwordController.value.text;
-  //   final nama = _namaController.value.text;
-  //   final nik = _nikController.value.text;
-  //   final alamat = _alamatController.value.text;
-  //   final kecamatan = _kecamatanController.value.text;
-  //   final kota = _kotaController.value.text;
-  //   setState(() => _loading = true);
-  //   try {
-  //     // Mencoba untuk registrasi
-  //     await Auth().regis(email, password, nama, nik, alamat, kecamatan, kota);
-  //
-  //     // Jika registrasi berhasil, navigasikan ke halaman Signin
-  //     Navigator.of(context).pushReplacement(
-  //       MaterialPageRoute(
-  //         builder: (context) => const SignIn(),
-  //       ),
-  //     );
-  //     setState(() => _loading = false);
-  //   } catch (e) {
-  //     print('Error saat registrasi: $e');
-  //     setState(() => _loading = false);
-  //   }
-  // }
   handleSubmit() async {
     if (!_formKey.currentState!.validate()) return;
     final email = _emailController.value.text;
@@ -70,12 +46,12 @@ class _regisState extends State<Regis> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Registrasi Berhasil'),
-            content: Text('Akun Anda telah berhasil terdaftar!'),
+            title: const Text('Registrasi Berhasil'),
+            content: const Text('Akun Anda telah berhasil terdaftar!'),
             actions: [
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pop(); // Close the success dialog
+                  Navigator.of(context).pop(); 
                   // Navigasikan ke halaman SignIn
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
@@ -83,7 +59,7 @@ class _regisState extends State<Regis> {
                     ),
                   );
                 },
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -92,22 +68,20 @@ class _regisState extends State<Regis> {
     } catch (e) {
       print('Error saat registrasi: $e');
       setState(() => _loading = false);
-
-      // Check if the error is due to an existing email address
       if (e is FirebaseAuthException && e.code == 'email-already-in-use') {
-        // Show a dialog indicating that the email is already in use
         showDialog(
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Text('Registrasi Gagal'),
-              content: Text('Email sudah digunakan. Silakan gunakan email lain.'),
+              title: const Text('Registrasi Gagal'),
+              content:
+                  const Text('Email sudah digunakan. Silakan gunakan email lain.'),
               actions: [
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('OK'),
+                  child: const Text('OK'),
                 ),
               ],
             );
@@ -116,7 +90,6 @@ class _regisState extends State<Regis> {
       }
     }
   }
-
 
   bool isPasswordVisible = false;
 
@@ -130,13 +103,6 @@ class _regisState extends State<Regis> {
   Widget build(BuildContext context) {
     ThemeData selectedTheme = Provider.of<ThemeModeData>(context).getTheme();
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text(
-      //     "Daftar",
-      //     style: TextStyle(color: Colors.white),
-      //   ),
-      //   backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
-      // ),
       body: Center(
         child: SingleChildScrollView(
           child: Form(
@@ -154,9 +120,9 @@ class _regisState extends State<Regis> {
                   ),
                 ),
                 const SizedBox(height: 20),
-
                 Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
                   child: TextFormField(
                     controller: _nikController,
                     style: const TextStyle(
@@ -185,7 +151,8 @@ class _regisState extends State<Regis> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: selectedTheme.primaryColor, // Warna outline saat dalam keadaan fokus
+                          color: selectedTheme
+                              .primaryColor, // Warna outline saat dalam keadaan fokus
                           width: 2.0, // Lebar garis
                         ),
                       ),
@@ -193,7 +160,8 @@ class _regisState extends State<Regis> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
                   child: TextFormField(
                     controller: _namaController,
                     style: const TextStyle(
@@ -213,7 +181,8 @@ class _regisState extends State<Regis> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: selectedTheme.primaryColor, // Warna outline saat dalam keadaan fokus
+                          color: selectedTheme
+                              .primaryColor, // Warna outline saat dalam keadaan fokus
                           width: 2.0, // Lebar garis
                         ),
                       ),
@@ -221,7 +190,8 @@ class _regisState extends State<Regis> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
                   child: TextFormField(
                     autocorrect: true,
                     controller: _emailController,
@@ -242,7 +212,8 @@ class _regisState extends State<Regis> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: selectedTheme.primaryColor, // Warna outline saat dalam keadaan fokus
+                          color: selectedTheme
+                              .primaryColor, // Warna outline saat dalam keadaan fokus
                           width: 2.0, // Lebar garis
                         ),
                       ), // Teks Rp. yang akan ditampilkan di sebelah kiri inputan
@@ -250,7 +221,8 @@ class _regisState extends State<Regis> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
                   child: TextFormField(
                     autocorrect: true,
                     controller: _passwordController,
@@ -276,12 +248,13 @@ class _regisState extends State<Regis> {
                       labelText: 'Password',
                       labelStyle: TextStyle(
                         color: selectedTheme.primaryColor,
-                        fontWeight: FontWeight.bold,// warna label teks
+                        fontWeight: FontWeight.bold, // warna label teks
                         fontSize: 14,
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: selectedTheme.primaryColor, // Warna outline saat dalam keadaan fokus
+                          color: selectedTheme
+                              .primaryColor, // Warna outline saat dalam keadaan fokus
                           width: 2.0, // Lebar garis
                         ),
                       ),
@@ -289,7 +262,8 @@ class _regisState extends State<Regis> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
                   child: TextFormField(
                     controller: _alamatController,
                     style: const TextStyle(
@@ -309,7 +283,8 @@ class _regisState extends State<Regis> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: selectedTheme.primaryColor, // Warna outline saat dalam keadaan fokus
+                          color: selectedTheme
+                              .primaryColor, // Warna outline saat dalam keadaan fokus
                           width: 2.0, // Lebar garis
                         ),
                       ),
@@ -317,7 +292,8 @@ class _regisState extends State<Regis> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
                   child: TextFormField(
                     controller: _kecamatanController,
                     style: const TextStyle(
@@ -327,7 +303,7 @@ class _regisState extends State<Regis> {
                       if (value == null || value.isEmpty) {
                         return 'Kecamatan wajib diisi';
                       }
-                      return null; // Return null for no validation errors
+                      return null; 
                     },
                     decoration: InputDecoration(
                       labelText: 'Kecamatan',
@@ -337,7 +313,8 @@ class _regisState extends State<Regis> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: selectedTheme.primaryColor, // Warna outline saat dalam keadaan fokus
+                          color: selectedTheme
+                              .primaryColor, // Warna outline saat dalam keadaan fokus
                           width: 2.0, // Lebar garis
                         ),
                       ),
@@ -345,7 +322,8 @@ class _regisState extends State<Regis> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
                   child: TextFormField(
                     controller: _kotaController,
                     style: const TextStyle(
@@ -355,7 +333,7 @@ class _regisState extends State<Regis> {
                       if (value == null || value.isEmpty) {
                         return 'Kota wajib diisi';
                       }
-                      return null; // Return null for no validation errors
+                      return null; 
                     },
                     decoration: InputDecoration(
                       labelText: 'Kota',
@@ -365,7 +343,8 @@ class _regisState extends State<Regis> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: selectedTheme.primaryColor, // Warna outline saat dalam keadaan fokus
+                          color: selectedTheme
+                              .primaryColor, // Warna outline saat dalam keadaan fokus
                           width: 2.0, // Lebar garis
                         ),
                       ),
@@ -373,7 +352,7 @@ class _regisState extends State<Regis> {
                   ),
                 ),
                 const SizedBox(
-                  height: 60,
+                  height: 40,
                 ),
                 ElevatedButton(
                   onPressed: () => handleSubmit(),
@@ -381,8 +360,8 @@ class _regisState extends State<Regis> {
                     backgroundColor: selectedTheme.primaryColor,
                     minimumSize:
                         const Size(250, 50), // Atur lebar dan tinggi button
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(
                           15.0), // Mengatur radius untuk membuat button rounded
@@ -413,7 +392,8 @@ class _regisState extends State<Regis> {
                       onPressed: () {
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (context) => const SignIn()),
+                          MaterialPageRoute(
+                              builder: (context) => const SignIn()),
                         );
                       },
                       child: const Text(
@@ -423,7 +403,10 @@ class _regisState extends State<Regis> {
                       ),
                     )
                   ],
-                )
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
               ],
             ),
           ),

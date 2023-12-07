@@ -216,8 +216,6 @@ class _kendaraanState extends State<kendaraan> {
 
   @override
   Widget build(BuildContext context) {
-    var lebar = MediaQuery.of(context).size.width;
-    var tinggi = MediaQuery.of(context).size.height;
     ThemeData selectedTheme = Provider.of<ThemeModeData>(context).getTheme();
     bool isEdit = widget.isEdit;
 
@@ -479,12 +477,6 @@ class _kendaraanState extends State<kendaraan> {
             filled: true,
             fillColor: Colors.white,
             border: const OutlineInputBorder(),
-            // focusedBorder: const OutlineInputBorder(
-            //   borderSide: BorderSide(
-            //     color:
-            //     Color(0xFF183D3D), // Warna outline saat dalam keadaan fokus
-            //   ),
-            // ),
           ),
           maxLength: jumlahKarakter,
         ),
@@ -510,7 +502,7 @@ class _kendaraanState extends State<kendaraan> {
         ],
         onChanged: (String? value) {
           if (value != null) {
-              controller.text = value;
+            controller.text = value;
           }
         },
         decoration: InputDecoration(
@@ -518,11 +510,6 @@ class _kendaraanState extends State<kendaraan> {
           filled: true,
           fillColor: Colors.white,
           border: const OutlineInputBorder(),
-          // focusedBorder: const OutlineInputBorder(
-          //   borderSide: BorderSide(
-          //     color: Color(0xFF183D3D),
-          //   ),
-          // ),
         ),
       ),
     );
@@ -541,7 +528,7 @@ class _kendaraanState extends State<kendaraan> {
         }).toList(),
         onChanged: (String? value) {
           if (value != null) {
-              controller.text = value;
+            controller.text = value;
           }
         },
         decoration: InputDecoration(
@@ -549,11 +536,6 @@ class _kendaraanState extends State<kendaraan> {
           filled: true,
           fillColor: Colors.white,
           border: const OutlineInputBorder(),
-          // focusedBorder: const OutlineInputBorder(
-          //   borderSide: BorderSide(
-          //     color: Color(0xFF183D3D),
-          //   ),
-          // ),
         ),
       ),
     );

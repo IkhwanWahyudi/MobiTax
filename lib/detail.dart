@@ -22,35 +22,6 @@ class _DetailPageState extends State<DetailPage> {
     setState(() {});
   }
 
-  // Future<void> bayar(String id) async {
-  //   try {
-  //     // Dapatkan UID pengguna yang saat ini terautentikasi
-  //     String uidPengguna = FirebaseAuth.instance.currentUser!.uid;
-  //
-  //
-  //     // Mendapatkan koleksi data_diri dari dokumen pengguna dengan UID saat ini
-  //     await FirebaseFirestore.instance
-  //         .collection('pengguna')
-  //         .doc(uidPengguna)
-  //         .collection('kendaraan')
-  //         .doc(id)
-  //         .update({
-  //       'status': 'Sudah dibayar',
-  //       'tanggal_pembayaran': DateTime.now(),
-  //       // Tambahkan field lain yang ingin Anda update
-  //     });
-  //
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(content: Text("Pajak berhasil dibayar")),
-  //     );
-  //
-  //     Navigator.pop(context);
-  //   } catch (e) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(content: Text("Terjadi kesalahan. Silakan coba lagi.")),
-  //     );
-  //   }
-  // }
   Future<void> bayar(String id, int masa) async {
     try {
       // Dapatkan UID pengguna yang saat ini terautentikasi
@@ -124,8 +95,6 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    var lebar = MediaQuery.of(context).size.width;
-    var tinggi = MediaQuery.of(context).size.height;
     var selectedDocumentId = widget.DocumentId;
     int pajak = 0;
     ThemeData selectedTheme = Provider.of<ThemeModeData>(context).getTheme();
@@ -185,12 +154,10 @@ class _DetailPageState extends State<DetailPage> {
             }
 
             return Column(
-              //crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Expanded(
                     child: SingleChildScrollView(
                   child: Padding(
-                    //padding: const EdgeInsets.only(top: 20, left: 40),
                     padding: const EdgeInsets.all(15),
                     child: Column(
                       children: [
@@ -234,7 +201,6 @@ class _DetailPageState extends State<DetailPage> {
                                 ),
                               ],
                             ),
-                            //const Spacer(),
                             Column(
                               children: [
                                 Container(
@@ -259,7 +225,6 @@ class _DetailPageState extends State<DetailPage> {
                                 ),
                               ],
                             ),
-                            //const Spacer(),
                             Column(
                               children: [
                                 Container(
@@ -284,7 +249,6 @@ class _DetailPageState extends State<DetailPage> {
                                 ),
                               ],
                             ),
-                            //const Spacer(),
                             Column(
                               children: [
                                 Container(
@@ -309,7 +273,6 @@ class _DetailPageState extends State<DetailPage> {
                                 ),
                               ],
                             ),
-                            // const Spacer(),
                             Column(
                               children: [
                                 Container(
@@ -334,7 +297,6 @@ class _DetailPageState extends State<DetailPage> {
                                 ),
                               ],
                             ),
-                            //Spacer(),
                           ],
                         ),
                         const SizedBox(

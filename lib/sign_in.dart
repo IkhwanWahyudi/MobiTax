@@ -75,13 +75,6 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     ThemeData selectedTheme = Provider.of<ThemeModeData>(context).getTheme();
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text(
-      //     "Masuk",
-      //     style: TextStyle(color: Colors.white),
-      //   ),
-      //   backgroundColor: Color.fromRGBO(70, 152, 138, 1),
-      // ),
       body: Center(
         child: Form(
           key: _formKey,

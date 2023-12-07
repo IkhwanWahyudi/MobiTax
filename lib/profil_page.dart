@@ -14,12 +14,10 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var lebar = MediaQuery.of(context).size.width;
-    // var tinggi = MediaQuery.of(context).size.height;
     User? user = FirebaseAuth.instance.currentUser;
     ThemeData selectedTheme = Provider.of<ThemeModeData>(context).getTheme();
 
     return Scaffold(
-      //backgroundColor: const Color.fromRGBO(70, 152, 138, 1),
       backgroundColor: const Color.fromARGB(255, 240, 237, 237),
       appBar: AppBar(
         backgroundColor: selectedTheme.primaryColor,
@@ -38,9 +36,6 @@ class Profile extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            // const Expanded(
-            //   child: SingleChildScrollView(),
-            // ),
             Container(
                 height: 90,
                 width: double.infinity,
@@ -59,103 +54,14 @@ class Profile extends StatelessWidget {
                     ),
                   ],
                 ),
-
-                // child: Container(
-                //   margin: EdgeInsets.all(10),
-                //   padding: EdgeInsets.all(10),
-                //   decoration: BoxDecoration(
-                //     color: Colors.white,
-                //     borderRadius: BorderRadius.circular(15),
-                //   ),
-                //   child: StreamBuilder<QuerySnapshot>(
-                //     stream: FirebaseFirestore.instance
-                //         .collection('pengguna')
-                //         .doc(user?.uid)
-                //         .collection('data_diri')
-                //         .snapshots(),
-                //     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                //       if (snapshot.connectionState == ConnectionState.waiting) {
-                //         return CircularProgressIndicator();
-                //       }
-                //
-                //       var nama = snapshot.data!.docs[0]['nama'];
-                //       var nik = snapshot.data!.docs[0]['nik'];
-                //
-                //       return Row(
-                //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //         crossAxisAlignment: CrossAxisAlignment.start,
-                //         children: [
-                //           Container(
-                //             // decoration: BoxDecoration(
-                //             //   color: Colors.green,
-                //             // ),
-                //             child: Row(
-                //               crossAxisAlignment: CrossAxisAlignment.start,
-                //               children: [
-                //                 Container(
-                //                   child: Center(
-                //                     child: Icon(
-                //                       Icons.account_circle_outlined,
-                //                       color: Colors.black,
-                //                       size: 40,
-                //                     ),
-                //                   ),
-                //                 ),
-                //                 SizedBox(width: 10),
-                //                 Column(
-                //                   crossAxisAlignment: CrossAxisAlignment.start,
-                //                   mainAxisAlignment: MainAxisAlignment.center,
-                //                   children: [
-                //                     Text(
-                //                       nik,
-                //                       style: TextStyle(
-                //                         fontSize: 10,
-                //                         color: Colors.black,
-                //                       ),
-                //                       overflow: TextOverflow.ellipsis,
-                //                     ),
-                //                     Text(
-                //                       nama,
-                //                       style: TextStyle(
-                //                         fontSize: 18,
-                //                         fontWeight: FontWeight.bold,
-                //                         color: Colors.black,
-                //                       ),
-                //                       overflow: TextOverflow.ellipsis,
-                //                     ),
-                //                   ],
-                //                 ),
-                //               ],
-                //             ),
-                //           ),
-                //           IconButton(
-                //             onPressed: () {
-                //               FirebaseAuth.instance.signOut();
-                //               Navigator.of(context).pushReplacement(
-                //                 MaterialPageRoute(
-                //                   builder: (context) => SignIn(),
-                //                 ),
-                //               );
-                //             },
-                //             icon: const Icon(
-                //               Icons.logout,
-                //               size: 30,
-                //               color: Colors.black,
-                //             ),
-                //           ),
-                //         ],
-                //       );
-                //     },
-                //   ),
-                // ),
-
                 child: StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
                       .collection('pengguna')
                       .doc(user?.uid)
                       .collection('data_diri')
                       .snapshots(),
-                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return CircularProgressIndicator();
                     }
@@ -184,241 +90,220 @@ class Profile extends StatelessWidget {
                           SizedBox(width: 10),
                           Expanded(
                               child: Row(
+                            children: [
+                              Expanded(
+                                  child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Expanded(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            nik,
-                                            style: TextStyle(
-                                              fontSize: 10,
-                                              color: Colors.black,
-                                            ),
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                          Text(
-                                            nama,
-                                            style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
-                                            ),
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ],
-                                      )
-                                  ),
-                                  IconButton(
-                                    onPressed: () {
-                                      FirebaseAuth.instance.signOut();
-                                      Navigator.of(context).pushReplacement(
-                                        MaterialPageRoute(
-                                          builder: (context) => SignIn(),
-                                        ),
-                                      );
-                                    },
-                                    icon: const Icon(
-                                      Icons.logout,
-                                      size: 30,
+                                  Text(
+                                    nik,
+                                    style: TextStyle(
+                                      fontSize: 10,
                                       color: Colors.black,
                                     ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  Text(
+                                    nama,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ],
-                              )
-                          )
+                              )),
+                              IconButton(
+                                onPressed: () {
+                                  FirebaseAuth.instance.signOut();
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (context) => SignIn(),
+                                    ),
+                                  );
+                                },
+                                icon: const Icon(
+                                  Icons.logout,
+                                  size: 30,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ))
                         ],
                       ),
                     );
                   },
-                )
-
-
-
-            ),
+                )),
             Expanded(
-                child: StreamBuilder<QuerySnapshot>(
-                  // Mendapatkan koleksi data_diri dari dokumen pengguna dengan UID saat ini
-                    stream: FirebaseFirestore.instance
-                        .collection('pengguna')
-                        .doc(user?.uid)
-                        .collection('data_diri')
-                        .snapshots(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Text('Data sedang dimuat');
-                      }
+              child: StreamBuilder<QuerySnapshot>(
+                // Mendapatkan koleksi data_diri dari dokumen pengguna dengan UID saat ini
+                stream: FirebaseFirestore.instance
+                    .collection('pengguna')
+                    .doc(user?.uid)
+                    .collection('data_diri')
+                    .snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Text('Data sedang dimuat');
+                  }
 
-                      var nama = snapshot.data!.docs[0]['nama'];
-                      var alamat = snapshot.data!.docs[0]['alamat'];
-                      var kecamatan = snapshot.data!.docs[0]['kecamatan'];
-                      var kota = snapshot.data!.docs[0]['kota'];
+                  var nama = snapshot.data!.docs[0]['nama'];
+                  var alamat = snapshot.data!.docs[0]['alamat'];
+                  var kecamatan = snapshot.data!.docs[0]['kecamatan'];
+                  var kota = snapshot.data!.docs[0]['kota'];
 
-                      return ListView(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(top: 15, left: 10, right: 10),
-                            height: 60,
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.person,
-                                  color: selectedTheme.primaryColor,
-                                  size: 30,
-                                ),
-                                SizedBox(width: 30),
-                                Expanded(
-                                  child: Text(
-                                    nama,
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.black,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ],
+                  return ListView(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(top: 15, left: 10, right: 10),
+                        height: 60,
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.person,
+                              color: selectedTheme.primaryColor,
+                              size: 30,
                             ),
-                          ),
-
-                          Container(
-                            height: 1, // Lebar garis
-                            //color: Colors.black, // Warna garis
-                            color: Colors.black.withOpacity(0.5),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 10),
-                            //margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-                            height: 60,
-                            // decoration: BoxDecoration(
-                            //   color: Colors.green,
-                            // ),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.location_on_outlined,
-                                  color: selectedTheme.primaryColor,
-                                  size: 30,
-                                ),
-                                SizedBox(width: 30), // Jarak antara ikon dan teks
-                                Expanded(
-                                  child: Text(
-                                    alamat,
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.black,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            height: 1, // Lebar garis
-                            //color: Colors.black, // Warna garis
-                            color: Colors.black.withOpacity(0.5),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 10),
-                            //margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-                            height: 60,
-                            // decoration: BoxDecoration(
-                            //   color: Colors.green,
-                            // ),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.my_location_outlined,
-                                  color: selectedTheme.primaryColor,
-                                  size: 30,
-                                ),
-                                SizedBox(width: 30), // Jarak antara ikon dan teks
-                                Expanded(
-                                  child: Text(
-                                    kecamatan,
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.black,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            height: 1, // Lebar garis
-                            //color: Colors.black, // Warna garis
-                            color: Colors.black.withOpacity(0.5),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 10),
-                            //margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-                            height: 60,
-                            // decoration: BoxDecoration(
-                            //   color: Colors.green,
-                            // ),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.location_city_outlined,
-                                  color: selectedTheme.primaryColor,
-                                  size: 30,
-                                ),
-                                SizedBox(width: 30), // Jarak antara ikon dan teks
-                                Expanded(
-                                  child: Text(
-                                    'Kota $kota',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.black,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            height: 1, // Lebar garis
-                            //color: Colors.black, // Warna garis
-                            color: Colors.black.withOpacity(0.5),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 20),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        EditProfile(), // Navigasi ke edit_profile
-                                  ),
-                                );
-                                // Fungsi
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: selectedTheme.primaryColor,
-                                // padding: EdgeInsets.symmetric(vertical: 15), // Button padding
-                                fixedSize: Size(lebar, 40),
-                              ),
+                            SizedBox(width: 30),
+                            Expanded(
                               child: Text(
-                                'Edit Profil',
+                                nama,
                                 style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                  color: Colors.black,
                                 ),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        height: 1, // Lebar garis
+                        color: Colors.black.withOpacity(0.5),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        height: 60,
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.location_on_outlined,
+                              color: selectedTheme.primaryColor,
+                              size: 30,
+                            ),
+                            SizedBox(width: 30), // Jarak antara ikon dan teks
+                            Expanded(
+                              child: Text(
+                                alamat,
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        height: 1, // Lebar garis
+                        //color: Colors.black, // Warna garis
+                        color: Colors.black.withOpacity(0.5),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        //margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+                        height: 60,
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.my_location_outlined,
+                              color: selectedTheme.primaryColor,
+                              size: 30,
+                            ),
+                            SizedBox(width: 30), // Jarak antara ikon dan teks
+                            Expanded(
+                              child: Text(
+                                kecamatan,
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        height: 1, // Lebar garis
+                        color: Colors.black.withOpacity(0.5),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        height: 60,
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.location_city_outlined,
+                              color: selectedTheme.primaryColor,
+                              size: 30,
+                            ),
+                            SizedBox(width: 30), // Jarak antara ikon dan teks
+                            Expanded(
+                              child: Text(
+                                'Kota $kota',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        height: 1, // Lebar garis
+                        color: Colors.black.withOpacity(0.5),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 20),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    EditProfile(), // Navigasi ke edit_profile
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: selectedTheme.primaryColor,
+                            fixedSize: Size(lebar, 40),
                           ),
-                        ],
-                      );
-                    }))
+                          child: Text(
+                            'Edit Profil',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            )
           ],
         ),
       ),

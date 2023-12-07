@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:mobi_tax/firebase_options.dart';
 import 'package:mobi_tax/introductionPage.dart';
 import 'package:mobi_tax/profil_page.dart';
-import 'package:mobi_tax/sign_in.dart';
 import 'package:mobi_tax/themeModeData.dart';
 import 'package:provider/provider.dart';
 
@@ -34,10 +33,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'MobiTax',
-      // theme: ThemeData(
-      //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      //   useMaterial3: true,
-      // ),
       debugShowCheckedModeBanner: false,
       theme: Provider.of<ThemeModeData>(context).getTheme(),
       home: StreamBuilder<User?>(
@@ -50,7 +45,6 @@ class MyApp extends StatelessWidget {
           }
         },
       ),
-      //home: MyHomePage(),
     );
   }
 }
@@ -102,7 +96,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
             label: 'Profil',
           ),
         ],
-        //unselectedIconTheme: Theme.of(context).iconTheme,
         type: BottomNavigationBarType.fixed,
       ),
     );

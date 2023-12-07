@@ -32,8 +32,6 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: const Color.fromARGB(255, 240, 237, 237),
       appBar: AppBar(
         backgroundColor: selectedTheme.primaryColor,
-        //backgroundColor: Color.fromRGBO(70, 152, 138, 1),
-        //backgroundColor: Colors.pink,
         title: const Text(
           "MOBITAX",
           style: TextStyle(
@@ -64,7 +62,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
         automaticallyImplyLeading: false,
-        //centerTitle: true,
       ),
       body: Center(
         child: Column(
@@ -87,7 +84,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ],
               ),
-
               child: StreamBuilder<QuerySnapshot>(
                 // Mendapatkan koleksi data_diri dari dokumen pengguna dengan UID saat ini
                 stream: FirebaseFirestore.instance
@@ -97,8 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.connectionState ==
-                      ConnectionState.waiting) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
                     return CircularProgressIndicator();
                   }
 
@@ -135,8 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               Text(
                                 nama,
                                 style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold),
+                                    fontSize: 18, fontWeight: FontWeight.bold),
                                 overflow: TextOverflow.ellipsis,
                               ),
                               Text(
@@ -155,7 +149,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
               ),
             ),
-
             Container(
               height: 20,
               width: lebar,
@@ -271,7 +264,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             children: [
                               Container(
                                 width: lebar,
-                                height: 90,
+                                height: 100,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(10),
@@ -305,36 +298,35 @@ class _MyHomePageState extends State<MyHomePage> {
                                     const SizedBox(width: 15),
                                     Expanded(
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           Text(
                                             "$plat",
                                             style: const TextStyle(
                                                 fontSize: 15,
                                                 color: Colors.black,
-                                                fontWeight: FontWeight.bold
-                                            ),
+                                                fontWeight: FontWeight.bold),
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                           const SizedBox(height: 5),
-
                                           Text(
                                             "$merk",
                                             style: TextStyle(
-                                                fontSize: 15,
-                                                color: selectedTheme.primaryColor,
-                                                //fontWeight: FontWeight.bold
+                                              fontSize: 15,
+                                              color: selectedTheme.primaryColor,
+                                              //fontWeight: FontWeight.bold
                                             ),
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                           const SizedBox(height: 7),
-
                                           Text(
                                             "Masa Berlaku : ${masa.toString()} Hari",
                                             style: const TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.black,
+                                              fontSize: 12,
+                                              color: Colors.black,
                                             ),
                                             overflow: TextOverflow.ellipsis,
                                           )
@@ -342,22 +334,22 @@ class _MyHomePageState extends State<MyHomePage> {
                                       ),
                                     ),
                                     IconButton(
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => kendaraan(
-                                                idKendaraan: idKendaraan,
-                                                isEdit: true,
-                                              ), // Navigasi ke kendaraan
-                                            ),
-                                          );
-                                        },
-                                        icon: Icon(
-                                          Icons.edit,
-                                          color: Colors.black,
-                                          size: 30,
-                                        ),
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => kendaraan(
+                                              idKendaraan: idKendaraan,
+                                              isEdit: true,
+                                            ), // Navigasi ke kendaraan
+                                          ),
+                                        );
+                                      },
+                                      icon: Icon(
+                                        Icons.edit,
+                                        color: Colors.black,
+                                        size: 30,
+                                      ),
                                     ),
                                   ],
                                 ),

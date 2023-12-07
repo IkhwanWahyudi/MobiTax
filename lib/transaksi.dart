@@ -6,7 +6,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobi_tax/detailTransaksi.dart';
 import 'package:provider/provider.dart';
 import 'themeModeData.dart';
 
@@ -18,7 +17,6 @@ class transaksi extends StatefulWidget {
 class _transaksiState extends State<transaksi> {
   @override
   Widget build(BuildContext context) {
-    var lebar = MediaQuery.of(context).size.width;
     var tinggi = MediaQuery.of(context).size.height;
     User? user = FirebaseAuth.instance.currentUser;
     ThemeData selectedTheme = Provider.of<ThemeModeData>(context).getTheme();
@@ -90,9 +88,6 @@ class _transaksiState extends State<transaksi> {
                     children: [
                       Container(
                         height: 170,
-                        // decoration: BoxDecoration(
-                        //     color: Colors.blueGrey
-                        // ),
                         child: Stack(
                           children: [
                             Container(
@@ -100,11 +95,11 @@ class _transaksiState extends State<transaksi> {
                               width: double.infinity,
                               decoration: BoxDecoration(
                                 color: selectedTheme.primaryColor,
-                                borderRadius: BorderRadius.only(
+                                borderRadius: const BorderRadius.only(
                                   bottomLeft: Radius.circular(15),
                                   bottomRight: Radius.circular(15),
                                 ),
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                     color: Colors.grey, // warna bayangan
                                     blurRadius: 5, // radius blur bayangan
@@ -186,7 +181,6 @@ class _transaksiState extends State<transaksi> {
                                     const SizedBox(height: 20),
                                     Container(
                                       height: 1, // Lebar garis
-                                      //color: Colors.black, // Warna garis
                                       color: Colors.black.withOpacity(0.5),
                                     ),
                                     const SizedBox(height: 20),
@@ -312,7 +306,7 @@ class _transaksiState extends State<transaksi> {
                                   ),
                                   Text(
                                     tanggal_pembayaran,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 12,
                                       color: Colors.black,
                                     ),
@@ -388,103 +382,6 @@ class _transaksiState extends State<transaksi> {
                       },
                     ),
                   ),
-
-                  // Container(
-                  //   margin: const EdgeInsets.only(
-                  //       left: 10, top: 10, bottom: 20),
-                  //   //padding: const EdgeInsets.all(20),
-                  //   child: const Text(
-                  //     'Alamat Pengiriman',
-                  //     style: TextStyle(
-                  //       color: Colors.black,
-                  //       fontSize: 15,
-                  //       fontWeight: FontWeight.bold,
-                  //     ),
-                  //   ),
-                  // ),
-                  // Container(
-                  //   padding: const EdgeInsets.all(20),
-                  //   //margin: const EdgeInsets.only(right: 40),
-                  //   margin: const EdgeInsets.only(right: 10, left: 10),
-                  //   decoration: const BoxDecoration(
-                  //     color: Colors.white,
-                  //     borderRadius: BorderRadius.all(
-                  //       Radius.circular(10),
-                  //     ),
-                  //     boxShadow: [
-                  //       BoxShadow(
-                  //         color: Colors.grey, // warna bayangan
-                  //         blurRadius: 5, // radius blur bayangan
-                  //         offset: Offset(0,
-                  //             0), // pergeseran bayangan (horizontal, vertical)
-                  //       ),
-                  //     ],
-                  //   ),
-                  //   child: Column(
-                  //     crossAxisAlignment: CrossAxisAlignment.start,
-                  //     mainAxisAlignment: MainAxisAlignment.center,
-                  //     children: [
-                  //       const Row(
-                  //         children: [
-                  //           Icon(
-                  //             CupertinoIcons.location,
-                  //             color: Colors.black,
-                  //           ),
-                  //           Padding(
-                  //             padding: EdgeInsets.only(left: 20),
-                  //             child: Text(
-                  //               'Rumah',
-                  //               style: TextStyle(
-                  //                   fontSize: 15, color: Colors.black),
-                  //             ),
-                  //           ),
-                  //         ],
-                  //       ),
-                  //       const SizedBox(
-                  //         height: 8,
-                  //       ),
-                  //       FutureBuilder<QuerySnapshot>(
-                  //         // Mendapatkan koleksi data_diri dari dokumen pengguna dengan UID saat ini
-                  //         future: FirebaseFirestore.instance
-                  //             .collection('pengguna')
-                  //             .doc(user?.uid)
-                  //             .collection('data_diri')
-                  //             .get(),
-                  //         builder: (BuildContext context,
-                  //             AsyncSnapshot<QuerySnapshot> snapshot) {
-                  //           if (snapshot.connectionState ==
-                  //               ConnectionState.waiting) {
-                  //             return const CircularProgressIndicator();
-                  //           }
-                  //
-                  //           var jalan = snapshot.data!.docs[0]['alamat'];
-                  //           var kecamatan =
-                  //               snapshot.data!.docs[0]['kecamatan'];
-                  //           var kota = snapshot.data!.docs[0]['kota'];
-                  //
-                  //           return Column(
-                  //             crossAxisAlignment: CrossAxisAlignment.start,
-                  //             children: [
-                  //               Text(
-                  //                 jalan,
-                  //                 style: const TextStyle(
-                  //                     fontSize: 15, color: Colors.black),
-                  //               ),
-                  //               const SizedBox(
-                  //                 height: 8,
-                  //               ),
-                  //               Text(
-                  //                 '$kecamatan, Kota $kota',
-                  //                 style: const TextStyle(
-                  //                     fontSize: 15, color: Colors.black),
-                  //               ),
-                  //             ],
-                  //           );
-                  //         },
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
                 ],
               );
             }),

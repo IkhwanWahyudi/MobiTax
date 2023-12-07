@@ -15,12 +15,6 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  // final TextEditingController _nikController = TextEditingController();
-  // final TextEditingController _namaController = TextEditingController();
-  // final TextEditingController _alamatController = TextEditingController();
-  // final TextEditingController _kecamatanController = TextEditingController();
-  // final TextEditingController _kotaController = TextEditingController();
-  // Define controllers for each TextField
   final TextEditingController _nikController = TextEditingController();
   final TextEditingController _namaController = TextEditingController();
   final TextEditingController _alamatController = TextEditingController();
@@ -98,13 +92,10 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     var lebar = MediaQuery.of(context).size.width;
-    // var tinggi = MediaQuery.of(context).size.height;
-    User? user = FirebaseAuth.instance.currentUser;
     ThemeData selectedTheme = Provider.of<ThemeModeData>(context).getTheme();
 
     return Scaffold(
         backgroundColor: Theme.of(context).canvasColor,
-        // backgroundColor: const Color.fromARGB(255, 240, 237, 237),
         appBar: AppBar(
           backgroundColor: selectedTheme.primaryColor,
           elevation: 0,
@@ -186,7 +177,7 @@ class _EditProfileState extends State<EditProfile> {
                           } else if (value.length < 16) {
                             return 'NIK setidaknya sebanyak 16 karakter';
                           }
-                          return null; // Return null for no validation errors
+                          return null; 
                         },
                         decoration: InputDecoration(
                           labelText: 'NIK',
@@ -219,7 +210,7 @@ class _EditProfileState extends State<EditProfile> {
                           if (value == null || value.isEmpty) {
                             return 'Alamat wajib diisi';
                           }
-                          return null; // Return null for no validation errors
+                          return null; 
                         },
                         decoration: InputDecoration(
                           labelText: 'Alamat',
@@ -253,7 +244,7 @@ class _EditProfileState extends State<EditProfile> {
                           if (value == null || value.isEmpty) {
                             return 'Kecamatan wajib diisi';
                           }
-                          return null; // Return null for no validation errors
+                          return null; 
                         },
                         decoration: InputDecoration(
                           labelText: 'Kecamatan',
@@ -309,7 +300,6 @@ class _EditProfileState extends State<EditProfile> {
                   onPressed: () => editDataDiri(),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: selectedTheme.primaryColor,
-                    // padding: EdgeInsets.symmetric(vertical: 15), // Button padding
                     fixedSize: Size(lebar, 40),
                   ),
                   child: Text(

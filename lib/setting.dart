@@ -25,7 +25,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
         ),
         centerTitle: true,
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.white, // Ganti warna sesuai keinginan Anda
         ),
         backgroundColor: selectedTheme.primaryColor,

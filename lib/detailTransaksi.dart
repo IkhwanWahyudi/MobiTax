@@ -11,7 +11,6 @@ class _detailTransaksiState extends State<detailTransaksi> {
   @override
   Widget build(BuildContext context) {
     var lebar = MediaQuery.of(context).size.width;
-    // var tinggi = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Detail Transaksi'), // Judul AppBar
@@ -29,7 +28,6 @@ class _detailTransaksiState extends State<detailTransaksi> {
           children: [
             Container(
               width: lebar * 0.976,
-              // height: tinggi,
               height: 150,
               decoration: BoxDecoration(
                 color: Colors.white,

@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class Auth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  Future<void> regis(String email, String password, String nama, String nik, String alamat,
-      String kecamatan, String kota) async {
+  Future<void> regis(String email, String password, String nama, String nik,
+      String alamat, String kecamatan, String kota) async {
     final regisUser = await _auth.createUserWithEmailAndPassword(
       email: email,
       password: password,
