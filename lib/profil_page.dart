@@ -42,37 +42,120 @@ class Profile extends StatelessWidget {
             //   child: SingleChildScrollView(),
             // ),
             Container(
-              height: 90,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: selectedTheme.primaryColor,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(15),
-                  bottomRight: Radius.circular(15),
-                ),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.grey, // warna bayangan
-                    blurRadius: 5, // radius blur bayangan
-                    offset: Offset(
-                        0, 0), // pergeseran bayangan (horizontal, vertical)
-                  ),
-                ],
-              ),
-              child: Container(
-                margin: EdgeInsets.all(10),
-                padding: EdgeInsets.all(10),
+                height: 90,
+                width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
+                  color: selectedTheme.primaryColor,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(15),
+                    bottomRight: Radius.circular(15),
+                  ),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.grey, // warna bayangan
+                      blurRadius: 5, // radius blur bayangan
+                      offset: Offset(
+                          0, 0), // pergeseran bayangan (horizontal, vertical)
+                    ),
+                  ],
                 ),
+
+                // child: Container(
+                //   margin: EdgeInsets.all(10),
+                //   padding: EdgeInsets.all(10),
+                //   decoration: BoxDecoration(
+                //     color: Colors.white,
+                //     borderRadius: BorderRadius.circular(15),
+                //   ),
+                //   child: StreamBuilder<QuerySnapshot>(
+                //     stream: FirebaseFirestore.instance
+                //         .collection('pengguna')
+                //         .doc(user?.uid)
+                //         .collection('data_diri')
+                //         .snapshots(),
+                //     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                //       if (snapshot.connectionState == ConnectionState.waiting) {
+                //         return CircularProgressIndicator();
+                //       }
+                //
+                //       var nama = snapshot.data!.docs[0]['nama'];
+                //       var nik = snapshot.data!.docs[0]['nik'];
+                //
+                //       return Row(
+                //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //         crossAxisAlignment: CrossAxisAlignment.start,
+                //         children: [
+                //           Container(
+                //             // decoration: BoxDecoration(
+                //             //   color: Colors.green,
+                //             // ),
+                //             child: Row(
+                //               crossAxisAlignment: CrossAxisAlignment.start,
+                //               children: [
+                //                 Container(
+                //                   child: Center(
+                //                     child: Icon(
+                //                       Icons.account_circle_outlined,
+                //                       color: Colors.black,
+                //                       size: 40,
+                //                     ),
+                //                   ),
+                //                 ),
+                //                 SizedBox(width: 10),
+                //                 Column(
+                //                   crossAxisAlignment: CrossAxisAlignment.start,
+                //                   mainAxisAlignment: MainAxisAlignment.center,
+                //                   children: [
+                //                     Text(
+                //                       nik,
+                //                       style: TextStyle(
+                //                         fontSize: 10,
+                //                         color: Colors.black,
+                //                       ),
+                //                       overflow: TextOverflow.ellipsis,
+                //                     ),
+                //                     Text(
+                //                       nama,
+                //                       style: TextStyle(
+                //                         fontSize: 18,
+                //                         fontWeight: FontWeight.bold,
+                //                         color: Colors.black,
+                //                       ),
+                //                       overflow: TextOverflow.ellipsis,
+                //                     ),
+                //                   ],
+                //                 ),
+                //               ],
+                //             ),
+                //           ),
+                //           IconButton(
+                //             onPressed: () {
+                //               FirebaseAuth.instance.signOut();
+                //               Navigator.of(context).pushReplacement(
+                //                 MaterialPageRoute(
+                //                   builder: (context) => SignIn(),
+                //                 ),
+                //               );
+                //             },
+                //             icon: const Icon(
+                //               Icons.logout,
+                //               size: 30,
+                //               color: Colors.black,
+                //             ),
+                //           ),
+                //         ],
+                //       );
+                //     },
+                //   ),
+                // ),
+
                 child: StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
                       .collection('pengguna')
                       .doc(user?.uid)
                       .collection('data_diri')
                       .snapshots(),
-                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return CircularProgressIndicator();
                     }
@@ -80,73 +163,79 @@ class Profile extends StatelessWidget {
                     var nama = snapshot.data!.docs[0]['nama'];
                     var nik = snapshot.data!.docs[0]['nik'];
 
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          // decoration: BoxDecoration(
-                          //   color: Colors.green,
-                          // ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                child: Center(
-                                  child: Icon(
-                                    Icons.account_circle_outlined,
-                                    color: Colors.black,
-                                    size: 40,
-                                  ),
-                                ),
+                    return Container(
+                      margin: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            child: Center(
+                              child: Icon(
+                                Icons.account_circle_outlined,
+                                color: Colors.black,
+                                size: 40,
                               ),
-                              SizedBox(width: 10),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          Expanded(
+                              child: Row(
                                 children: [
-                                  Text(
-                                    nik,
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      color: Colors.black,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
+                                  Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            nik,
+                                            style: TextStyle(
+                                              fontSize: 10,
+                                              color: Colors.black,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          Text(
+                                            nama,
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      )
                                   ),
-                                  Text(
-                                    nama,
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
+                                  IconButton(
+                                    onPressed: () {
+                                      FirebaseAuth.instance.signOut();
+                                      Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                          builder: (context) => SignIn(),
+                                        ),
+                                      );
+                                    },
+                                    icon: const Icon(
+                                      Icons.logout,
+                                      size: 30,
                                       color: Colors.black,
                                     ),
-                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            FirebaseAuth.instance.signOut();
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (context) => SignIn(),
-                              ),
-                            );
-                          },
-                          icon: const Icon(
-                            Icons.logout,
-                            size: 30,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
+                              )
+                          )
+                        ],
+                      ),
                     );
                   },
-                ),
-              ),
+                )
+
+
+
             ),
             Expanded(
                 child: StreamBuilder<QuerySnapshot>(

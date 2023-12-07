@@ -232,7 +232,7 @@ class _transaksiState extends State<transaksi> {
             ),
 
             Container(
-              margin: const EdgeInsets.only(left: 10, top: 10),
+              margin: const EdgeInsets.only(left: 10, top: 10, bottom: 10),
               alignment: Alignment.centerLeft,
               //padding: const EdgeInsets.all(20),
               child: const Text(
@@ -252,7 +252,7 @@ class _transaksiState extends State<transaksi> {
                   return Container(
                     margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                     padding: const EdgeInsets.all(10),
-                    height: 50,
+                    height: 140,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
@@ -264,12 +264,99 @@ class _transaksiState extends State<transaksi> {
                         ),
                       ],
                     ),
-                    child: Text(
-                      'Transaksi $index', // Ganti dengan data sesuai kebutuhan Anda
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.black,
-                      ),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Plat Kendaraan',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              'Tanggal',
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.black,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 80,
+                                height: 80,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: selectedTheme.primaryColor,
+                                ),
+                                child: Icon(
+                                  Icons.directions_bike,
+                                  color: Colors.white,
+                                  size: 60,
+                                ),
+                              ),
+                              SizedBox(width: 30),
+
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Atas Nama',
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.black,
+                                          //fontWeight: FontWeight.bold
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Text(
+                                      'Namanya',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    SizedBox(height: 10),
+
+                                    Text(
+                                      'Jumlah yang dibayar',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.black,
+                                        //fontWeight: FontWeight.bold
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Text(
+                                      '9999999',
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                )
+                              )
+                            ],
+                          )
+                        )
+                      ],
                     ),
                   );
                 },
