@@ -204,17 +204,18 @@ class _MyHomePageState extends State<MyHomePage> {
                     //physics: const NeverScrollableScrollPhysics(),
                     itemCount: snapshot.data!.docs.length,
                     itemBuilder: (context, index) {
+                      var idKendaraan = snapshot.data!.docs[index].id;
                       var dataKendaraan = snapshot.data!.docs[index].data()
-                      as Map<String, dynamic>;
+                          as Map<String, dynamic>;
                       var jenisKendaraan = dataKendaraan['jenis'];
                       var plat = dataKendaraan['plat'];
                       var merk = dataKendaraan['merk'];
 
-                      IconData kendaraan;
+                      IconData iconKendaraan;
                       if (jenisKendaraan == "Motor") {
-                        kendaraan = Icons.directions_bike;
+                        iconKendaraan = Icons.directions_bike;
                       } else {
-                        kendaraan = Icons.directions_car;
+                        iconKendaraan = Icons.directions_car;
                       }
 
                       return Dismissible(
@@ -275,8 +276,8 @@ class _MyHomePageState extends State<MyHomePage> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => DetailPage(
-                                    selectedDocumentId:
-                                    index), // Navigasi ke DetailPage
+                                    DocumentId:
+                                        idKendaraan), // Navigasi ke DetailPage
                               ),
                             );
                           },
@@ -298,7 +299,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                   ],
                                 ),
                                 padding: EdgeInsets.all(10),
-                                margin: EdgeInsets.only(left: 10, right: 10),
+                                margin: EdgeInsets.only(
+                                    left: 10, right: 10, top: 10),
                                 child: Row(
                                   children: [
                                     Container(
@@ -309,7 +311,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                         color: selectedTheme.primaryColor,
                                       ),
                                       child: Icon(
-                                        kendaraan,
+                                        iconKendaraan,
                                         color: Colors.white,
                                         size: 30,
                                       ),
@@ -317,15 +319,36 @@ class _MyHomePageState extends State<MyHomePage> {
                                     const SizedBox(width: 15),
                                     Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                       mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text("$plat"),
                                         Text("$merk"),
                                         Text("Masa Berlaku")
                                       ],
-                                    )
+                                    ),
+                                    SizedBox(
+                                        width: 50,
+                                        height: 50,
+                                        child: ElevatedButton(
+                                          child: Icon(
+                                            Icons.edit,
+                                            color: Colors.black,
+                                            size: 30,
+                                          ),
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => kendaraan(
+                                                  idKendaraan: idKendaraan,
+                                                  isEdit: true,
+                                                ), // Navigasi ke kendaraan
+                                              ),
+                                            );
+                                          },
+                                        )),
                                   ],
                                 ),
                               ),
@@ -348,15 +371,17 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          kendaraan(), // Navigasi ke kendaraan
+                      builder: (context) => kendaraan(
+                        idKendaraan: "",
+                        isEdit: false,
+                      ), // Navigasi ke kendaraan
                     ),
                   );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: selectedTheme.primaryColor,
                   minimumSize:
-                  const Size(250, 50), // Atur lebar dan tinggi button
+                      const Size(250, 50), // Atur lebar dan tinggi button
                   padding: const EdgeInsets.symmetric(
                     vertical: 10,
                     horizontal: 16,

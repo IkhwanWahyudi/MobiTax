@@ -6,7 +6,10 @@ import 'package:provider/provider.dart';
 import 'themeModeData.dart';
 
 class kendaraan extends StatefulWidget {
-  const kendaraan({Key? key});
+  bool isEdit;
+  String idKendaraan;
+
+  kendaraan({super.key, required this.idKendaraan, required this.isEdit});
 
   @override
   State<kendaraan> createState() => _kendaraanState();
@@ -26,7 +29,7 @@ class _kendaraanState extends State<kendaraan> {
   final TextEditingController noBPKB = TextEditingController();
   final TextEditingController selectedYearController = TextEditingController();
   final List<int> availableYears =
-  List.generate(20, (index) => DateTime.now().year - index);
+      List.generate(20, (index) => DateTime.now().year - index);
   int selectedYear = DateTime.now().year;
   final _formKey = GlobalKey<FormState>();
 
@@ -128,20 +131,103 @@ class _kendaraanState extends State<kendaraan> {
     }
   }
 
+  Future<void> editKendaraan() async {
+    String selectedDocumentId = widget.idKendaraan;
+
+    if (!_formKey.currentState!.validate()) return;
+    try {
+      // =========== VALIDASI INPUT KENDARAAN ===============
+      if (jenis.text.isEmpty) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Peringatan'),
+              content: const Text('Jenis kendaraan masih kosong.'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+        return;
+      } else if (selectedYearController.text.isEmpty) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Peringatan'),
+              content: const Text('Tahun Kepemilikan masih kosong.'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+        return;
+      }
+
+      // Dapatkan UID pengguna yang saat ini terautentikasi
+      String uidPengguna = FirebaseAuth.instance.currentUser!.uid;
+
+      // Tambahkan data kendaraan ke dokumen Firestore pengguna
+      await FirebaseFirestore.instance
+          .collection('pengguna')
+          .doc(uidPengguna)
+          .collection('kendaraan')
+          .doc(selectedDocumentId)
+          .update({
+        'plat': plat.text,
+        'jenis': jenis.text,
+        'merk': merk.text,
+        'type': type.text,
+        'tahun': int.parse(selectedYearController.text),
+        'warna': warna.text,
+        'rangka': noRangka.text,
+        'mesin': noMesin.text,
+        'bpkb': noBPKB.text,
+        'brand': brand.text,
+        'transmisi': int.tryParse(transmisi.text) ?? 0,
+        'bbm': bbm.text
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Kendaraan berhasil diubah")),
+      );
+
+      Navigator.pop(context);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Terjadi kesalahan. Silakan coba lagi.")),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var lebar = MediaQuery.of(context).size.width;
     var tinggi = MediaQuery.of(context).size.height;
     ThemeData selectedTheme = Provider.of<ThemeModeData>(context).getTheme();
+    bool isEdit = widget.isEdit;
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: selectedTheme.primaryColor,
         shadowColor: Colors.transparent,
         centerTitle: true,
-        title: const Text(
-          'Tambah Kendaraan',
-          style: TextStyle(
+        title: Text(
+          isEdit ? 'Edit Kendaraan' : 'Tambah Kendaraan',
+          style: const TextStyle(
             color: Colors.white,
           ),
         ),
@@ -161,26 +247,26 @@ class _kendaraanState extends State<kendaraan> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      _textfield(plat, 'Nomor Plat Kendaraan'),
+                      _textfield(plat, 'Nomor Plat Kendaraan', 'plat'),
                       _buildDropdown(jenis, 'Jenis Kendaraan'),
                       const SizedBox(
                         height: 15,
                       ),
-                      _textfield(merk, 'Merk Kendaraan'),
-                      _textfield(bbm, 'Bahan Bakar Kendaraan'),
+                      _textfield(merk, 'Merk Kendaraan', 'merk'),
+                      _textfield(bbm, 'Bahan Bakar Kendaraan', 'bbm'),
                       _buildNumericTextField(
-                          transmisi, 'Transmisi Kendaraan (CC)'),
-                      _textfield(brand, 'Brand Kendaraan'),
-                      _textfield(type, 'Tipe Kendaraan'),
+                          transmisi, 'Transmisi Kendaraan (CC)', 'transmisi'),
+                      _textfield(brand, 'Brand Kendaraan', 'brand'),
+                      _textfield(type, 'Tipe Kendaraan', 'type'),
                       _dropdownYear(
                           selectedYearController, 'Tahun Kepemilikan'),
                       const SizedBox(
                         height: 15,
                       ),
-                      _textfield(warna, 'Warna Kendaraan'),
-                      _buildNumericTextField(noRangka, 'No. Rangka'),
-                      _buildNumericTextField(noMesin, 'No. Mesin'),
-                      _buildNumericTextField(noBPKB, 'No. BPKB'),
+                      _textfield(warna, 'Warna Kendaraan', 'warna'),
+                      _buildNumericTextField(noRangka, 'No. Rangka', 'rangka'),
+                      _buildNumericTextField(noMesin, 'No. Mesin', 'mesin'),
+                      _buildNumericTextField(noBPKB, 'No. BPKB', 'bpkb'),
                       const SizedBox(
                         height: 50,
                       )
@@ -198,7 +284,11 @@ class _kendaraanState extends State<kendaraan> {
           margin: const EdgeInsets.all(10),
           child: ElevatedButton(
             onPressed: () {
-              tambahKendaraan();
+              if (isEdit) {
+                editKendaraan();
+              } else {
+                tambahKendaraan();
+              }
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: selectedTheme.primaryColor,
@@ -227,8 +317,13 @@ class _kendaraanState extends State<kendaraan> {
   }
 
   //======= WIDGET TEXT FIELD ============
-  Widget _textfield(TextEditingController controller, String labelText) {
+  Widget _textfield(
+      TextEditingController controller, String labelText, String field) {
     int jumlahKarakter = 100;
+    bool isEdit = widget.isEdit;
+    String uidPengguna = FirebaseAuth.instance.currentUser!.uid;
+    String selectedDocumentId = widget.idKendaraan;
+
     if (labelText == 'Nomor Plat Kendaraan' ||
         labelText == 'Bahan Bakar Kendaraan' ||
         labelText == 'Warna Kendaraan') {
@@ -238,36 +333,79 @@ class _kendaraanState extends State<kendaraan> {
         labelText == 'Tipe Kendaraan') {
       jumlahKarakter = 15;
     }
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: TextFormField(
-        controller: controller,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return '$labelText wajib diisi';
-          }
-          return null;
-        },
-        decoration: InputDecoration(
-          labelText: labelText,
-          filled: true,
-          fillColor: Colors.white,
-          border: const OutlineInputBorder(),
-          // focusedBorder: const OutlineInputBorder(
-          //   borderSide: BorderSide(
-          //     color:
-          //     Color(0xFF183D3D), // Warna outline saat dalam keadaan fokus
-          //   ),
-          // ),
+    if (isEdit) {
+      return FutureBuilder<DocumentSnapshot>(
+          future: FirebaseFirestore.instance
+              .collection('pengguna')
+              .doc(uidPengguna)
+              .collection('kendaraan')
+              .doc(selectedDocumentId)
+              .get(),
+          builder:
+              (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              // Tampilkan loading spinner atau indikator lainnya jika data masih dimuat
+              return const CircularProgressIndicator();
+            }
+
+            var data = snapshot.data!.data() as Map<String, dynamic>;
+            controller.text = data[field];
+
+            return Padding(
+              padding: const EdgeInsets.all(10),
+              child: TextFormField(
+                controller: controller,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return '$labelText wajib diisi';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: labelText,
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: const OutlineInputBorder(),
+                ),
+                maxLength: jumlahKarakter,
+              ),
+            );
+          });
+    } else {
+      return Padding(
+        padding: const EdgeInsets.all(10),
+        child: TextFormField(
+          controller: controller,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return '$labelText wajib diisi';
+            }
+            return null;
+          },
+          decoration: InputDecoration(
+            labelText: labelText,
+            filled: true,
+            fillColor: Colors.white,
+            border: const OutlineInputBorder(),
+            // focusedBorder: const OutlineInputBorder(
+            //   borderSide: BorderSide(
+            //     color:
+            //     Color(0xFF183D3D), // Warna outline saat dalam keadaan fokus
+            //   ),
+            // ),
+          ),
+          maxLength: jumlahKarakter,
         ),
-        maxLength: jumlahKarakter,
-      ),
-    );
+      );
+    }
   }
 
   Widget _buildNumericTextField(
-      TextEditingController controller, String labelText) {
+      TextEditingController controller, String labelText, String field) {
     int jumlahKarakter = 100;
+    bool isEdit = widget.isEdit;
+    String uidPengguna = FirebaseAuth.instance.currentUser!.uid;
+    String selectedDocumentId = widget.idKendaraan;
     if (labelText == 'Transmisi Kendaraan (CC)') {
       jumlahKarakter = 5;
     } else if (labelText == 'No. Rangka' ||
@@ -275,36 +413,82 @@ class _kendaraanState extends State<kendaraan> {
         labelText == 'No. BPKB') {
       jumlahKarakter = 15;
     }
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: TextFormField(
-        controller: controller,
-        keyboardType: const TextInputType.numberWithOptions(
-            decimal: false, signed: false),
-        inputFormatters: <TextInputFormatter>[
-          FilteringTextInputFormatter.digitsOnly,
-        ],
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return '$labelText wajib diisi';
-          }
-          return null;
-        },
-        decoration: InputDecoration(
-          labelText: labelText,
-          filled: true,
-          fillColor: Colors.white,
-          border: const OutlineInputBorder(),
-          // focusedBorder: const OutlineInputBorder(
-          //   borderSide: BorderSide(
-          //     color:
-          //     Color(0xFF183D3D), // Warna outline saat dalam keadaan fokus
-          //   ),
-          // ),
+
+    if (isEdit) {
+      return FutureBuilder<DocumentSnapshot>(
+          future: FirebaseFirestore.instance
+              .collection('pengguna')
+              .doc(uidPengguna)
+              .collection('kendaraan')
+              .doc(selectedDocumentId)
+              .get(),
+          builder:
+              (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              // Tampilkan loading spinner atau indikator lainnya jika data masih dimuat
+              return const CircularProgressIndicator();
+            }
+
+            var data = snapshot.data!.data() as Map<String, dynamic>;
+            controller.text = data[field].toString();
+
+            return Padding(
+              padding: const EdgeInsets.all(10),
+              child: TextFormField(
+                controller: controller,
+                keyboardType: const TextInputType.numberWithOptions(
+                    decimal: false, signed: false),
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return '$labelText wajib diisi';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: labelText,
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: const OutlineInputBorder(),
+                ),
+                maxLength: jumlahKarakter,
+              ),
+            );
+          });
+    } else {
+      return Padding(
+        padding: const EdgeInsets.all(10),
+        child: TextFormField(
+          controller: controller,
+          keyboardType: const TextInputType.numberWithOptions(
+              decimal: false, signed: false),
+          inputFormatters: <TextInputFormatter>[
+            FilteringTextInputFormatter.digitsOnly,
+          ],
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return '$labelText wajib diisi';
+            }
+            return null;
+          },
+          decoration: InputDecoration(
+            labelText: labelText,
+            filled: true,
+            fillColor: Colors.white,
+            border: const OutlineInputBorder(),
+            // focusedBorder: const OutlineInputBorder(
+            //   borderSide: BorderSide(
+            //     color:
+            //     Color(0xFF183D3D), // Warna outline saat dalam keadaan fokus
+            //   ),
+            // ),
+          ),
+          maxLength: jumlahKarakter,
         ),
-        maxLength: jumlahKarakter,
-      ),
-    );
+      );
+    }
   }
 
   //==========WIDGET DROPDOWN============
