@@ -51,7 +51,7 @@ class _DetailPageState extends State<DetailPage> {
   //     );
   //   }
   // }
-  Future<void> bayar(String id) async {
+  Future<void> bayar(String id, int masa) async {
     try {
       // Dapatkan UID pengguna yang saat ini terautentikasi
       String uidPengguna = FirebaseAuth.instance.currentUser!.uid;
@@ -63,6 +63,8 @@ class _DetailPageState extends State<DetailPage> {
       String formattedDate =
           '${now.day.toString().padLeft(2, '0')}-${now.month.toString().padLeft(2, '0')}-${now.year}';
 
+      masa += 365;
+
       // Mendapatkan koleksi data_diri dari dokumen pengguna dengan UID saat ini
       await FirebaseFirestore.instance
           .collection('pengguna')
@@ -72,6 +74,7 @@ class _DetailPageState extends State<DetailPage> {
           .update({
         'status': 'Sudah dibayar',
         'tanggal_pembayaran': formattedDate,
+        'masa': masa
         // Tambahkan field lain yang ingin Anda update
       });
 
@@ -86,7 +89,38 @@ class _DetailPageState extends State<DetailPage> {
       );
     }
   }
+  
+  Future<void> batal(String id, int masa) async {
+    try {
+      // Dapatkan UID pengguna yang saat ini terautentikasi
+      String uidPengguna = FirebaseAuth.instance.currentUser!.uid;
 
+      masa -= 365;
+
+      // Mendapatkan koleksi data_diri dari dokumen pengguna dengan UID saat ini
+      await FirebaseFirestore.instance
+          .collection('pengguna')
+          .doc(uidPengguna)
+          .collection('kendaraan')
+          .doc(id)
+          .update({
+        'status': 'Belum Terbayar',
+        'tanggal_pembayaran': "",
+        'masa': masa
+        // Tambahkan field lain yang ingin Anda update
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Pajak berhasil dibayar")),
+      );
+
+      Navigator.pop(context);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Terjadi kesalahan. Silakan coba lagi.")),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -140,6 +174,7 @@ class _DetailPageState extends State<DetailPage> {
             var rangka = dataKendaraan['rangka'];
             var bpkb = dataKendaraan['bpkb'];
             var mesin = dataKendaraan['mesin'];
+            var masa = dataKendaraan['masa'];
 
             bool isTerbayar = false;
 
@@ -471,26 +506,73 @@ class _DetailPageState extends State<DetailPage> {
                                 TextButton(
                                   onPressed: () async {
                                     // Tutup dialog setelah menghapus
-                                    bayar(selectedDocumentId);
+                                    bayar(selectedDocumentId, masa);
                                     Navigator.of(context).pop();
 
                                     // Perbarui UI dengan memanggil metode refreshUI
                                     refreshUI();
                                   },
-                                  child: Text('Bayar'),
+                                  child: Text('Proses'),
                                 ),
                               ],
                             );
                           },
                         );
-                      } else {}
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            if (transmisi < 100) {
+                              pajak = 50000;
+                            } else if (transmisi >= 100 && transmisi < 150) {
+                              pajak = 200000;
+                            } else if (transmisi >= 150 && transmisi < 200) {
+                              pajak = 400000;
+                            } else if (transmisi >= 200 && transmisi < 1000) {
+                              pajak = 700000;
+                            } else if (transmisi >= 1000 && transmisi < 2000) {
+                              pajak = 1000000;
+                            } else if (transmisi >= 2000) {
+                              pajak = 2000000;
+                            }
+                            return AlertDialog(
+                              title: Text('Pemberitahuan'),
+                              content: Text(
+                                  'Anda yakin ingin membatalkan proses pembayaran pajak?'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+
+                                    // Perbarui UI dengan memanggil metode refreshUI
+                                    refreshUI();
+                                  },
+                                  child: Text('Tidak'),
+                                ),
+                                TextButton(
+                                  onPressed: () async {
+                                    // Tutup dialog setelah menghapus
+                                    batal(selectedDocumentId, masa);
+                                    Navigator.of(context).pop();
+
+                                    // Perbarui UI dengan memanggil metode refreshUI
+                                    refreshUI();
+                                  },
+                                  child: Text('Yakin'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor:
                           isTerbayar ? Colors.grey : selectedTheme.primaryColor,
                     ),
                     child: Text(
-                      'Bayar',
+                      isTerbayar?
+                      'Batal Proses':'Proses',
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),

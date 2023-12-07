@@ -195,6 +195,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       var jenisKendaraan = dataKendaraan['jenis'];
                       var plat = dataKendaraan['plat'];
                       var merk = dataKendaraan['merk'];
+                      var masa = dataKendaraan['masa'];
 
                       IconData iconKendaraan;
                       if (jenisKendaraan == "Motor") {
@@ -330,7 +331,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                           const SizedBox(height: 7),
 
                                           Text(
-                                            "Masa Berlaku : ",
+                                            "Masa Berlaku : ${masa.toString()} Hari",
                                             style: const TextStyle(
                                                 fontSize: 12,
                                                 color: Colors.black,

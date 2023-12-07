@@ -116,7 +116,8 @@ class _kendaraanState extends State<kendaraan> {
         'brand': brand.text,
         'transmisi': int.tryParse(transmisi.text) ?? 0,
         'bbm': bbm.text,
-        'status': 'Belum Terbayar'
+        'status': 'Belum Terbayar',
+        'masa': 30
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
