@@ -509,9 +509,7 @@ class _kendaraanState extends State<kendaraan> {
         ],
         onChanged: (String? value) {
           if (value != null) {
-            setState(() {
               controller.text = value;
-            });
           }
         },
         decoration: InputDecoration(
@@ -542,9 +540,7 @@ class _kendaraanState extends State<kendaraan> {
         }).toList(),
         onChanged: (String? value) {
           if (value != null) {
-            setState(() {
               controller.text = value;
-            });
           }
         },
         decoration: InputDecoration(
